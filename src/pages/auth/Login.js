@@ -6,7 +6,7 @@ import {toast} from 'react-toastify';
 import {Button} from 'antd'
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom'
-import axios from 'axios'
+// import axios from 'axios'
 import {createOrUpdateUser} from '../../functions/auth'
 
 const Login = ({history}) => {
@@ -19,7 +19,7 @@ const Login = ({history}) => {
 
     useEffect(() =>{
         if(user && user.token) history.push('/')
-    },[user])
+    },[user, history])
 
     let dispatch = useDispatch()
 

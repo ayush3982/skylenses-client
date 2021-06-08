@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Menu } from 'antd';
-import { MailOutlined, AppstoreOutlined, SettingOutlined, UserOutlined, UserAddOutlined, LogoutOutlined } from '@ant-design/icons';
+import {AppstoreOutlined, SettingOutlined, UserOutlined, UserAddOutlined, LogoutOutlined } from '@ant-design/icons';
 import {Link} from 'react-router-dom';
 import firebase from 'firebase'
 import {useDispatch, useSelector} from 'react-redux';
