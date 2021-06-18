@@ -10,7 +10,8 @@ const CategoryCreate = () => {
 
     const {user} = useSelector((state) => ({...state}))
 
-    const [name, setName] = useState('')
+    const [name, setName] = useState('');
+    const [hexCode, sethexCode] = useState('');
     const [loading, setLoading] = useState(false)
     const [categories, setCategories] = useState([]);
 
@@ -24,10 +25,11 @@ const CategoryCreate = () => {
         e.preventDefault();
         // console.log(name)
         setLoading(true)
-        createCategory({name}, user.token)
+        createCategory({name, hexCode}, user.token)
         .then(res => {
             setLoading(false)
             setName('')
+            sethexCode('')
             toast.success(`${res.data.name} successfully created`)
             loadCategories()
         })
@@ -71,6 +73,15 @@ const CategoryCreate = () => {
                 required>
             </input>
             <br />
+            <label>Color Code (Hex Code)</label>
+            <input type="text" 
+                className="form-control" 
+                onChange = {e => sethexCode(e.target.value)} 
+                value={hexCode}
+                autoFocus
+                required>
+            </input>
+            <br />
             <button className="btn btn-outline-primary">Save</button>
         </form>
     )
@@ -88,8 +99,8 @@ const CategoryCreate = () => {
                 <h4>Available Categories</h4>
                 <hr />
                 {categories.map((c) => (
-                    <div className="alert alert-secondary">
-                        {c.name} 
+                    <div className="alert alert-secondary" style={{color: c.hexCode}}>
+                        {c.name}
                         <span onClick={() => handleRemove(c.slug)} className="btn btn-sm float-right">
                             <DeleteOutlined className="text-danger"/>
                         </span>
