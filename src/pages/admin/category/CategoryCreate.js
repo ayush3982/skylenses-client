@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux'
 import {createCategory, getCategories, removeCategory} from '../../../functions/category'
 import {Link} from "react-router-dom"
 import {EditOutlined, DeleteOutlined} from '@ant-design/icons'
+import LocalSearch from "../../../components/forms/LocalSearch"
 
 const CategoryCreate = () => {
 
@@ -14,6 +15,7 @@ const CategoryCreate = () => {
     const [hexCode, sethexCode] = useState('');
     const [loading, setLoading] = useState(false)
     const [categories, setCategories] = useState([]);
+    const [keyword, setKeyword] = useState('')
 
     const loadCategories = () => getCategories().then(c => setCategories(c.data))
 
@@ -59,10 +61,15 @@ const CategoryCreate = () => {
               }
             });
         }
-      };
+    };
+
     
 
+    const searched = (keyword) => (c) => c.name.toLowerCase().includes(keyword)
+    
     const categoryForm = () => (
+        <>
+        
         <form onSubmit={handleSubmit}>
             <label>Name</label>
             <input type="text" 
@@ -84,7 +91,10 @@ const CategoryCreate = () => {
             <br />
             <button className="btn btn-outline-primary">Save</button>
         </form>
+
+        </>
     )
+
 
     return (
     <div className="container-fluid">
@@ -95,10 +105,13 @@ const CategoryCreate = () => {
             <div className="col-md-8">
                 {loading ? <h4 className="text-danger">Loading...</h4> : <h4>Create Category</h4>}
                 {categoryForm()}
+                <hr />  
+
+                <LocalSearch keyword={keyword} setKeyword = {setKeyword}/>
+
+                <h4>Categories</h4>
                 <hr />
-                <h4>Available Categories</h4>
-                <hr />
-                {categories.map((c) => (
+                {categories.filter(searched(keyword)).map((c) => (
                     <div className="alert alert-secondary" style={{color: c.hexCode}}>
                         {c.name}
                         <span onClick={() => handleRemove(c.slug)} className="btn btn-sm float-right">
