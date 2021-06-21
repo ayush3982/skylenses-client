@@ -35,6 +35,8 @@ const initialState = {
 const ProductCreate = () => {
 
     const [values, setValues] = useState(initialState)
+    const [subOptions, setSubOptions] = useState([])
+    const [showSub, setShowSub] = useState(false)
 
     const {user} = useSelector((state) => ({...state}))
 
@@ -70,6 +72,12 @@ const ProductCreate = () => {
         e.preventDefault();
         console.log('Clicked Category', e.target.value)
         setValues({...values, category: e.target.value})
+        getCategorySubs(e.target.value)
+        .then(res => {
+            console.log('sub options', res)
+            setSubOptions(res.data)
+            setShowSub(true);
+        })
     }
 
 
@@ -95,6 +103,20 @@ const ProductCreate = () => {
                                     ))}
                                 </select>
                             </div>
+
+                            {showSub ? (
+                                <div className="form-group">
+                                    <label>Sub Category</label>
+                                    <select name="sub" className="form-control" onChange={handleChange}>
+                                        <option>Select Category</option>
+                                        {subOptions.length > 0 && subOptions.map((c) => (
+                                            <option value={c._id} key={c._id}>
+                                                {c.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            ) : ''}
                 
                             <hr />
                             <div className="form-group">
