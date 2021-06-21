@@ -16,11 +16,11 @@ const initialState = {
     quantity: '',
     images: [],
     color: '',
-    choosePowers: ["Choose Power","0"],
-    choosePower6s: ["Choose Power","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
-    choosePowerLefts: ["Choose Power","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
-    choosePowerRights: ["Choose Power","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
-    packFormats: ["Vial", "Blister"],
+    choosePowers: ["Choose Power","Default","0"],
+    choosePower6s: ["Choose Power","Default","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
+    choosePowerLefts: ["Choose Power","Default","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
+    choosePowerRights: ["Choose Power","Default","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
+    packFormats: ["Choose", "Vial", "Blister"],
     material: '',
     diameter: '',
     choosePower: '',
@@ -34,14 +34,25 @@ const ProductCreate = () => {
 
     const [values, setValues] = useState(initialState)
 
+    const {user} = useSelector((state) => ({...state}))
+
     const {title, description, price, categories, category, subs, sub, shipping, quantity, images, color, material, diameter, choosePower, choosePower6, choosePowerLeft, choosePowerRight, packFormat} = values
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        createProduct(values, user.token)
+        .then(res => {
+            console.log(res)
+            window.alert(`"${res.data.title}" is created`)
+            window.location.reload()
+        }).catch (err => {
+            console.log(err)
+            if (err.response.status === 400) toast.error(err.response.data)
+        })
     }
 
     const handleChange = (e) => {
-        //
+        setValues({...values, [e.target.name]: e.target.value})
     }
 
 
@@ -86,15 +97,119 @@ const ProductCreate = () => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Shipping</label>
+                                <label>Quantity</label>
                                 <input 
-                                    type="text" 
-                                    name="description" 
+                                    type="number" 
+                                    name="quantity" 
                                     className = "form-control" 
-                                    value = {description}
+                                    value = {quantity}
                                     onChange = {handleChange}
                                 />
                             </div>
+                            <div className="form-group">
+                                <label>Color (hex-code)</label>
+                                <input 
+                                    type="text" 
+                                    name="color" 
+                                    className = "form-control" 
+                                    value = {color}
+                                    onChange = {handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Material</label>
+                                <input 
+                                    type="text" 
+                                    name="material" 
+                                    className = "form-control" 
+                                    value = {material}
+                                    onChange = {handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Diameter</label>
+                                <input 
+                                    type="text" 
+                                    name="diameter" 
+                                    className = "form-control" 
+                                    value = {diameter}
+                                    onChange = {handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Pack Format</label>
+                                <select
+                                    name = "packFormat"
+                                    className = "form-control"
+                                    onChange = {handleChange}
+                                >
+                                    {values.packFormats.map(c => 
+                                        <option key = {c} value = {c}>
+                                            {c}
+                                        </option>)}
+                                </select>
+
+                            </div>
+                            <hr className="mt-5"></hr>
+                            <h4 className = "text-danger">Make sure the following are set to "Default"</h4>
+                            <hr />
+                            <div className="form-group">
+                                <label>Choose Power</label>
+                                <select
+                                    name = "choosePower"
+                                    className = "form-control"
+                                    onChange = {handleChange}
+                                >
+                                    {values.choosePowers.map(c => 
+                                        <option key = {c} value = {c}>
+                                            {c}
+                                        </option>)}
+                                </select>
+
+                            </div>
+                            <div className="form-group">
+                                <label>Choose Power 6 Months</label>
+                                <select
+                                    name = "choosePower6"
+                                    className = "form-control"
+                                    onChange = {handleChange}
+                                >
+                                    {values.choosePower6s.map(c => 
+                                        <option key = {c} value = {c}>
+                                            {c}
+                                        </option>)}
+                                </select>
+
+                            </div>
+                            <div className="form-group">
+                                <label>Choose Power 6 Month Left</label>
+                                <select
+                                    name = "choosePowerLeft"
+                                    className = "form-control"
+                                    onChange = {handleChange}
+                                >
+                                    {values.choosePowerLefts.map(c => 
+                                        <option key = {c} value = {c}>
+                                            {c}
+                                        </option>)}
+                                </select>
+
+                            </div>
+                            <div className="form-group">
+                                <label>Choose Power 6 Month Right</label>
+                                <select
+                                    name = "choosePowerRight"
+                                    className = "form-control"
+                                    onChange = {handleChange}
+                                >
+                                    {values.choosePowerRights.map(c => 
+                                        <option key = {c} value = {c}>
+                                            {c}
+                                        </option>)}
+                                </select>
+
+                            </div>
+                            <button className="btn btn-outline-info mt-3">Save</button>
                         </form>
                 </div>
             </div>
