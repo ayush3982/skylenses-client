@@ -6,3 +6,4 @@ export const createProduct = async (product, authtoken) =>
       authtoken,
     },
 });
+

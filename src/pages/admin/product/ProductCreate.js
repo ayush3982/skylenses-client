@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import AdminNav from '../../../components/nav/AdminNav'
 import {toast} from 'react-toastify'
 import {useSelector} from 'react-redux'
+import {getCategories, getCategorySubs} from '../../../functions/category'
+import {getSubs} from '../../../functions/sub'
 import {createProduct} from '../../../functions/product'
 
 const initialState = {
@@ -38,6 +40,14 @@ const ProductCreate = () => {
 
     const {title, description, price, categories, category, subs, sub, shipping, quantity, images, color, material, diameter, choosePower, choosePower6, choosePowerLeft, choosePowerRight, packFormat} = values
 
+    const loadCategories = () => getCategories().then(c => setValues({...values, categories: c.data}))
+    const loadSubs = () => getSubs().then(s => setValues({...values, subs: s.data}))
+    
+    useEffect(() => {
+        loadCategories()
+        loadSubs()
+    }, [])
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         createProduct(values, user.token)
@@ -47,12 +57,19 @@ const ProductCreate = () => {
             window.location.reload()
         }).catch (err => {
             console.log(err)
-            if (err.response.status === 400) toast.error(err.response.data)
+            // if (err.response.status === 400) toast.error(err.response.data)
+            toast.error(err.response.data.err)
         })
     }
 
     const handleChange = (e) => {
         setValues({...values, [e.target.name]: e.target.value})
+    }
+
+    const handleCategoryChange = (e) => {
+        e.preventDefault();
+        console.log('Clicked Category', e.target.value)
+        setValues({...values, category: e.target.value})
     }
 
 
@@ -66,6 +83,20 @@ const ProductCreate = () => {
                     <h4>Create Product</h4>
                         <hr />
                         <form onSubmit={handleSubmit}>
+                    
+                            <div className="form-group">
+                                <label>Category (Months)</label>
+                                <select name="category" className="form-control" onChange={handleCategoryChange}>
+                                    <option>Select Category</option>
+                                    {values.categories.length > 0 && values.categories.map((c) => (
+                                        <option value={c._id} key={c._id}>
+                                            {c.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                
+                            <hr />
                             <div className="form-group">
                                 <label>Title</label>
                                 <input 
