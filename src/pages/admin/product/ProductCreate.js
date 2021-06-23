@@ -5,6 +5,7 @@ import {useSelector} from 'react-redux'
 import {getCategories, getCategorySubs} from '../../../functions/category'
 import {getSubs} from '../../../functions/sub'
 import {createProduct} from '../../../functions/product'
+import FileUpload from '../../../components/forms/FileUpload'
 
 const initialState = {
     title: '',
@@ -37,6 +38,7 @@ const ProductCreate = () => {
     const [values, setValues] = useState(initialState)
     const [subOptions, setSubOptions] = useState([])
     const [showSub, setShowSub] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     const {user} = useSelector((state) => ({...state}))
 
@@ -89,7 +91,15 @@ const ProductCreate = () => {
                 </div>
                 <div className="col-md-8">
                     <h4>Create Product</h4>
+                    {JSON.stringify(values.images)}
                         <hr />
+                        <div className="p-3">
+                            <FileUpload 
+                                values={values}
+                                setValues={setValues}
+                                setLoading={setLoading}
+                            />
+                        </div>
                         <form onSubmit={handleSubmit}>
                     
                             <div className="form-group">
