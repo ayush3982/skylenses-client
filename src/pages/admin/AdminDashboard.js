@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import AdminNav from '../../components/nav/AdminNav'
+import AdminProductCard from '../../components/cards/AdminProductCard';
 import {getProducts} from '../../functions/product';
 
 const AdminDashboard = () => {
@@ -27,17 +28,13 @@ const AdminDashboard = () => {
     
 
     return (
-    <div className="container-fluid">
-        <div className="row">
-            <div className="col-md-2">
-                <AdminNav />
-            </div>
-            <div className="col-md-10">
-                {loading ? (<h4 className = "text-danger">Loading...</h4>) : (<h4>All Products</h4>)} 
-        
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-md-2">
+                    <AdminNav />
+                </div>
             </div>
         </div>
-    </div>
     )
 }
 
