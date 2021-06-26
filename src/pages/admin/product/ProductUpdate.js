@@ -4,14 +4,86 @@ import {toast} from 'react-toastify'
 import {useSelector} from 'react-redux'
 import {getCategories, getCategorySubs} from '../../../functions/category'
 import {getSubs} from '../../../functions/sub'
-import {createProduct} from '../../../functions/product'
+import {getProduct} from '../../../functions/product'
 import FileUpload from '../../../components/forms/FileUpload'
 import {LoadingOutlined} from '@ant-design/icons'
+
+const initialState = {
+    title: '',
+    description: '',
+    price: '',
+    categories: [],
+    category: '',
+    subs: [],
+    sub: '',
+    shipping: '',
+    quantity: '',
+    images: [],
+    color: '',
+    choosePowers: ["Choose Power","Default","0"],
+    choosePower6s: ["Choose Power","Default","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
+    choosePowerLefts: ["Choose Power","Default","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
+    choosePowerRights: ["Choose Power","Default","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
+    packFormats: ["Vial", "Blister"],
+    material: '',
+    diameter: '',
+    choosePower: '',
+    choosePower6: '',
+    choosePowerLeft: '',
+    choosePowerRight: '',
+    packFormat: '',
+}
 
 
 const ProductUpdate = ({match}) => {
 
+    const [values, setValues] = useState(initialState)
+    const [subOptions, setSubOptions] = useState([])
+    const [categories, setCategories] = useState([])
+
+    const {title, description, price,  category, subs, sub, shipping, quantity, images, color, material, diameter, choosePower, choosePower6, choosePowerLeft, choosePowerRight, packFormat} = values
+
     const {user} = useSelector((state) => ({...state}))
+
+    const {slug} = match.params;
+
+    const loadProduct = () => {
+        getProduct(slug)
+        .then(p => {
+            setValues({...values, ...p.data})
+        })
+    }
+
+    const loadCategories = () => {
+        getCategories().then((c) => {
+            console.log("Get categories", c.data)
+            setCategories(c.data)
+        })
+    }
+
+    useEffect(() => {
+        loadProduct();
+        loadCategories()
+    }, [])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+    }
+
+    const handleChange = (e) => {
+        setValues({...values, [e.target.name]: e.target.value})
+    }
+
+    const handleCategoryChange = (e) => {
+        e.preventDefault();
+        console.log('Clicked Category', e.target.value)
+        setValues({...values, category: e.target.value})
+        getCategorySubs(e.target.value)
+        .then(res => {
+            console.log('sub options', res)
+            setSubOptions(res.data)
+        })
+    }
 
     return (
         <div className="container-fluid">
@@ -20,23 +92,23 @@ const ProductUpdate = ({match}) => {
                     <AdminNav />
                 </div>
                 <div className="col-md-8">
-                    {JSON.stringify(match.params.slug)}
                     <h4>Product Update</h4>
                         <hr />
+                        {JSON.stringify(values)}
                         {/* <div className="p-3">
                             <FileUpload 
                                 values={values}
                                 setValues={setValues}
                                 setLoading={setLoading}
                             />
-                        </div>
+                        </div> */}
                         <form onSubmit={handleSubmit}>
                     
                             <div className="form-group">
                                 <label>Category (Months)</label>
                                 <select name="category" className="form-control" onChange={handleCategoryChange}>
-                                    <option>Select Category</option>
-                                    {values.categories.length > 0 && values.categories.map((c) => (
+                                    <option>{category ? category.name : "Please select"}</option>
+                                    {categories.length > 0 && categories.map((c) => (
                                         <option value={c._id} key={c._id}>
                                             {c.name}
                                         </option>
@@ -44,7 +116,7 @@ const ProductUpdate = ({match}) => {
                                 </select>
                             </div>
 
-                            {showSub ? (
+                            {/* {showSub ? (
                                 <div className="form-group">
                                     <label>Sub Category</label>
                                     <select name="sub" className="form-control" onChange={handleChange}>
@@ -56,7 +128,7 @@ const ProductUpdate = ({match}) => {
                                         ))}
                                     </select>
                                 </div>
-                            ) : ''}
+                            ) : ''} */}
                 
                             <hr />
                             <div className="form-group">
@@ -132,6 +204,7 @@ const ProductUpdate = ({match}) => {
                             <div className="form-group">
                                 <label>Pack Format</label>
                                 <select
+                                    value = {packFormat === 'Vial' ? 'Vial' : 'Blister'}
                                     name = "packFormat"
                                     className = "form-control"
                                     onChange = {handleChange}
@@ -149,6 +222,7 @@ const ProductUpdate = ({match}) => {
                             <div className="form-group">
                                 <label>Choose Power</label>
                                 <select
+                                    value = {choosePower}
                                     name = "choosePower"
                                     className = "form-control"
                                     onChange = {handleChange}
@@ -163,6 +237,7 @@ const ProductUpdate = ({match}) => {
                             <div className="form-group">
                                 <label>Choose Power 6 Months</label>
                                 <select
+                                    value = {choosePower6}
                                     name = "choosePower6"
                                     className = "form-control"
                                     onChange = {handleChange}
@@ -177,6 +252,7 @@ const ProductUpdate = ({match}) => {
                             <div className="form-group">
                                 <label>Choose Power 6 Month Left</label>
                                 <select
+                                    value = {choosePowerLeft}
                                     name = "choosePowerLeft"
                                     className = "form-control"
                                     onChange = {handleChange}
@@ -191,6 +267,7 @@ const ProductUpdate = ({match}) => {
                             <div className="form-group">
                                 <label>Choose Power 6 Month Right</label>
                                 <select
+                                    value = {choosePowerRight}
                                     name = "choosePowerRight"
                                     className = "form-control"
                                     onChange = {handleChange}
@@ -203,7 +280,7 @@ const ProductUpdate = ({match}) => {
 
                             </div>
                             <button className="btn btn-outline-info mt-3">Save</button>
-                        </form> */}
+                        </form> 
                 </div>
             </div>
         </div>

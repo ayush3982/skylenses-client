@@ -78,9 +78,9 @@ const ProductCreate = () => {
         getCategorySubs(e.target.value)
         .then(res => {
             console.log('sub options', res)
-            setSubOptions(res.data)
-            setShowSub(true);
+            setSubOptions(res.data);
         })
+        setShowSub(true)
     }
 
 
