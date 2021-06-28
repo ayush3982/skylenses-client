@@ -4,7 +4,7 @@ import {toast} from 'react-toastify'
 import {useSelector} from 'react-redux'
 import {getCategories, getCategorySubs} from '../../../functions/category'
 import {getSubs} from '../../../functions/sub'
-import {getProduct} from '../../../functions/product'
+import {getProduct, updateProduct} from '../../../functions/product'
 import FileUpload from '../../../components/forms/FileUpload'
 import {LoadingOutlined} from '@ant-design/icons'
 
@@ -35,11 +35,13 @@ const initialState = {
 }
 
 
-const ProductUpdate = ({match}) => {
+const ProductUpdate = ({match, history}) => {
 
     const [values, setValues] = useState(initialState)
     const [subOptions, setSubOptions] = useState([])
     const [categories, setCategories] = useState([])
+    const [defaultSub, setDefaultSub] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const {title, description, price,  category, subs, sub, shipping, quantity, images, color, material, diameter, choosePower, choosePower6, choosePowerLeft, choosePowerRight, packFormat} = values
 
@@ -51,6 +53,13 @@ const ProductUpdate = ({match}) => {
         getProduct(slug)
         .then(p => {
             setValues({...values, ...p.data})
+            getCategorySubs(p.data.category._id)
+            .then(res => {
+                setSubOptions(res.data)
+            })
+            const defaultSelected = p.data.sub
+            console.log(defaultSelected)
+            setDefaultSub(prev => defaultSelected)
         })
     }
 
@@ -68,10 +77,29 @@ const ProductUpdate = ({match}) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setLoading(true)
+        updateProduct(slug, values, user.token)
+        .then(res => {
+            setLoading(false)
+            toast.success(`${res.data.title} is updated`)
+            history.push("/admin/products")
+        })
+        .catch(err => {
+            console.log(err)
+            setLoading(false)
+            // if (err.response.status === 400) toast.error(err.response.data)
+            toast.error(err.response.data.err)
+        })
+
     }
 
     const handleChange = (e) => {
         setValues({...values, [e.target.name]: e.target.value})
+    }
+
+    const handleSubChange = (e) => {
+        setDefaultSub(e.target.value)
+        setValues({...values, sub: e.target.value})
     }
 
     const handleCategoryChange = (e) => {
@@ -92,22 +120,21 @@ const ProductUpdate = ({match}) => {
                     <AdminNav />
                 </div>
                 <div className="col-md-8">
-                    <h4>Product Update</h4>
+                        {loading ? (<LoadingOutlined className="text-danger h1" />) : (<h4>Create Product</h4>)}
                         <hr />
                         {JSON.stringify(values)}
-                        {/* <div className="p-3">
+                        <div className="p-3">
                             <FileUpload 
                                 values={values}
                                 setValues={setValues}
                                 setLoading={setLoading}
                             />
-                        </div> */}
+                        </div> 
                         <form onSubmit={handleSubmit}>
                     
                             <div className="form-group">
                                 <label>Category (Months)</label>
-                                <select name="category" className="form-control" onChange={handleCategoryChange}>
-                                    <option>{category ? category.name : "Please select"}</option>
+                                <select name="category" className="form-control" onChange={handleCategoryChange} value={category._id}>
                                     {categories.length > 0 && categories.map((c) => (
                                         <option value={c._id} key={c._id}>
                                             {c.name}
@@ -116,19 +143,19 @@ const ProductUpdate = ({match}) => {
                                 </select>
                             </div>
 
-                            {/* {showSub ? (
-                                <div className="form-group">
-                                    <label>Sub Category</label>
-                                    <select name="sub" className="form-control" onChange={handleChange}>
-                                        <option>Select Category</option>
-                                        {subOptions.length > 0 && subOptions.map((c) => (
-                                            <option value={c._id} key={c._id}>
-                                                {c.name}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                            ) : ''} */}
+                           {JSON.stringify(defaultSub)}
+                            <div className="form-group">
+                                <label>Sub Category</label>
+                                <select name="sub" className="form-control" onChange={handleSubChange} value={defaultSub}>
+                                    <option>Select Sub Category</option>
+                                    {subOptions.length > 0 && subOptions.map((c) => (
+                                        <option value={c._id} key={c._id}>
+                                            {c.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+            
                 
                             <hr />
                             <div className="form-group">
