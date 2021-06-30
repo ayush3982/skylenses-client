@@ -13,7 +13,9 @@ const SubUpdate = ({match, history}) => {
     const {user} = useSelector((state) => ({...state}))
 
     const [name, setName] = useState('');
-    const [hexCode, sethexCode] = useState('');
+    const [hexCodeLight, setHexCodeLight] = useState('');
+    const [hexCodeDark, setHexCodeDark] = useState('');
+    const [tagline, setTagline] = useState('');
     const [parent, setParent] = useState('');
     const [loading, setLoading] = useState(false)
     const [categories, setCategories] = useState([]);
@@ -22,7 +24,9 @@ const SubUpdate = ({match, history}) => {
     const loadCategories = () => getCategories().then(c => setCategories(c.data))
     const loadSub = () => getSub(match.params.slug).then(s => {
         setName(s.data.name)
-        sethexCode(s.data.hexCode)
+        setHexCodeLight(s.data.hexCodeLight)
+        setHexCodeDark(s.data.hexCodeDark)
+        setTagline(s.data.tagline)
         setParent(s.data.parent)
     })
 
@@ -35,11 +39,13 @@ const SubUpdate = ({match, history}) => {
         e.preventDefault();
         // console.log(name)
         setLoading(true)
-        updateSub(match.params.slug, {name, hexCode, parent}, user.token)
+        updateSub(match.params.slug, {name, hexCodeLight, hexCodeDark, tagline, parent}, user.token)
         .then(res => {
             setLoading(false)
             setName('')
-            sethexCode('')
+            setHexCodeLight('')
+            setHexCodeDark('')
+            setTagline('')
             toast.success(`${res.data.name} successfully updated`)
             history.push('/admin/sub')
         })
@@ -64,11 +70,27 @@ const SubUpdate = ({match, history}) => {
                 required>
             </input>
             <br />
-            <label>Color Code (Hex Code)</label>
+            <label>Color Code Light(Hex Code)</label>
             <input type="text" 
                 className="form-control" 
-                onChange = {e => sethexCode(e.target.value)} 
-                value={hexCode}
+                onChange = {e => setHexCodeLight(e.target.value)} 
+                value={hexCodeLight}
+                autoFocus
+                required>
+            </input>
+            <label>Color Code Dark(Hex Code)</label>
+            <input type="text" 
+                className="form-control" 
+                onChange = {e => setHexCodeDark(e.target.value)} 
+                value={hexCodeDark}
+                autoFocus
+                required>
+            </input>
+            <label>Tagline</label>
+            <input type="text" 
+                className="form-control" 
+                onChange = {e => setTagline(e.target.value)} 
+                value={tagline}
                 autoFocus
                 required>
             </input>

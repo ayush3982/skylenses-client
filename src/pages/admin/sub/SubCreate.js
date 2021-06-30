@@ -13,7 +13,9 @@ const SubCreate = () => {
     const {user} = useSelector((state) => ({...state}))
 
     const [name, setName] = useState('');
-    const [hexCode, sethexCode] = useState('');
+    const [hexCodeLight, setHexCodeLight] = useState('');
+    const [hexCodeDark, setHexCodeDark] = useState('');
+    const [tagline, setTagline] = useState('');
     const [loading, setLoading] = useState(false)
     const [categories, setCategories] = useState([]);
     const [subs, setSubs] = useState([]);
@@ -32,11 +34,13 @@ const SubCreate = () => {
         e.preventDefault();
         // console.log(name)
         setLoading(true)
-        createSub({name, hexCode, parent: category}, user.token)
+        createSub({name, hexCodeLight, hexCodeDark, tagline, parent: category}, user.token)
         .then(res => {
             setLoading(false)
             setName('')
-            sethexCode('')
+            setHexCodeLight('')
+            setHexCodeDark('')
+            setTagline('')
             toast.success(`${res.data.name} successfully created`)
             loadSubs();
         })
@@ -85,14 +89,31 @@ const SubCreate = () => {
                 required>
             </input>
             <br />
-            <label>Color Code (Hex Code)</label>
+            <label>Color Code Light(Hex Code)</label>
             <input type="text" 
                 className="form-control" 
-                onChange = {e => sethexCode(e.target.value)} 
-                value={hexCode}
+                onChange = {e => setHexCodeLight(e.target.value)} 
+                value={hexCodeLight}
                 autoFocus
                 required>
             </input>
+            <label>Color Code Dark(Hex Code)</label>
+            <input type="text" 
+                className="form-control" 
+                onChange = {e => setHexCodeDark(e.target.value)} 
+                value={hexCodeDark}
+                autoFocus
+                required>
+            </input>
+            <label>Tagline</label>
+            <input type="text" 
+                className="form-control" 
+                onChange = {e => setTagline(e.target.value)} 
+                value={tagline}
+                autoFocus
+                required>
+            </input>
+            
             <br />
             <button className="btn btn-outline-primary">Save</button>
         </form>
@@ -130,7 +151,7 @@ const SubCreate = () => {
                 <h4>Sub Categories</h4>
                 <hr />
                 {subs.filter(searched(keyword)).map((s) => (
-                    <div className="alert alert-secondary" key={s._id} style={{color: s.hexCode}}>
+                    <div className="alert alert-secondary" key={s._id} style={{color: s.hexCodeDark}}>
                         {s.name}
                         <span onClick={() => handleRemove(s.slug)} className="btn btn-sm float-right">
                             <DeleteOutlined className="text-danger"/>

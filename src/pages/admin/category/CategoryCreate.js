@@ -12,7 +12,9 @@ const CategoryCreate = () => {
     const {user} = useSelector((state) => ({...state}))
 
     const [name, setName] = useState('');
-    const [hexCode, sethexCode] = useState('');
+    const [hexCodeLight, setHexCodeLight] = useState('');
+    const [hexCodeDark, setHexCodeDark] = useState('');
+    const [tagline, setTagline] = useState('');
     const [loading, setLoading] = useState(false)
     const [categories, setCategories] = useState([]);
     const [keyword, setKeyword] = useState('')
@@ -27,11 +29,13 @@ const CategoryCreate = () => {
         e.preventDefault();
         // console.log(name)
         setLoading(true)
-        createCategory({name, hexCode}, user.token)
+        createCategory({name, hexCodeLight, hexCodeDark, tagline,}, user.token)
         .then(res => {
             setLoading(false)
             setName('')
-            sethexCode('')
+            setHexCodeLight('')
+            setHexCodeDark('')
+            setTagline('')
             toast.success(`${res.data.name} successfully created`)
             loadCategories()
         })
@@ -80,11 +84,27 @@ const CategoryCreate = () => {
                 required>
             </input>
             <br />
-            <label>Color Code (Hex Code)</label>
+            <label>Color Code Light(Hex Code)</label>
             <input type="text" 
                 className="form-control" 
-                onChange = {e => sethexCode(e.target.value)} 
-                value={hexCode}
+                onChange = {e => setHexCodeLight(e.target.value)} 
+                value={hexCodeLight}
+                autoFocus
+                required>
+            </input>
+            <label>Color Code Dark(Hex Code)</label>
+            <input type="text" 
+                className="form-control" 
+                onChange = {e => setHexCodeDark(e.target.value)} 
+                value={hexCodeDark}
+                autoFocus
+                required>
+            </input>
+            <label>Tagline</label>
+            <input type="text" 
+                className="form-control" 
+                onChange = {e => setTagline(e.target.value)} 
+                value={tagline}
                 autoFocus
                 required>
             </input>
@@ -112,7 +132,7 @@ const CategoryCreate = () => {
                 <h4>Categories</h4>
                 <hr />
                 {categories.filter(searched(keyword)).map((c) => (
-                    <div className="alert alert-secondary" style={{color: c.hexCode}}>
+                    <div className="alert alert-secondary" style={{color: c.hexCodeDark}}>
                         {c.name}
                         <span onClick={() => handleRemove(c.slug)} className="btn btn-sm float-right">
                             <DeleteOutlined className="text-danger"/>
