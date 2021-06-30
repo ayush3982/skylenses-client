@@ -33,6 +33,7 @@ const initialState = {
     choosePowerLeft: '',
     choosePowerRight: '',
     packFormat: '',
+    
 }
 
 const ProductCreate = () => {
