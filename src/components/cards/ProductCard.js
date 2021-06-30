@@ -10,7 +10,7 @@ const {Meta} = Card;
 
 const ProductCard = ({product}) => {
     
-    const {images, title, slug, description} = product;
+    const {images, title, slug, tagline} = product;
     
     return (
         <Card
@@ -30,7 +30,7 @@ const ProductCard = ({product}) => {
         >
         <Meta
           title={title}
-          description={`${description && description.substring(0, 40)}...`}
+          description={`${tagline && tagline.substring(0, 40)}...`}
         />
       </Card>
             

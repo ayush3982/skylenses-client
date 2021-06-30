@@ -10,7 +10,7 @@ import {LoadingOutlined} from '@ant-design/icons'
 
 const initialState = {
     title: '',
-    description: '',
+    tagline: '',
     price: '',
     categories: [],
     category: '',
@@ -19,7 +19,8 @@ const initialState = {
     shipping: '',
     quantity: '',
     images: [],
-    color: '',
+    hexCodeLight: '',
+    hexCodeDark: '',
     choosePowers: ["Choose Power","Default","0"],
     choosePower6s: ["Choose Power","Default","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
     choosePowerLefts: ["Choose Power","Default","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
@@ -43,7 +44,7 @@ const ProductUpdate = ({match, history}) => {
     const [defaultSub, setDefaultSub] = useState('')
     const [loading, setLoading] = useState(false)
 
-    const {title, description, price,  category, subs, sub, shipping, quantity, images, color, material, diameter, choosePower, choosePower6, choosePowerLeft, choosePowerRight, packFormat} = values
+    const {title, tagline, price,  category, subs, sub, shipping, quantity, images, hexCodeDark, hexCodeLight, material, diameter, choosePower, choosePower6, choosePowerLeft, choosePowerRight, packFormat} = values
 
     const {user} = useSelector((state) => ({...state}))
 
@@ -169,12 +170,12 @@ const ProductUpdate = ({match, history}) => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Description</label>
+                                <label>Tagline</label>
                                 <input 
                                     type="text" 
-                                    name="description" 
+                                    name="tagline" 
                                     className = "form-control" 
-                                    value = {description}
+                                    value = {tagline}
                                     onChange = {handleChange}
                                 />
                             </div>
@@ -199,12 +200,22 @@ const ProductUpdate = ({match, history}) => {
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Color (hex-code)</label>
+                                <label>Hex Code Dark</label>
                                 <input 
                                     type="text" 
-                                    name="color" 
+                                    name="hexCodeDark" 
                                     className = "form-control" 
-                                    value = {color}
+                                    value = {hexCodeDark}
+                                    onChange = {handleChange}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label>Hex Code Light</label>
+                                <input 
+                                    type="text" 
+                                    name="hexCodeLight" 
+                                    className = "form-control" 
+                                    value = {hexCodeLight}
                                     onChange = {handleChange}
                                 />
                             </div>
