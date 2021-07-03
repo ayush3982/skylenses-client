@@ -4,12 +4,15 @@ import { Link } from "react-router-dom";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import { Carousel } from 'react-responsive-carousel';
+import StarRating from "react-star-ratings"
+import RatingModal from "../modal/RatingModal";
 
 const {Meta} = Card
 
 const SingleProduct = ({product}) => {
 
-    const {title, tagline, images, slug, hexCodeDark, hexCodeLight, price, category, sub} = product;
+    const {title, tagline, images, slug, hexCodeDark, hexCodeLight, price, category, sub, _id} = product;
+    const [comment, setComment] = useState('')
 
     return (
         <>  
@@ -28,7 +31,29 @@ const SingleProduct = ({product}) => {
                         </>,
                         <Link to = {`/`}>
                             <HeartOutlined className="text-info" /> <br /> Add to Wishlist
-                        </Link>
+                        </Link>,
+                        <RatingModal>
+                            <StarRating
+                                name = {_id}
+                                numberOfStars = {5}
+                                rating = {2}
+                                changeRating = {(newRating, name) => console.log('newRating', newRating, "name", name)}
+                                isSelectable = {true}
+                                starRatedColor = "aqua"
+                            />
+                            <br />
+                            <br /> 
+                            <div className="form-group">
+                                <label>Leave a comment</label>
+                                <input 
+                                    type="text" 
+                                    name="title" 
+                                    className = "form-control" 
+                                    value = {comment}
+                                    onChange = {e => setComment(e.target.value)}
+                                />
+                            </div>
+                        </RatingModal>
                     ]}
                 >
                     <div>
