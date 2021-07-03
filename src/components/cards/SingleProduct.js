@@ -6,6 +6,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import StarRating from "react-star-ratings"
 import RatingModal from "../modal/RatingModal";
+import {showAverage} from "../../functions/rating"
 
 const {Meta} = Card
 
@@ -22,6 +23,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
             </div>
             <div className="col-md-5">
                 <h1 className="p-3" style={{backgroundColor: hexCodeLight}}>{title}</h1>
+                {product && product.ratings && product.ratings.length > 0 ? showAverage(product) : 'Newly Launched'}
                 <h6 className="p-3">{tagline}</h6>
                 <Card
                     actions = {[
