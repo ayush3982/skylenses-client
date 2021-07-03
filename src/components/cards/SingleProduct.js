@@ -22,9 +22,11 @@ const SingleProduct = ({product, onStarClick, star}) => {
                 </Carousel>
             </div>
             <div className="col-md-5">
-                <h1 className="p-3" style={{backgroundColor: hexCodeLight}}>{title}</h1>
-                {product && product.ratings && product.ratings.length > 0 ? showAverage(product) : 'Newly Launched'}
-                <h6 className="p-3">{tagline}</h6>
+                <h1 className="p-3 text-center" style={{backgroundColor: hexCodeLight}}>{title}</h1>
+                {product && product.ratings && product.ratings.length > 0 ? showAverage(product) : (
+                    <div className="text-center pt-1 pb-3">New Product: Be the first to rate it!</div>
+                )}
+                <h6 className="p-3 text-center">{tagline}</h6>
                 <Card
                     actions = {[
                         <>

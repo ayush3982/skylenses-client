@@ -44,3 +44,6 @@ export const productComment = async (productId, comment, authtoken) =>
       authtoken,
     },
 });
+
+export const getRelated = async (productId) =>
+  await axios.get(`${process.env.REACT_APP_API}/product/related/${productId}`);
