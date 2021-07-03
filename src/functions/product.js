@@ -20,8 +20,26 @@ export const removeProduct = async (slug, authtoken) =>
 export const getProduct = async (slug) =>
   await axios.get(`${process.env.REACT_APP_API}/product/${slug}`);
 
-  export const updateProduct = async (slug, product, authtoken) =>
+export const updateProduct = async (slug, product, authtoken) =>
   await axios.put(`${process.env.REACT_APP_API}/product/${slug}`, product, {
+    headers: {
+      authtoken,
+    },
+});
+
+export const productStar = async (productId, star, authtoken) =>
+  await axios.put(
+    `${process.env.REACT_APP_API}/product/star/${productId}`,
+    { star },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+);
+
+export const productComment = async (productId, comment, authtoken) =>
+  await axios.put(`${process.env.REACT_APP_API}/product/comment/${productId}`, {comment}, {
     headers: {
       authtoken,
     },

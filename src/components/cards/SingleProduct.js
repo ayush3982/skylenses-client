@@ -9,10 +9,9 @@ import RatingModal from "../modal/RatingModal";
 
 const {Meta} = Card
 
-const SingleProduct = ({product}) => {
+const SingleProduct = ({product, onStarClick, star}) => {
 
     const {title, tagline, images, slug, hexCodeDark, hexCodeLight, price, category, sub, _id} = product;
-    const [comment, setComment] = useState('')
 
     return (
         <>  
@@ -36,23 +35,13 @@ const SingleProduct = ({product}) => {
                             <StarRating
                                 name = {_id}
                                 numberOfStars = {5}
-                                rating = {2}
-                                changeRating = {(newRating, name) => console.log('newRating', newRating, "name", name)}
+                                rating = {star}   
+                                changeRating = {onStarClick}
                                 isSelectable = {true}
                                 starRatedColor = "aqua"
                             />
                             <br />
                             <br /> 
-                            <div className="form-group">
-                                <label>Leave a comment</label>
-                                <input 
-                                    type="text" 
-                                    name="title" 
-                                    className = "form-control" 
-                                    value = {comment}
-                                    onChange = {e => setComment(e.target.value)}
-                                />
-                            </div>
                         </RatingModal>
                     ]}
                 >
