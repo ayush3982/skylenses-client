@@ -4,12 +4,14 @@ import {getProduct, productStar, productComment, getRelated} from "../functions/
 import SingleProduct from "../components/cards/SingleProduct"
 import {useSelector} from 'react-redux'
 import ProductCard from "../components/cards/ProductCard";
+import { Button } from "antd";
 
 
 
 const Product = ({match}) => {
     const [product, setProduct] = useState({})
     const [star, setStar] = useState(0)
+    const [comment, setComment] = useState('')
     const [related, setRelated] = useState('')
     const {slug} = match.params;
 
@@ -29,6 +31,7 @@ const Product = ({match}) => {
         }
     });
 
+
     const onStarClick = (newRating, name) => {
         setStar(newRating);
         console.table(newRating, name);
@@ -37,6 +40,15 @@ const Product = ({match}) => {
           loadSingleProduct(); // if you want to show updated rating in real time
         });
     };
+
+    const handleCommentSubmit = (e) => {
+        e.preventDefault();
+        productComment(product._id, comment, user.token).then((res) => {
+            console.log("comment posted", res.data);
+            loadSingleProduct(); // if you want to show updated
+            setComment('')
+        })
+    }
 
     const loadSingleProduct = () => {
         getProduct(slug).then((res) => {
@@ -48,7 +60,7 @@ const Product = ({match}) => {
 
     return (
         <div className ="container-fluid">
-            {JSON.stringify(product.ratings)}
+            {JSON.stringify(product)}
             <div className = "row pt-4">
                 <SingleProduct product={product} onStarClick={onStarClick} star = {star} />
             </div>
@@ -71,6 +83,34 @@ const Product = ({match}) => {
                 ) : (
                     <div className="text-center col">No Products Found</div>
                 )}
+            </div>
+            <div className="row p-5">
+                <div className="col-md-6">
+                <div> <h3>Comments</h3></div> <br />
+                <form onSubmit={handleCommentSubmit} className="pt-5">
+                    <div className="form-group">
+                        <textarea
+                        type="text"
+                        className="form-control"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        placeholder="Your comment"
+                        autoFocus
+                        />
+                    </div>
+                    <Button
+                        onClick={handleCommentSubmit}
+                        type="primary"
+                        className="mb-3"
+                        block
+                        shape="round"
+                        disabled={!comment || comment.length < 5}
+                    >
+                        Post
+                    </Button>
+                </form>
+                </div>
+
             </div>
         </div>
     )
