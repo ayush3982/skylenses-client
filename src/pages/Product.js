@@ -8,10 +8,11 @@ import { Button } from "antd";
 
 
 
-const Product = ({match}) => {
+const Product = ({match, history}) => {
     const [product, setProduct] = useState({})
     const [star, setStar] = useState(0)
     const [comment, setComment] = useState('')
+    const [allowComment, setAllowComment] = useState(false)
     const [related, setRelated] = useState('')
     const {slug} = match.params;
 
@@ -21,6 +22,12 @@ const Product = ({match}) => {
         loadSingleProduct()
         console.log(product)
     }, [slug])
+
+    useEffect(() => {
+        if(user && user.token) {
+            setAllowComment(true);
+        }
+    })
 
     useEffect(() => {
         if (product.ratings && user) {
@@ -48,6 +55,13 @@ const Product = ({match}) => {
             loadSingleProduct(); // if you want to show updated
             setComment('')
         })
+    }
+
+    const handleRedirect = () => {
+        history.push({
+            pathname: "/login",
+            state: { from: `/product/${slug}` },
+        });
     }
 
     const loadSingleProduct = () => {
@@ -87,7 +101,8 @@ const Product = ({match}) => {
             <div className="row p-5">
                 <div className="col-md-6">
                 <div> <h3>Comments</h3></div> <br />
-                <form onSubmit={handleCommentSubmit} className="pt-5">
+                {allowComment ? (
+                    <form onSubmit={handleCommentSubmit} className="pt-5">
                     <div className="form-group">
                         <textarea
                         type="text"
@@ -109,6 +124,9 @@ const Product = ({match}) => {
                         Post
                     </Button>
                 </form>
+                ) : (
+                    <div className="btn btn-primary" onClick={handleRedirect}>Please log in to comment</div>
+                )}
                 </div>
 
             </div>
