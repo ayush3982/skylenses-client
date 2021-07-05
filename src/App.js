@@ -6,6 +6,7 @@ import {Switch, Route} from 'react-router-dom'
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/Home';
+import Shop from './pages/Shop';
 import Product from './pages/Product';
 import Header from './components/nav/Header';
 import RegisterComplete from './pages/auth/RegisterComplete'
@@ -68,6 +69,7 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route exact path = "/" component = {Home}/>
+        <Route exact path = "/shop" component = {Shop}/>
         <Route exact path = "/product/:slug" component = {Product}/>
         <Route exact path = "/login" component = {Login}/>
         <Route exact path = "/register" component = {Register}/>
