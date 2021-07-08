@@ -1,15 +1,33 @@
 import React from 'react'
 import {Card} from 'antd'
-import {EyeOutlined, DeleteOutlined} from '@ant-design/icons'
+import {EyeOutlined, DeleteOutlined, ShoppingCartOutlined} from '@ant-design/icons'
 import defaultImage from "../../images/image.jpg"
 import {Link} from "react-router-dom"
 import {showAverage} from "../../functions/rating"
+import _ from "lodash"
 
 
 const {Meta} = Card;
 
 
 const ProductCard = ({product}) => {
+
+
+    const handleAddToCart = () => {
+      let cart = []
+      if(typeof window != 'undefined') {
+        if(localStorage.getItem('cart')) {
+          cart = JSON.parse(localStorage.getItem('cart')) 
+        }
+        cart.push({
+          ...product,
+          count: 1,
+        })
+        let unique = _.uniqWith(cart, _.isEqual)
+        // console.log(unique)
+        localStorage.setItem('cart', JSON.stringify(unique))
+      }
+    }
     
     const {images, title, slug, tagline} = product;
     
@@ -32,6 +50,9 @@ const ProductCard = ({product}) => {
               <Link to={`/product/${slug}`}>
                 <EyeOutlined className="text-warning" /> <br /> View Product
               </Link>,
+              <a onClick = {handleAddToCart}>
+                <ShoppingCartOutlined className="text-danger" /> <br /> Add to Cart
+              </a>
             ]}
           >
           <Meta
