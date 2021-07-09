@@ -5,6 +5,7 @@ import defaultImage from "../../images/image.jpg"
 import {Link} from "react-router-dom"
 import {showAverage} from "../../functions/rating"
 import _ from "lodash"
+import {useSelector, useDispatch} from 'react-redux'
 
 
 const {Meta} = Card;
@@ -12,6 +13,8 @@ const {Meta} = Card;
 
 const ProductCard = ({product}) => {
 
+    const {user, cart} = useSelector((state) => ({...state}))
+    const dispatch = useDispatch()
 
     const handleAddToCart = () => {
       let cart = []
@@ -26,6 +29,10 @@ const ProductCard = ({product}) => {
         let unique = _.uniqWith(cart, _.isEqual)
         // console.log(unique)
         localStorage.setItem('cart', JSON.stringify(unique))
+        dispatch({
+          type: "ADD_TO_CART",
+          payload: unique
+        })
       }
     }
     

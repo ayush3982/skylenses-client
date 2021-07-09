@@ -7,12 +7,38 @@ import { Carousel } from 'react-responsive-carousel';
 import StarRating from "react-star-ratings"
 import RatingModal from "../modal/RatingModal";
 import {showAverage} from "../../functions/rating"
+import _ from "lodash"
+import {useSelector, useDispatch} from 'react-redux'
+
 
 const {Meta} = Card
 
 const SingleProduct = ({product, onStarClick, star}) => {
 
     const {title, tagline, images, slug, hexCodeDark, hexCodeLight, price, category, sub, _id} = product;
+
+    const {user, cart} = useSelector((state) => ({...state}))
+    const dispatch = useDispatch()
+
+    const handleAddToCart = () => {
+        let cart = []
+        if(typeof window != 'undefined') {
+          if(localStorage.getItem('cart')) {
+            cart = JSON.parse(localStorage.getItem('cart')) 
+          }
+          cart.push({
+            ...product,
+            count: 1,
+          })
+          let unique = _.uniqWith(cart, _.isEqual)
+          // console.log(unique)
+          localStorage.setItem('cart', JSON.stringify(unique))
+          dispatch({
+            type: "ADD_TO_CART",
+            payload: unique
+          })
+        }
+    }
 
     return (
         <>  
@@ -30,7 +56,9 @@ const SingleProduct = ({product, onStarClick, star}) => {
                 <Card
                     actions = {[
                         <>
-                            <ShoppingCartOutlined className="text-success" /> Add to Card
+                            <a onClick = {handleAddToCart}>
+                                <ShoppingCartOutlined className="text-danger" /> <br /> Add to Cart
+                            </a>
                         </>,
                         <Link to = {`/`}>
                             <HeartOutlined className="text-info" /> <br /> Add to Wishlist
