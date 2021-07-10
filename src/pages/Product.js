@@ -110,7 +110,6 @@ const Product = ({match, history}) => {
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
                         placeholder="Your comment"
-                        autoFocus
                         />
                     </div>
                     <Button

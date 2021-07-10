@@ -15,10 +15,23 @@ const {Meta} = Card
 
 const SingleProduct = ({product, onStarClick, star}) => {
 
+    const choosePowers = ["Choose Power","0"]
+    const choosePower6s = ["Choose Power","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"]
+    const choosePowerLefts = ["Choose Power","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"]
+    const choosePowerRights = ["Choose Power","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"]
+    const outOfStock = ["0", "-1.00", "-1.25", "-1.50", "-1.75", "-5.00"]
+    const [power, setPower] = useState('default');
+    const [power6, setPower6] = useState('default');
+    const [powerLeft, setPowerLeft] = useState('default');
+    const [powerRight, setPowerRight] = useState('default');
+    
+
     const {title, tagline, images, slug, hexCodeDark, hexCodeLight, price, category, sub, _id} = product;
 
     const {user, cart} = useSelector((state) => ({...state}))
     const dispatch = useDispatch()
+
+
 
     const handleAddToCart = () => {
         let cart = []
@@ -29,6 +42,10 @@ const SingleProduct = ({product, onStarClick, star}) => {
           cart.push({
             ...product,
             count: 1,
+            choosePower6: power6,
+            choosePower: power,
+            choosePowerLeft: powerLeft,
+            choosePowerRight: powerRight
           })
           let unique = _.uniqWith(cart, _.isEqual)
           // console.log(unique)
@@ -109,6 +126,50 @@ const SingleProduct = ({product, onStarClick, star}) => {
                             </Link>
                             </li>
                         )}
+
+                        
+
+                        <br />
+
+                        {category && category.name === '6 Months' ? (
+                            <div className="form-group">
+                                    <select
+                                        value = {power6}
+                                        name = "choosePower6"
+                                        className = "form-control"
+                                        onChange = {(e) => setPower6(e.target.value)}
+                                    >
+                                        {choosePower6s.map(c => {
+                                            if(outOfStock.includes(c)) {
+                                               return (<option disabled key = {c} value = {c}>
+                                                    {c} - Out of Stock
+                                                </option>)
+                                            } else {
+                                                return (
+                                                    <option key = {c} value = {c}>
+                                                        {c}
+                                                    </option>
+                                                )
+                                            }
+                                        })}
+                                    </select>
+                            </div>
+                        ) : (
+                            <div className="form-group">
+                                    <select
+                                        value = {power}
+                                        name = "choosePowers"
+                                        className = "form-control"
+                                        onChange = {(e) => setPower(e.target.value)}
+                                    >
+                                        {choosePowers.map(c => 
+                                            <option key = {c} value = {c}>
+                                                {c}
+                                            </option>
+                                        )}
+                                    </select>
+                            </div>
+                        )}    
 
         
                         </ul>

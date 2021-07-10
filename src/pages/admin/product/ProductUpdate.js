@@ -254,7 +254,7 @@ const ProductUpdate = ({match, history}) => {
                                 </select>
 
                             </div>
-                            <hr className="mt-5"></hr>
+                            {/* <hr className="mt-5"></hr>
                             <h4 className = "text-danger">Make sure the following are set to "Default"</h4>
                             <hr />
                             <div className="form-group">
@@ -316,7 +316,7 @@ const ProductUpdate = ({match, history}) => {
                                         </option>)}
                                 </select>
 
-                            </div>
+                            </div> */}
                             <button className="btn btn-outline-info mt-3">Save</button>
                         </form> 
                 </div>

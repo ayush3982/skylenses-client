@@ -47,14 +47,14 @@ const ProductCreate = () => {
 
     const {title, tagline, price, categories, category, subs, sub, shipping, quantity, images, hexCodeDark, hexCodeLight, material, diameter, choosePower, choosePower6, choosePowerLeft, choosePowerRight, packFormat} = values
 
-    const loadCategories = () => getCategories().then(c => setValues({...values, categories: c.data}))
-    const loadSubs = () => getSubs().then(s => setValues({...values, subs: s.data}))
-    
     useEffect(() => {
         loadCategories()
         loadSubs()
     }, [])
     
+    const loadCategories = () => getCategories().then(c => setValues({...values, categories: c.data}))
+    const loadSubs = () => getSubs().then(s => setValues({...values, subs: s.data}))
+
     const handleSubmit = (e) => {
         e.preventDefault();
         createProduct(values, user.token)
@@ -226,7 +226,7 @@ const ProductCreate = () => {
                                 </select>
 
                             </div>
-                            <hr className="mt-5"></hr>
+                            {/* <hr className="mt-5"></hr>
                             <h4 className = "text-danger">Make sure the following are set to "Default"</h4>
                             <hr />
                             <div className="form-group">
@@ -284,7 +284,7 @@ const ProductCreate = () => {
                                         </option>)}
                                 </select>
 
-                            </div>
+                            </div> */}
                             <button className="btn btn-outline-info mt-3">Save</button>
                         </form>
                 </div>
