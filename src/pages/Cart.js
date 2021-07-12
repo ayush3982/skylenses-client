@@ -28,6 +28,7 @@ const Cart = () => {
                         <th scope="col">Power</th>
                         <th scope="col">Duration</th>
                         <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
                         <th scope="col">Remove</th>
                     </tr>
                 </thead>

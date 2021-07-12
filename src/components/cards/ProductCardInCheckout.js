@@ -9,6 +9,7 @@ const ProductCardInCheckout = ({p}) => {
                 <td>{p.choosePower}</td>
                 <td>{p.category.name}</td>
                 <td>{p.count}</td>
+                <td>{p.price}</td>
                 <td>Delete Icon</td>
             </tr>
         </tbody>
