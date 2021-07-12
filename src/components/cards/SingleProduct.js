@@ -31,7 +31,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
     const {user, cart} = useSelector((state) => ({...state}))
     const dispatch = useDispatch()
 
-    //fhhh
+    //fhhhhtjjtrj
 
     const handleAddToCart = () => {
         let cart = []
