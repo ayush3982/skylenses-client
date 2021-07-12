@@ -31,8 +31,6 @@ const SingleProduct = ({product, onStarClick, star}) => {
     const {user, cart} = useSelector((state) => ({...state}))
     const dispatch = useDispatch()
 
-    //fhhhhtj
-
     const handleAddToCart = () => {
         let cart = []
         if(typeof window != 'undefined') {
