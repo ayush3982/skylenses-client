@@ -75,7 +75,6 @@ const SingleProduct = ({product, onStarClick, star}) => {
           cart.push({
             ...product,
             count: 1,
-            choosePower6: power6,
             choosePower: power,
             choosePowerLeft: powerLeft,
             choosePowerRight: powerRight,
@@ -172,10 +171,10 @@ const SingleProduct = ({product, onStarClick, star}) => {
                             <>
                                 <div className="form-group">
                                     <select
-                                        value = {power6}
-                                        name = "choosePower6"
+                                        value = {power}
+                                        name = "choosePower"
                                         className = "form-control"
-                                        onChange = {(e) => setPower6(e.target.value)}
+                                        onChange = {(e) => setPower(e.target.value)}
                                         hidden = {hidden}
                                     >
                                         {choosePower6s.map(c => {

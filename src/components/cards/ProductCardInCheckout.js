@@ -6,7 +6,16 @@ const ProductCardInCheckout = ({p}) => {
             <tr>
                 <td>Image</td>
                 <td>{p.title}</td>
-                <td>{p.choosePower}</td>
+                {p.isCustomized ? (
+                   <>
+                    <td>
+                        Left Power: {p.choosePowerLeft} <br />
+                        Right Power: {p.choosePowerRight}
+                    </td> 
+                   </>
+                ) : (
+                    <td>{p.choosePower}</td>
+                )}
                 <td>{p.category.name}</td>
                 <td>{p.count}</td>
                 <td>{p.price}</td>
