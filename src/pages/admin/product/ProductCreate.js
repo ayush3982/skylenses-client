@@ -7,6 +7,11 @@ import {getSubs} from '../../../functions/sub'
 import {createProduct} from '../../../functions/product'
 import FileUpload from '../../../components/forms/FileUpload'
 import {LoadingOutlined} from '@ant-design/icons'
+import {Select} from 'antd'
+import {powerData} from '../../../helpers/powers'
+
+
+const {Option} = Select
 
 const initialState = {
     title: '',
@@ -22,7 +27,7 @@ const initialState = {
     hexCodeLight: '',
     hexCodeDark: '',
     choosePowers: ["Choose Power","0"],
-    choosePower6s: ["Choose Power","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
+    choosePower6s: ["0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
     choosePowerLefts: ["Choose Power","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
     choosePowerRights: ["Choose Power","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"],
     packFormats: ["Choose", "Vial", "Blister"],
@@ -33,6 +38,7 @@ const initialState = {
     choosePowerLeft: '',
     choosePowerRight: '',
     packFormat: '',
+    outOfStock: []
     
 }
 
@@ -45,15 +51,17 @@ const ProductCreate = () => {
 
     const {user} = useSelector((state) => ({...state}))
 
-    const {title, tagline, price, categories, category, subs, sub, shipping, quantity, images, hexCodeDark, hexCodeLight, material, diameter, choosePower, choosePower6, choosePowerLeft, choosePowerRight, packFormat} = values
+    const {title, tagline, price, categories, category, subs, sub, shipping, quantity, images, choosePower6s, hexCodeDark, hexCodeLight, material, diameter, choosePower, choosePower6, choosePowerLeft, choosePowerRight, packFormat, outOfStock} = values
 
+    const loadCategories = () => getCategories().then(c => setValues({...values, categories: c.data}))
+    const loadSubs = () => getSubs().then(s => setValues({...values, subs: s.data}))
+    
     useEffect(() => {
         loadCategories()
         loadSubs()
     }, [])
     
-    const loadCategories = () => getCategories().then(c => setValues({...values, categories: c.data}))
-    const loadSubs = () => getSubs().then(s => setValues({...values, subs: s.data}))
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -104,7 +112,7 @@ const ProductCreate = () => {
                             />
                         </div>
                         <form onSubmit={handleSubmit}>
-                    
+                            {JSON.stringify(categories)}
                             <div className="form-group">
                                 <label>Category (Months)</label>
                                 <select name="category" className="form-control" onChange={handleCategoryChange}>
@@ -285,6 +293,24 @@ const ProductCreate = () => {
                                 </select>
 
                             </div> */}
+                            {JSON.stringify(outOfStock)}
+                            <div>
+                                <label>Choose Out Of Stock</label>
+                                <Select
+                                    mode="multiple"
+                                    style={{ width: "100%" }}
+                                    placeholder="Please select"
+                                    value={outOfStock}
+                                    onChange={(value) => setValues({ ...values, outOfStock: value })}
+                                >
+                                    {powerData.length &&
+                                    powerData.map((s) => (
+                                        <Option value={s.Power} key={s.Index}>
+                                        {s.Power}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </div>
                             <button className="btn btn-outline-info mt-3">Save</button>
                         </form>
                 </div>

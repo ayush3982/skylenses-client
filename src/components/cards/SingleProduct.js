@@ -17,7 +17,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
 
     const choosePowers = ["Choose Power","0"]
     const choosePower6s = ["Choose Power","0","-1.00","-1.25","-1.50","-1.75","-2.00","-2.25","-2.50","-2.75","-3.00","-3.25","-3.50","-3.75","-4.00","-4.25","-4.50","-4.75","-5.00","-5.50","-6.00","-6.50","-7.00"]
-    const outOfStock = ["0", "-1.00", "-1.25", "-1.50", "-1.75", "-5.00"]
+    // const outOfStock = ["0", "-1.00", "-1.25", "-1.50", "-1.75", "-5.00"]
     const [power, setPower] = useState('default');
     const [power6, setPower6] = useState('default');
     const [powerLeft, setPowerLeft] = useState('default');
@@ -25,8 +25,9 @@ const SingleProduct = ({product, onStarClick, star}) => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [customized, setCustomized] = useState(false);
     const [hidden, setHidden] = useState(false);
+    const [showError, setShowError] = useState(false);
 
-    const {title, tagline, images, slug, hexCodeDark, hexCodeLight, price, category, sub, _id, isCustomized} = product;
+    const {title, tagline, images, slug, hexCodeDark, hexCodeLight, price, category, sub, _id, isCustomized, outOfStock} = product;
 
     const {user, cart} = useSelector((state) => ({...state}))
     const dispatch = useDispatch()
@@ -66,29 +67,58 @@ const SingleProduct = ({product, onStarClick, star}) => {
         setIsModalVisible(false);
     };
 
+
     const handleAddToCart = () => {
-        let cart = []
-        if(typeof window != 'undefined') {
-          if(localStorage.getItem('cart')) {
-            cart = JSON.parse(localStorage.getItem('cart')) 
-          }
-          cart.push({
-            ...product,
-            count: 1,
-            choosePower: power,
-            choosePowerLeft: powerLeft,
-            choosePowerRight: powerRight,
-            isCustomized: customized,
-            price: passingPrice
-          })
-          let unique = _.uniqWith(cart, _.isEqual)
-          // console.log(unique)
-          localStorage.setItem('cart', JSON.stringify(unique))
-          dispatch({
-            type: "ADD_TO_CART",
-            payload: unique
-          })
+        if((power !== "default" && power !== "Choose Power")) {
+            let cart = []
+            if(typeof window != 'undefined') {
+                if(localStorage.getItem('cart')) {
+                    cart = JSON.parse(localStorage.getItem('cart')) 
+                }
+                cart.push({
+                    ...product,
+                    count: 1,
+                    choosePower: power,
+                    choosePowerLeft: powerLeft,
+                    choosePowerRight: powerRight,
+                    isCustomized: customized,
+                    price: passingPrice
+                })
+                let unique = _.uniqWith(cart, _.isEqual)
+                // console.log(unique)
+                localStorage.setItem('cart', JSON.stringify(unique))
+                dispatch({
+                    type: "ADD_TO_CART",
+                    payload: unique
+                })
+             }
         }
+
+        if(customized) {
+            let cart = []
+            if(typeof window != 'undefined') {
+                if(localStorage.getItem('cart')) {
+                    cart = JSON.parse(localStorage.getItem('cart')) 
+                }
+                cart.push({
+                    ...product,
+                    count: 1,
+                    choosePower: power,
+                    choosePowerLeft: powerLeft,
+                    choosePowerRight: powerRight,
+                    isCustomized: customized,
+                    price: passingPrice
+                })
+                let unique = _.uniqWith(cart, _.isEqual)
+                // console.log(unique)
+                localStorage.setItem('cart', JSON.stringify(unique))
+                dispatch({
+                    type: "ADD_TO_CART",
+                    payload: unique
+                })
+             }
+        }
+    
     }
 
     return (
@@ -108,7 +138,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                     actions = {[
                         <>
                             <a onClick = {handleAddToCart}>
-                                <ShoppingCartOutlined className="text-danger" /> <br /> Add to Cart
+                                <ShoppingCartOutlined className="text-danger" disabled /> <br /> Add to Cart
                             </a>
                         </>,
                         <Link to = {`/`}>
@@ -206,6 +236,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                                 <Button type="primary" onClick={showModal}>
                                     Customize
                                 </Button>
+                                {showError ? (<p>Please choose a power</p>) : ""}
                                 <Modal title="Customize Your Lenses" okText={`Customize`} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                                     <div className="form-group">
                                         <label>Power Left</label>
