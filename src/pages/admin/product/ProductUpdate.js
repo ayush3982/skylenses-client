@@ -7,6 +7,11 @@ import {getSubs} from '../../../functions/sub'
 import {getProduct, updateProduct} from '../../../functions/product'
 import FileUpload from '../../../components/forms/FileUpload'
 import {LoadingOutlined} from '@ant-design/icons'
+import {powerData} from '../../../helpers/powers'
+import {Select} from 'antd'
+
+const {Option} = Select
+
 
 const initialState = {
     title: '',
@@ -44,7 +49,7 @@ const ProductUpdate = ({match, history}) => {
     const [defaultSub, setDefaultSub] = useState('')
     const [loading, setLoading] = useState(false)
 
-    const {title, tagline, price,  category, subs, sub, shipping, quantity, images, hexCodeDark, hexCodeLight, material, diameter, choosePower, choosePower6, choosePowerLeft, choosePowerRight, packFormat} = values
+    const {title, tagline, price,  category, subs, sub, shipping, quantity, images, hexCodeDark, hexCodeLight, material, diameter, choosePower, choosePower6, choosePowerLeft, choosePowerRight, packFormat, outOfStock} = values
 
     const {user} = useSelector((state) => ({...state}))
 
@@ -61,8 +66,13 @@ const ProductUpdate = ({match, history}) => {
             const defaultSelected = p.data.sub
             console.log(defaultSelected)
             setDefaultSub(prev => defaultSelected)
+            let arr = []
+            p.data.outOfStock.map((s) => {
+                arr.push(s.Index);
+            })
         })
     }
+
 
     const loadCategories = () => {
         getCategories().then((c) => {
@@ -317,6 +327,23 @@ const ProductUpdate = ({match, history}) => {
                                 </select>
 
                             </div> */}
+                            <div>
+                                <label>Choose Out Of Stock</label>
+                                <Select
+                                    mode="multiple"
+                                    style={{ width: "100%" }}
+                                    placeholder="Please select"
+                                    value={outOfStock}
+                                    onChange={(value) => setValues({ ...values, outOfStock: value })}
+                                >
+                                    {powerData.length &&
+                                    powerData.map((s) => (
+                                        <Option value={s.Power} key={s.Index}>
+                                        {s.Power}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </div>
                             <button className="btn btn-outline-info mt-3">Save</button>
                         </form> 
                 </div>
