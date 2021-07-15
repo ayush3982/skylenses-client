@@ -42,13 +42,13 @@ const Cart = () => {
     return (
         <div className="container-fluid pt-2">
             <div className="row">
-                <div className="col-md-7">
+                <div className="col-md-9">
                     <h4>Cart / {cart.length} Lenses</h4>
                     {!cart.length ? (<p>No products in cart. <Link to = '/shop'>Continue Shopping</Link></p>) : (
                         showCartItems()
                     )}
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                     <h4>Order Summary</h4>
                     <hr />
                     <p>Products</p>
