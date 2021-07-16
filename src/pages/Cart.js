@@ -2,15 +2,16 @@ import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
+import {userCart} from '../functions/user'
 
-const Cart = () => {
+const Cart = ({history}) => {
 
     const {cart, user} = useSelector((state) => ({...state}))
     // const [deliveryCharges, setDeliveryCharges] = useState(false)
     const dispatch = useDispatch()
 
-    const charges = 100;
-    const limit = 500;
+    const charges = 50;
+    const limit = 999;
 
     const deliveryChargesApplied = () => {
         let extraCharges = getTotal();
@@ -31,7 +32,9 @@ const Cart = () => {
     }
 
     const saveOrderToDb = () => {
-        //
+        userCart(cart,user.token).then((res) => {
+            if(res.data.ok) history.push("/checkout")
+        }).catch((err) => {console.log("cart save err", err)})
     }
 
     const showCartItems = () => {
@@ -73,7 +76,7 @@ const Cart = () => {
                             <p>{c.title} x {c.count} = ${c.price * c.count}</p>
                         </div>
                     ))}
-                    {getTotal() < deliveryChargesApplied() ? (<div>Delivery Charges : 100</div>) : (null)}
+                    {getTotal() < deliveryChargesApplied() ? (<div>Delivery Charges : 50</div>) : (null)}
                     <hr />
                         Total: <b>${deliveryChargesApplied()}</b>
                     <hr />

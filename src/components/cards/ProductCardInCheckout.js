@@ -26,8 +26,8 @@ const ProductCardInCheckout = ({p}) => {
         // console.log("available quantity", p.quantity);
         let count = e.target.value < 1 ? 1 : e.target.value;
     
-        if (count > p.quantity) {
-          toast.error(`Max available quantity: ${p.quantity}`);
+        if (count > 5) {
+          toast.error(`You can only order 5 each`);
           return;
         }
     
