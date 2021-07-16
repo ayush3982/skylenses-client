@@ -24,3 +24,32 @@ export const emptyUserCart = async (authtoken) =>
       authtoken,
     },
 });
+
+export const saveUserAddress = async (
+    authtoken,
+    billing_customer_name,
+    billing_address,
+    billing_city,
+    billing_pincode,
+    billing_state,
+    billing_country,
+    billing_email,
+    billing_phone
+  ) =>
+  await axios.post(
+    `${process.env.REACT_APP_API}/user/address`,
+    {
+      billing_customer_name,
+      billing_address,
+      billing_city,
+      billing_pincode,
+      billing_state,
+      billing_country,
+      billing_email,
+      billing_phone },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
