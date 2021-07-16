@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
@@ -6,7 +6,23 @@ import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
 const Cart = () => {
 
     const {cart, user} = useSelector((state) => ({...state}))
+    // const [deliveryCharges, setDeliveryCharges] = useState(false)
     const dispatch = useDispatch()
+
+    const charges = 100;
+    const limit = 500;
+
+    const deliveryChargesApplied = () => {
+        let extraCharges = getTotal();
+        if(extraCharges < limit) {
+            // setDeliveryCharges(true);
+            extraCharges = extraCharges + charges;
+            return extraCharges;
+        }
+        else {
+            return extraCharges
+        }
+    }
 
     const getTotal = () => {
         return cart.reduce((currentValue, nextValue) => {
@@ -57,8 +73,9 @@ const Cart = () => {
                             <p>{c.title} x {c.count} = ${c.price * c.count}</p>
                         </div>
                     ))}
+                    {getTotal() < deliveryChargesApplied() ? (<div>Delivery Charges : 100</div>) : (null)}
                     <hr />
-                        Total: <b>${getTotal()}</b>
+                        Total: <b>${deliveryChargesApplied()}</b>
                     <hr />
                     {
                         user ? (
