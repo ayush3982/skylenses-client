@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import { toast } from 'react-toastify';
-import {getUserCart, saveUserAddress} from "../functions/user"
+import {getUserCart, saveUserAddress, getUser} from "../functions/user"
  
 const Checkout = () => {
 
@@ -10,14 +10,15 @@ const Checkout = () => {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => ({ ...state }));
 
-    const [address, setAddress] = useState('')
+    const [address, setAddress] = useState()
+    const [phone, setPhone] = useState()
     const [customerName, setCustomerName] = useState('')
     const [city, setCity] = useState('')
     const [pincode, setPincode] = useState()
     const [state, setState] = useState('')
     const [country, setCountry] = useState('')
     const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState()
+    const [userData, setUserData] = useState('')
     const [addressSaved, setAddressSaved] = useState(false)
 
     useEffect(() => {
@@ -26,7 +27,21 @@ const Checkout = () => {
           setProducts(res.data.products);
           setTotal(res.data.cartTotal);
         });
+        getUser(user.token, user.email).then((res) => {
+            console.log(user.token)
+            setUserData(res.data)
+            setAddress(res.data.billing_address)
+            setPhone(res.data.billing_phone)
+            setCustomerName(res.data.billing_customer_name)
+            setCity(res.data.billing_city)
+            setState(res.data.billing_state)
+            setPincode(res.data.billing_pincode)
+            setCountry(res.data.billing_country)
+            setEmail(res.data.billing_email)
+        })
     }, []);
+
+    // const {billing_customer_name, billing_address, billing_country, billing_city, billing_phone, billing_email, billing_state, billing_pincode} = userData
 
     console.log( customerName,
         address,
@@ -58,44 +73,45 @@ const Checkout = () => {
 
     return (
         <div className = "row">
+            {JSON.stringify(userData)}
             <div className = "col-md-6">
                 <h4>Delivery Address</h4>
                 <br />
                 <form className = "ml-2 mr-5">
                     <div className = "form-group">
                         <label>Customer Name</label>
-                        <input className = "form-control" type = "text" onChange = {(e) => setCustomerName(e.target.value)} required/>
+                        <input value = {customerName} className = "form-control" type = "text" onChange = {(e) => setCustomerName(e.target.value)} required/>
                     </div>
                     <div className = "form-group">
                         <label>Address</label>
-                        <textArea className = "form-control" type = "text" onChange = {(e) => setAddress(e.target.value)} required/>
+                        <textarea value = {address} className = "form-control" type = "text" onChange = {(e) => setAddress(e.target.value)} required/>
                     </div>
                     <div className = "form-group">
                         <label>City</label>
-                        <input className = "form-control" type = "text" onChange = {(e) => setCity(e.target.value)} required/>
+                        <input value = {city}  className = "form-control" type = "text" onChange = {(e) => setCity(e.target.value)} required/>
                     </div>
                     <div className = "form-group">
                         <label>Pincode</label>
-                        <input className = "form-control" type = "number" inputmode="numeric" onChange = {(e) => setPincode(e.target.value)} required/>
+                        <input value = {pincode} className = "form-control" type = "number" inputmode="numeric" onChange = {(e) => setPincode(e.target.value)} required/>
                     </div>
                     <div className = "form-group">
                         <label>State</label>
-                        <input className = "form-control" type = "text" onChange = {(e) => setState(e.target.value)} required/>
+                        <input value = {state} className = "form-control" type = "text" onChange = {(e) => setState(e.target.value)} required/>
                     </div>
                     <div className = "form-group">
                         <label>Country</label>
-                        <input className = "form-control" type = "text" onChange = {(e) => setCountry(e.target.value)} required/>
+                        <input value = {country} className = "form-control" type = "text" onChange = {(e) => setCountry(e.target.value)} required/>
                     </div>
                     <div className = "form-group">
                         <label>Email</label>
-                        <input className = "form-control" type = "email" onChange = {(e) => setEmail(e.target.value)} required/>
+                        <input value = {email} className = "form-control" type = "email" onChange = {(e) => setEmail(e.target.value)} required/>
                     </div>
                     <div className = "form-group">
                         <label>Phone Number</label>
-                        <input className = "form-control" type = "number" onChange = {(e) => setPhone(e.target.value)} required/>
+                        <input value = {phone} className = "form-control" type = "number" onChange = {(e) => setPhone(e.target.value)} required/>
                     </div>
                 </form>
-                <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>Save</button>
+                <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>Confirm Address</button>
                 <hr />
                 <h4>Got Coupon?</h4>
                 <br />

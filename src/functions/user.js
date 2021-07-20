@@ -53,3 +53,10 @@ export const saveUserAddress = async (
       },
     }
   );
+
+  export const getUser = async (authtoken, email) =>
+  await axios.get(`${process.env.REACT_APP_API}/user/getuser/${email}`, {
+    headers: {
+      authtoken,
+    },
+});

@@ -58,6 +58,7 @@ const Login = ({ history }) => {
               email: res.data.email,
               token: idTokenResult.token,
               role: res.data.role,
+              coins: res.data.coins,
               _id: res.data._id,
             },
           });
@@ -88,6 +89,7 @@ const Login = ({ history }) => {
                 email: res.data.email,
                 token: idTokenResult.token,
                 role: res.data.role,
+                coins: res.data.coins,
                 _id: res.data._id,
               },
             });
