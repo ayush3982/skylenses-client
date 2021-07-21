@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import { toast } from 'react-toastify';
 import {getUserCart, saveUserAddress, getUser} from "../functions/user"
+import {countryData} from "../helpers/countries"
+import axios from "axios"
  
 const Checkout = () => {
 
@@ -20,12 +22,23 @@ const Checkout = () => {
     const [email, setEmail] = useState('')
     const [userData, setUserData] = useState('')
     const [addressSaved, setAddressSaved] = useState(false)
+    const [totalProductCount, setTotalProductCount] = useState()
+    const [internationalShipping, setInternationalShipping] = useState()
 
     useEffect(() => {
         getUserCart(user.token).then((res) => {
           console.log("user cart res", JSON.stringify(res.data, null, 4));
           setProducts(res.data.products);
           setTotal(res.data.cartTotal);
+          let num = 0;
+          for(let i = 0; i < res.data.products.length; i++) {
+              num = num + res.data.products[i].count
+          }
+          console.log(num) 
+          setTotalProductCount(num)
+          let international = (totalProductCount - 3)*1000
+          setInternationalShipping(international) 
+          console.log(internationalShipping) 
         });
         getUser(user.token, user.email).then((res) => {
             console.log(user.token)
@@ -71,9 +84,14 @@ const Checkout = () => {
         })
     }
 
+    const handleCountryChange = (e) => {
+        setCountry(e.target.value)  
+    }
+
     return (
         <div className = "row">
             {JSON.stringify(userData)}
+            {JSON.stringify(countryData)}
             <div className = "col-md-6">
                 <h4>Delivery Address</h4>
                 <br />
@@ -87,20 +105,27 @@ const Checkout = () => {
                         <textarea value = {address} className = "form-control" type = "text" onChange = {(e) => setAddress(e.target.value)} required/>
                     </div>
                     <div className = "form-group">
-                        <label>City</label>
-                        <input value = {city}  className = "form-control" type = "text" onChange = {(e) => setCity(e.target.value)} required/>
-                    </div>
-                    <div className = "form-group">
-                        <label>Pincode</label>
-                        <input value = {pincode} className = "form-control" type = "number" inputmode="numeric" onChange = {(e) => setPincode(e.target.value)} required/>
+                        <label>Country</label>
+                        <select name="sub" className="form-control" type = "text" onChange={handleCountryChange} value = {country} required>
+                            <option>Select Country</option>
+                                {countryData.length > 0 && countryData.map((c) => (
+                                    <option value={c.name}  key={c._id} data = {c.id}>
+                                        {c.name}
+                                    </option>
+                                ))}
+                        </select>
                     </div>
                     <div className = "form-group">
                         <label>State</label>
                         <input value = {state} className = "form-control" type = "text" onChange = {(e) => setState(e.target.value)} required/>
                     </div>
                     <div className = "form-group">
-                        <label>Country</label>
-                        <input value = {country} className = "form-control" type = "text" onChange = {(e) => setCountry(e.target.value)} required/>
+                        <label>City</label>
+                        <input value = {city}  className = "form-control" type = "text" onChange = {(e) => setCity(e.target.value)} required/>
+                    </div>
+                    <div className = "form-group">
+                        <label>Pincode/ZIP Code</label>
+                        <input value = {pincode} className = "form-control" type = "number" inputmode="numeric" onChange = {(e) => setPincode(e.target.value)} required/>
                     </div>
                     <div className = "form-group">
                         <label>Email</label>
@@ -127,12 +152,31 @@ const Checkout = () => {
                         <p>{p.product.title} x {p.count} = {p.price*p.count}</p>
                     </div>
                 ))}
-                <p>Rs 50 shipping for total below 999 (if applicable)</p>
-                <hr />
-                <p>total: {total}</p>
+                {country === "India" ? (
+                     <>
+                        <p>Rs 50 shipping for total below 999 (if applicable)</p>
+                        <hr />
+                        <p>total: {total}</p>
+                     </>
+                ) : (
+                    <>
+                        <p>International Shipping Applicable (You Can order only 3)</p>
+                        <p>Base Shipping: 1500 (Upto 3 Products)</p>
+                        <p>
+                            {totalProductCount > 3 ? (
+                               <>
+                                     <p>Per item extra shipping : {internationalShipping}</p>
+                                     <p>total: {{total} + 1500 + {internationalShipping}}</p>
+                               </>
+                            ) : (
+                                <p>total: {total + 1500}</p>   
+                            )}
+                        </p>
+                    </>
+                )}    
                 <div className = "row">
                     <div className = "col-md-6">
-                        <button className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length}>Place Order</button>
+                        <button className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || (country !== "India" && totalProductCount > 3)}>Place Order</button>
                     </div>
                 </div>
             </div>
