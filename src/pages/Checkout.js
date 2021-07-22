@@ -3,12 +3,13 @@ import {useSelector, useDispatch} from 'react-redux'
 import { toast } from 'react-toastify';
 import {getUserCart, saveUserAddress, getUser} from "../functions/user"
 import {countryData} from "../helpers/countries"
-import axios from "axios"
  
 const Checkout = () => {
 
     const [products, setProducts] = useState([])
     const [total, setTotal] = useState(0)
+    const [internationalTotal, setInternationalTotal] = useState(0)
+    const [fullData, setFullData] = useState('')
     const dispatch = useDispatch();
     const { user } = useSelector((state) => ({ ...state }));
 
@@ -22,23 +23,16 @@ const Checkout = () => {
     const [email, setEmail] = useState('')
     const [userData, setUserData] = useState('')
     const [addressSaved, setAddressSaved] = useState(false)
-    const [totalProductCount, setTotalProductCount] = useState()
-    const [internationalShipping, setInternationalShipping] = useState()
 
     useEffect(() => {
         getUserCart(user.token).then((res) => {
           console.log("user cart res", JSON.stringify(res.data, null, 4));
           setProducts(res.data.products);
+          setFullData(res.data)
+          setInternationalTotal(res.data.internationalCartTotal)
           setTotal(res.data.cartTotal);
-          let num = 0;
-          for(let i = 0; i < res.data.products.length; i++) {
-              num = num + res.data.products[i].count
-          }
-          console.log(num) 
-          setTotalProductCount(num)
-          let international = (totalProductCount - 3)*1000
-          setInternationalShipping(international) 
-          console.log(internationalShipping) 
+          console.log(total)
+          console.log(internationalTotal)
         });
         getUser(user.token, user.email).then((res) => {
             console.log(user.token)
@@ -85,15 +79,15 @@ const Checkout = () => {
     }
 
     const handleCountryChange = (e) => {
-        setCountry(e.target.value)  
+        setCountry(e.target.value) 
+        setInternationalTotal(fullData.internationCartTotal) 
+        console.log(internationalTotal)
     }
 
     return (
-        <div className = "row">
-            {JSON.stringify(userData)}
-            {JSON.stringify(countryData)}
+        <div className = "row"> 
             <div className = "col-md-6">
-                <h4>Delivery Address</h4>
+                <h4>Delivery Address</h4>  
                 <br />
                 <form className = "ml-2 mr-5">
                     <div className = "form-group">
@@ -136,7 +130,7 @@ const Checkout = () => {
                         <input value = {phone} className = "form-control" type = "number" onChange = {(e) => setPhone(e.target.value)} required/>
                     </div>
                 </form>
-                <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>Confirm Address</button>
+                <button className="btn btn-primary mt-2" onClick={saveAddressToDb} disabled = {country === "Select Country"}>Confirm Address</button>
                 <hr />
                 <h4>Got Coupon?</h4>
                 <br />
@@ -160,23 +154,25 @@ const Checkout = () => {
                      </>
                 ) : (
                     <>
-                        <p>International Shipping Applicable (You Can order only 3)</p>
-                        <p>Base Shipping: 1500 (Upto 3 Products)</p>
+                        <p>Shipping to {country}, additional shipping charges applied</p>
                         <p>
-                            {totalProductCount > 3 ? (
+                            {total < 4999 ? (
                                <>
-                                     <p>Per item extra shipping : {internationalShipping}</p>
-                                     <p>total: {{total} + 1500 + {internationalShipping}}</p>
+                                     <p>Rs 1500 shipping applied below INR 4999</p>
+                                     <p>total: {JSON.stringify(fullData.internationCartTotal)}</p>
                                </>
                             ) : (
-                                <p>total: {total + 1500}</p>   
+                                <>
+                                    <p>You are eligible for free shipping</p>
+                                    <p>Total: {total} </p>
+                                </>   
                             )}
                         </p>
                     </>
                 )}    
                 <div className = "row">
                     <div className = "col-md-6">
-                        <button className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || (country !== "India" && totalProductCount > 3)}>Place Order</button>
+                        <button className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length}>Place Order</button>
                     </div>
                 </div>
             </div>
