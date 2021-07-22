@@ -14,9 +14,9 @@ const CreateCouponPage = () => {
     const [expiry, setExpiry] = useState('')
     const [discount, setDiscount] = useState('')
     const [couponType, setCouponType] = useState('')
-    const [perUse, setPerUse] = useState('')
     const [isVisible, setIsVisible] = useState(false)
     const [isActive, setIsActive] = useState(false)
+    const [update, setUpdate] = useState(false)
     const [loading, setLoading] = useState()
     const [coupons, setCoupons] = useState([])
 
@@ -30,19 +30,32 @@ const CreateCouponPage = () => {
         e.preventDefault()//
         setLoading(true)
         console.log(couponType)
-        createCoupon({name, expiry, discount, couponType, perUse, isVisible, isActive}, user.token)
+        createCoupon({name, expiry, discount, couponType, isVisible, isActive}, user.token)
         .then(res => {
             setLoading(false)
             setName('')
             setExpiry('')
             setDiscount('')
             setCouponType('')
-            setPerUse(0)
             setIsVisible(false)
             toast.success(`${res.data.name} successfully created`)
             console.log(res.data._id)
             getCoupons().then(res => setCoupons(res.data))
         }).catch(err => console.log(err))
+    }
+
+    const handleRemove = couponId => {
+        if(window.confirm('Are you sure you want to remove this coupon')) {
+            removeCoupon(couponId, user.token).then(res => {
+                getCoupons().then(res => setCoupons(res.data))
+                toast.error(`${res.data.name} deleted` )
+            }).catch(err => console.log(err))
+        }
+    }
+
+    const handleUpdate = couponId => {
+        console.log(user.token)
+        console.log(update)
     }
 
     return (
@@ -74,8 +87,8 @@ const CreateCouponPage = () => {
                                 value = {couponType}
                             >
                                 <option>Select</option>
-                                <option>Flat</option>
-                                <option>Percentage</option>
+                                <option>Permanent</option>
+                                <option>Single Use</option>
                             </select>
 
                         </div>
@@ -99,19 +112,9 @@ const CreateCouponPage = () => {
                             />    
                         </div>
                         <div className="form-group">
-                            <label className="text-muted">Limit per use</label>
-                            <input 
-                                type="number" 
-                                className="form-control" 
-                                onChange={e => setPerUse(e.target.value)} 
-                                value = {perUse} 
-                                min="0"
-                                required/>
-                        </div>
-                        <div className="form-group">
                             <label className="text-muted">Visible to Users? </label>
                             <select
-                                name = "couponType"
+                                name = "isVisible"
                                 type = "boolean"
                                 className = "form-control"
                                 onChange = {e => setIsVisible(e.target.value)}
@@ -124,7 +127,7 @@ const CreateCouponPage = () => {
                         <div className="form-group">
                             <label className="text-muted">Activate Coupon</label>
                             <select
-                                name = "couponType"
+                                name = "isActive"
                                 type = "boolean"
                                 className = "form-control"
                                 onChange = {e => setIsActive(e.target.value)}
@@ -145,7 +148,6 @@ const CreateCouponPage = () => {
                                 <th scope="col">Expiry</th>
                                 <th scope="col">Discount</th>
                                 <th scope="col">Type</th>
-                                <th scope="col">Per User</th>
                                 <th scope="col">Visibility</th>
                                 <th scope="col">Active Status</th>
                                 <th scope="col">Change Status</th>
@@ -159,11 +161,25 @@ const CreateCouponPage = () => {
                                     <td>{new Date(c.expiry).toLocaleDateString()}</td>
                                     <td>{c.discount}</td>
                                     <td>{c.couponType}</td>
-                                    <td>{c.perUse}</td>
                                     <td>{JSON.stringify(c.isVisible)}</td>
                                     <td>{JSON.stringify(c.isActive)}</td>
-                                    <td>Update Box</td>
-                                    <td><DeleteOutlined /></td>
+                                    <td>
+                                    <div className="form-group">
+                                        <label className="text-muted">Activate Coupon</label>
+                                        <select
+                                            name = "isActive"
+                                            type = "boolean"
+                                            className = "form-control"
+                                            onChange = {e => setUpdate(e.target.value)}
+                                        >   
+                                            <option>Select</option>
+                                            <option value="true">Yes</option>
+                                            <option value="false">No</option>
+                                        </select>
+                                        <button onClick={() => handleUpdate(c._id)} className = "btn btn-outline btn-primary mt-2">Update Status</button>
+                                    </div>
+                                    </td>
+                                    <td><DeleteOutlined onClick = {() => handleRemove(c._id)} className = "text-danger pointer"/></td>
                                 </tr>
                             ))}
                         </tbody>  
