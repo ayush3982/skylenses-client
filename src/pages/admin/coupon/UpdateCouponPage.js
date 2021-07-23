@@ -2,14 +2,14 @@ import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {toast} from 'react-toastify'
 import DatePicker from 'react-datepicker'
-import { getCoupons, removeCoupon, createCoupon } from '../../../functions/coupon'
+import { getCoupons, removeCoupon, createCoupon, singleCoupon, updateCoupon } from '../../../functions/coupon'
 import "react-datepicker/dist/react-datepicker.css";
 import {DeleteOutlined} from '@ant-design/icons'
 import AdminNav from '../../../components/nav/AdminNav'
 import { Checkbox } from 'antd';
 import {Link} from "react-router-dom"
 
-const CreateCouponPage = () => {
+const UpdateCouponPage = ({match}) => {
 
     const [name, setName] = useState('')
     const [expiry, setExpiry] = useState('')
@@ -18,43 +18,35 @@ const CreateCouponPage = () => {
     const [isVisible, setIsVisible] = useState(false)
     const [isActive, setIsActive] = useState(false)
     const [loading, setLoading] = useState()
-    const [coupons, setCoupons] = useState([])
+    const [coupon, setCoupon] = useState('')
     const [minCartValue, setMinCartValue] = useState(0)
-
 
     const {user} = useSelector((state) => ({...state}))
 
     useEffect(() => {
-        getCoupons().then(res => setCoupons(res.data))
+        singleCoupon(match.params.name).then(res => {
+            setCoupon(res.data)
+            setName(res.data.name)
+            setExpiry(res.data.expiry) 
+            setCouponType(res.data.couponType)
+            setDiscount(res.data.discount)
+            setIsVisible(res.data.isVisible)
+            setIsActive(res.data.isActive)
+            setMinCartValue(res.data.minCartValue)
+        })
+        
     }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault()//
         setLoading(true)
         console.log(couponType)
-        createCoupon({name, expiry, discount, couponType, isVisible, isActive, minCartValue}, user.token)
+        updateCoupon(match.params.name, {name, expiry, discount, couponType, isVisible, isActive, minCartValue}, user.token)
         .then(res => {
             setLoading(false)
-            setName('')
-            setExpiry()
-            setDiscount(0)
-            setCouponType('')
-            setIsVisible(false)
-            setIsActive(false)
-            setMinCartValue()
-            toast.success(`${res.data.name} successfully created`)
+            toast.success(`${res.data.name} successfully updated`)
             console.log(res.data._id)
-            getCoupons().then(res => setCoupons(res.data))
         }).catch(err => console.log(err))
-    }
-
-    const handleRemove = couponId => {
-        if(window.confirm('Are you sure you want to remove this coupon')) {
-            removeCoupon(couponId, user.token).then(res => {
-                getCoupons().then(res => setCoupons(res.data))
-                toast.error(`${res.data.name} deleted` )
-            }).catch(err => console.log(err))
-        }
     }
 
     return (
@@ -64,8 +56,8 @@ const CreateCouponPage = () => {
                     <AdminNav />
                 </div>
                 <div className="col-md-8">
-                    <h4>Create Coupon</h4>
-                    {JSON.stringify(coupons)}
+                    <h4>Update Coupon:</h4>
+                    {JSON.stringify(coupon)}
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label className="text-muted">Name</label>
@@ -75,7 +67,8 @@ const CreateCouponPage = () => {
                                 onChange={e => setName(e.target.value)} 
                                 value = {name} 
                                 autoFocus 
-                                required/>
+                                required
+                                disabled/>
                         </div>
                         <div className="form-group">
                             <label className="text-muted">Coupon Type</label>
@@ -104,10 +97,10 @@ const CreateCouponPage = () => {
                             <label className="text-muted">Expiry Date</label> <br />
                             <DatePicker 
                                 className="form-control" 
-                                selected = {expiry}
                                 value = {expiry}
                                 onChange = {(date) => setExpiry(date)}
                                 required
+                                disabled
                             />    
                         </div>
                         <div className="form-group">
@@ -115,6 +108,7 @@ const CreateCouponPage = () => {
                             <select
                                 name = "isVisible"
                                 type = "boolean"
+                                value = {isVisible}
                                 className = "form-control"
                                 onChange = {e => setIsVisible(e.target.value)}
                             >   
@@ -129,6 +123,7 @@ const CreateCouponPage = () => {
                                 name = "isActive"
                                 type = "boolean"
                                 className = "form-control"
+                                value = {isActive} 
                                 onChange = {e => setIsActive(e.target.value)}
                             >   
                                 <option>Select</option>
@@ -147,48 +142,10 @@ const CreateCouponPage = () => {
                         </div>
                         <button className="btn btn-outline-primary">Save</button>
                     </form>
-                    <br />
-                    <hr />
-                    <table className="table table-striped">
-                        <thead className="thead-light">
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Expiry</th>
-                                <th scope="col">Discount</th>
-                                <th scope="col">Minimum Cart Value</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Visibility</th>
-                                <th scope="col">Active Status</th>
-                                <th scope="col">Change Status</th>
-                                <th scope="col">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {coupons.map((c) => (
-                                <tr key = {c._id}>
-                                    <td>{c.name}</td>
-                                    <td>{new Date(c.expiry).toLocaleDateString()}</td>
-                                    <td>{c.discount}</td>
-                                    <td>{c.minCartValue}</td>
-                                    <td>{c.couponType}</td>
-                                    <td>{JSON.stringify(c.isVisible)}</td>
-                                    <td>{JSON.stringify(c.isActive)}</td>
-                                    <td>
-                                    <Link to={`/admin/coupon/${c.name}`}>
-                                        <span>
-                                            <p className="btn btn-outline">Update</p> 
-                                        </span>
-                                    </Link>
-                                    </td>
-                                    <td><DeleteOutlined onClick = {() => handleRemove(c._id)} className = "text-danger pointer"/></td>
-                                </tr>
-                            ))}
-                        </tbody>  
-                    </table>
                 </div>
             </div>
         </div>
     )
 }
 
-export default CreateCouponPage
+export default UpdateCouponPage

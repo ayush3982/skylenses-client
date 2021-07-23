@@ -25,6 +25,7 @@ import SubCreate from './pages/admin/sub/SubCreate'
 import SubUpdate from './pages/admin/sub/SubUpdate'
 import ProductCreate from './pages/admin/product/ProductCreate'
 import CreateCouponPage from './pages/admin/coupon/CreateCouponPage'
+import UpdateCouponPage from './pages/admin/coupon/UpdateCouponPage'
 import AllProducts from './pages/admin/product/AllProducts'
 import ProductUpdate from './pages/admin/product/ProductUpdate'
 
@@ -92,6 +93,7 @@ const App = () => {
         <AdminRoute exact path = "/admin/products" component = {AllProducts}/>
         <AdminRoute exact path = "/admin/product/:slug" component = {ProductUpdate}/>
         <AdminRoute exact path = "/admin/coupon" component = {CreateCouponPage}/>
+        <AdminRoute exact path = "/admin/coupon/:name" component = {UpdateCouponPage}/>
       </Switch>
    </>
   );
