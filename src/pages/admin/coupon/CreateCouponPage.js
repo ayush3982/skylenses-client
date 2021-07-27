@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import {toast} from 'react-toastify'
 import DatePicker from 'react-datepicker'
-import { getCoupons, removeCoupon, createCoupon } from '../../../functions/coupon'
+import { getCoupons, removeCoupon, createCoupon, addCoupon } from '../../../functions/coupon'
 import "react-datepicker/dist/react-datepicker.css";
 import {DeleteOutlined} from '@ant-design/icons'
 import AdminNav from '../../../components/nav/AdminNav'

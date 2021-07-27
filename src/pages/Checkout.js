@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import { toast } from 'react-toastify';
-import {getUserCart, saveUserAddress, getUser} from "../functions/user"
+import {getUserCart, saveUserAddress, getUser, applyCoupon} from "../functions/user"
 import {countryData} from "../helpers/countries"
  
 const Checkout = () => {
@@ -29,13 +29,13 @@ const Checkout = () => {
           console.log("user cart res", JSON.stringify(res.data, null, 4));
           setProducts(res.data.products);
           setFullData(res.data)
-          setInternationalTotal(res.data.internationalCartTotal)
           setTotal(res.data.cartTotal);
+          setInternationalTotal(res.data.internationCartTotal)
           console.log(total)
           console.log(internationalTotal)
         });
         getUser(user.token, user.email).then((res) => {
-            console.log(user.token)
+            console.log(res)
             setUserData(res.data)
             setAddress(res.data.billing_address)
             setPhone(res.data.billing_phone)
@@ -50,14 +50,6 @@ const Checkout = () => {
 
     // const {billing_customer_name, billing_address, billing_country, billing_city, billing_phone, billing_email, billing_state, billing_pincode} = userData
 
-    console.log( customerName,
-        address,
-        city,
-        pincode,
-        state,
-        country,
-        email,
-        phone)
 
     const saveAddressToDb = () => {
         saveUserAddress(
@@ -80,8 +72,24 @@ const Checkout = () => {
 
     const handleCountryChange = (e) => {
         setCountry(e.target.value) 
-        setInternationalTotal(fullData.internationCartTotal) 
-        console.log(internationalTotal)
+    }
+
+    const IndianShippingBox = () => {
+        return (
+            <div>
+                Rs 50 shipping if applicable
+                <p>Total: {total}</p>
+            </div>
+        )
+    }
+
+    const InternationalShippingBox = () => {
+        return (
+            <div>
+                <p>Seems like you are shipping to {country}, international shipping will be applied under orders less than 4999</p>
+                {total < 4999 ? (<div>total : {internationalTotal}</div>) : (<div> total : {total}</div>)}
+            </div>
+        )
     }
 
     return (
@@ -134,7 +142,7 @@ const Checkout = () => {
                 <hr />
                 <h4>Got Coupon?</h4>
                 <br />
-                Coupon input and apply button
+
             </div>
             <div className="col-md-6">
                 <h4>Order Summary</h4>
@@ -145,34 +153,16 @@ const Checkout = () => {
                     <div key = {i}>
                         <p>{p.product.title} x {p.count} = {p.price*p.count}</p>
                     </div>
-                ))}
+                ))} 
+                <hr />   
                 {country === "India" ? (
-                     <>
-                        <p>Rs 50 shipping for total below 999 (if applicable)</p>
-                        <hr />
-                        <p>total: {total}</p>
-                     </>
+                    <>{IndianShippingBox()}</>
                 ) : (
-                    <>
-                        <p>Shipping to {country}, additional shipping charges applied</p>
-                        <p>
-                            {total < 4999 ? (
-                               <>
-                                     <p>Rs 1500 shipping applied below INR 4999</p>
-                                     <p>total: {JSON.stringify(fullData.internationCartTotal)}</p>
-                               </>
-                            ) : (
-                                <>
-                                    <p>You are eligible for free shipping</p>
-                                    <p>Total: {total} </p>
-                                </>   
-                            )}
-                        </p>
-                    </>
-                )}    
+                    <>{InternationalShippingBox()}</>
+                )}
                 <div className = "row">
                     <div className = "col-md-6">
-                        <button className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length}>Place Order</button>
+                        <button className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</button>
                     </div>
                 </div>
             </div>
@@ -180,4 +170,4 @@ const Checkout = () => {
     )
 }
 
-export default Checkout
+export default Checkout   

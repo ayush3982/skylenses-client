@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { getProducts} from "../functions/product";
 import ProductCard from '../components/cards/ProductCard';
+// import "../styles/homepage.css"
 
 const Home = () => {
 
@@ -25,20 +26,23 @@ const Home = () => {
   }, [])
 
   return (
-    <>
+    <div className="container-fluid">
       <div className="jumbotron">
-        {loading ? (<h1 className="text-danger h1">Loading...</h1>) : (<h1>All Products</h1>)}
+        {loading ? (<h1 className="text-danger h1">Loading...</h1>) : (<h1>All Products</h1>)} 
       </div>
       <div className="container">
         <div className="row">
+          <br />
+          <br />
+          <br />
           {products.map((product) => (
             <div key = {product._id} className="col-md-4">
               <ProductCard product={product} />
             </div>
           ))}
         </div>
-      </div>
-    </>
+      </div> 
+    </div>
   );
 };
 

@@ -30,4 +30,7 @@ export const updateCoupon = async (couponName, coupon, authtoken) =>
             authtoken 
         }
     }
-    )
+    ) 
+
+export const addCoupon = async (couponName) => 
+    await axios.put(`${process.env.REACT_APP_API}/coupon/add/user/${couponName}`)

@@ -6,6 +6,7 @@ import {Switch, Route} from 'react-router-dom'
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/Home';
+import HomePage from './pages/HomePage';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
@@ -73,6 +74,7 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <Route exact path = "/" component = {Home}/>
+        <Route exact path = "/homepage" component = {HomePage}/>
         <Route exact path = "/shop" component = {Shop}/>
         <Route exact path = "/cart" component = {Cart}/>
         <Route exact path = "/checkout" component = {Checkout}/>

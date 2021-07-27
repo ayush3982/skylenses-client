@@ -25,7 +25,7 @@ export const updateProduct = async (slug, product, authtoken) =>
     headers: {
       authtoken,
     },
-});
+}); 
 
 export const productStar = async (productId, star, authtoken) =>
   await axios.put(
