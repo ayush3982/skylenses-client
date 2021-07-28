@@ -150,6 +150,7 @@ const Checkout = ({history}) => {
         <div className = "row"> 
             <div className = "col-md-6">
                 <h4>Delivery Address</h4>  
+                {JSON.stringify(userData)}
                 <br />
                 <form className = "ml-2 mr-5">
                     <div className = "form-group">
