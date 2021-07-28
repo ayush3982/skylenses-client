@@ -4,11 +4,14 @@ import { toast } from 'react-toastify';
 import {getUserCart, saveUserAddress, getUser, applyCoupon} from "../functions/user"
 import {countryData} from "../helpers/countries"
  
-const Checkout = () => {
+const Checkout = ({history}) => {
 
     const [products, setProducts] = useState([])
     const [total, setTotal] = useState(0)
     const [internationalTotal, setInternationalTotal] = useState(0)
+    const [coupon, setCoupon] = useState('')
+    const [totalAfterDiscount, setTotalAfterDiscount] = useState(0)
+    const [discountError, setDiscountError] = useState('')
     const [fullData, setFullData] = useState('')
     const dispatch = useDispatch();
     const { user } = useSelector((state) => ({ ...state }));
@@ -79,6 +82,12 @@ const Checkout = () => {
             <div>
                 Rs 50 shipping if applicable
                 <p>Total: {total}</p>
+                {totalAfterDiscount > 0 && (
+                    <div>
+                        <p className = "text-success">Coupon Applied</p>
+                        <b><p>Total Payable: {totalAfterDiscount} </p></b>
+                    </div>
+                )}
             </div>
         )
     }
@@ -91,6 +100,51 @@ const Checkout = () => {
             </div>
         )
     }
+
+    const applyDiscountCoupon = () => {
+        applyCoupon(user.token, coupon)
+        .then(res => {
+            console.log('RES ON COUPON', res.data)
+            if(res.data) {
+                setTotalAfterDiscount(res.data)
+                console.log(totalAfterDiscount)
+                dispatch({
+                    type: "COUPON_APPLIED",
+                    payload: true,
+                });
+            }
+            if(res.data.err) {
+                setDiscountError(res.data.err)
+                dispatch({
+                    type: "COUPON_APPLIED",
+                    payload: false,
+                  });
+            }
+        })
+    }
+
+    const removeCoupon = () => {
+        setCoupon('');
+        setTotalAfterDiscount(0)
+    }
+
+    const showApplyCoupon = () => (
+        <>
+          <input   
+            onChange={(e) => {
+              setCoupon(e.target.value);
+              setDiscountError("");
+            }}
+            value={coupon}
+            type="text"
+            className="form-control"
+          />
+          <button onClick={applyDiscountCoupon} className="btn btn-primary mt-2">
+            Apply
+          </button>
+          <button onClick={removeCoupon} disabled = {!coupon} className="btn btn-danger mt-2">Remove Coupon</button>
+        </>
+    );
 
     return (
         <div className = "row"> 
@@ -140,8 +194,6 @@ const Checkout = () => {
                 </form>
                 <button className="btn btn-primary mt-2" onClick={saveAddressToDb} disabled = {country === "Select Country"}>Confirm Address</button>
                 <hr />
-                <h4>Got Coupon?</h4>
-                <br />
 
             </div>
             <div className="col-md-6">
@@ -162,9 +214,15 @@ const Checkout = () => {
                 )}
                 <div className = "row">
                     <div className = "col-md-6">
-                        <button className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</button>
+                        <button onClick={() => history.push('/payment')} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</button>
                     </div>
                 </div>
+                {discountError && <p className = "text-danger p-2">{discountError}</p>}
+                {(country === "Select Country" || country === "India") && (
+                    <div>
+                        {showApplyCoupon()}
+                    </div>
+                )}
             </div>
         </div>
     )
