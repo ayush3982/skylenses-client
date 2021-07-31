@@ -316,6 +316,7 @@ const Checkout = ({history}) => {
                 <h4>Delivery Address</h4>  
                 <br />
                 {JSON.stringify(couponApplied)}
+                {JSON.stringify(userData.coins)}
                 <form className = "ml-2 mr-5">
                     <div className = "form-group">
                         <label>Customer Name</label>
@@ -396,7 +397,7 @@ const Checkout = ({history}) => {
                     
                 </div>
                 {discountError && <p className = "text-danger p-2">{discountError}</p>}
-                {(country === "Select Country" || country === "India") && (
+                {(country === "Select Country" || country === "India") && (total >= 999) && (  
                     <div>
                         {showApplyCoupon()}
                     </div>
