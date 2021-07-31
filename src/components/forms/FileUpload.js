@@ -20,7 +20,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
           files[i],
           720,
           720,
-          "JPEG",
+          "PNG",
           100,
           0,
           (uri) => {

@@ -72,3 +72,10 @@ export const applyCoupon = async (authtoken, coupon) =>
       }
     }
   )
+
+export const buyCart = async (coupon, cartID) => {
+  await axios.get(
+    `${process.env.REACT_APP_API}/order/${cartID}`,
+    { couponApplied: coupon}
+  )
+}

@@ -11,12 +11,12 @@ const Checkout = ({history}) => {
     const [products, setProducts] = useState([])
     const [total, setTotal] = useState(0)
     const [internationalTotal, setInternationalTotal] = useState(0)
-    const [coupon, setCoupon] = useState('')
+    const [couponApplied, setCouponApplied] = useState('')
     const [totalAfterDiscount, setTotalAfterDiscount] = useState(0)
     const [discountError, setDiscountError] = useState('')
     const [fullData, setFullData] = useState('')
     const dispatch = useDispatch();
-    const { user } = useSelector((state) => ({ ...state }));
+    const { user, coupon } = useSelector((state) => ({ ...state }));
 
     const [address, setAddress] = useState('')
     const [phone, setPhone] = useState('')
@@ -111,7 +111,7 @@ const Checkout = ({history}) => {
     }
 
     const applyDiscountCoupon = () => {
-        applyCoupon(user.token, coupon)
+        applyCoupon(user.token, couponApplied)
         .then(res => {
             console.log('RES ON COUPON', res.data)
             if(res.data) {
@@ -133,7 +133,7 @@ const Checkout = ({history}) => {
     }
 
     const removeCoupon = () => {
-        setCoupon('');
+        setCouponApplied('');
         setTotalAfterDiscount(0)
     }
 
@@ -141,21 +141,32 @@ const Checkout = ({history}) => {
         <>
           <input   
             onChange={(e) => {
-              setCoupon(e.target.value);
+              setCouponApplied(e.target.value);
               setDiscountError("");  
             }}
-            value={coupon}
+            value={couponApplied}
             type="text"
             className="form-control"
           />
           <button onClick={applyDiscountCoupon} className="btn btn-primary mt-2">
             Apply
           </button>
-          <button onClick={removeCoupon} disabled = {!coupon} className="btn btn-danger mt-2">Remove Coupon</button>
+          <button onClick={removeCoupon} disabled = {!couponApplied} className="btn btn-danger mt-2">Remove Coupon</button>
         </>
     );
 
     const buyNow = async (cartID) => {
+        getUserCart(user.token).then((res) => {
+            console.log("user cart res", JSON.stringify(res.data, null, 4));
+            setProducts(res.data.products);
+            setFullData(res.data)
+            setTotal(res.data.cartTotal);
+            setInternationalTotal(res.data.internationCartTotal)
+            console.log(total)
+            console.log(internationalTotal)
+            setCartId(res.data._id);
+            console.log(cartId)       
+          });
         const res = await axios.get(`${process.env.REACT_APP_API}/order/${cartID}`)
         console.log(res);
         if(res.status === 200) {
@@ -199,6 +210,103 @@ const Checkout = ({history}) => {
                     alert(response.error.metadata.order_id);
                     alert(response.error.metadata.payment_id);
             });
+            
+        }
+    }
+
+    const buyNowInternational = async (cartID) => {
+        const res = await axios.get(`${process.env.REACT_APP_API}/order/international/${cartID}`)
+        console.log(res);
+        if(res.status === 200) {
+            const options = {
+                "key": process.env.RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
+                "amount": res.data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "Sky Cosmetic Lenses",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": res.data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response){
+                    // alert(response.razorpay_payment_id);
+                    // alert(response.razorpay_order_id);
+                    // alert(response.razorpay_signature)
+                    setOrderId(response.razorpay_order_id)
+                    setPaymentId(response.razorpay_payment_id)
+                    setSignature(response.razorpay_signature)
+                    setPayment(true)
+                },
+                "prefill": {
+                    "name": customerName,
+                    "email": email,
+                    "contact": phone
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new window.Razorpay(options);
+            rzp1.open()
+            rzp1.on('payment.failed', function (response){
+                    alert(response.error.code);
+                    alert(response.error.description);
+                    alert(response.error.source);
+                    alert(response.error.step);
+                    alert(response.error.reason);
+                    alert(response.error.metadata.order_id);
+                    alert(response.error.metadata.payment_id);
+            });
+            
+        }
+    }
+
+    const buyNowCoupon = async (cartID) => {
+        const res = await axios.get(`${process.env.REACT_APP_API}/order/coupon/${cartID}`)
+        console.log(res);
+        if(res.status === 200) {
+            const options = {
+                "key": process.env.RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
+                "amount": res.data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "Sky Cosmetic Lenses",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": res.data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response){
+                    // alert(response.razorpay_payment_id);
+                    // alert(response.razorpay_order_id);
+                    // alert(response.razorpay_signature)
+                    setOrderId(response.razorpay_order_id)
+                    setPaymentId(response.razorpay_payment_id)
+                    setSignature(response.razorpay_signature)
+                    setPayment(true)
+                },
+                "prefill": {
+                    "name": customerName,
+                    "email": email,
+                    "contact": phone
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new window.Razorpay(options);
+            rzp1.open()
+            rzp1.on('payment.failed', function (response){
+                    alert(response.error.code);
+                    alert(response.error.description);
+                    alert(response.error.source);
+                    alert(response.error.step);
+                    alert(response.error.reason);
+                    alert(response.error.metadata.order_id);
+                    alert(response.error.metadata.payment_id);
+            });
+            
         }
     }
 
@@ -207,6 +315,7 @@ const Checkout = ({history}) => {
             <div className = "col-md-6">
                 <h4>Delivery Address</h4>  
                 <br />
+                {JSON.stringify(couponApplied)}
                 <form className = "ml-2 mr-5">
                     <div className = "form-group">
                         <label>Customer Name</label>
@@ -269,9 +378,22 @@ const Checkout = ({history}) => {
                     <>{InternationalShippingBox()}</>
                 )}
                 <div className = "row">
-                    <div className = "col-md-6">
-                        <button onClick={() => buyNow(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</button>
-                    </div>
+                    {(country === "India" || total >= 4999) && (couponApplied === '') && (
+                        <div className = "col-md-6">
+                            <button onClick={() => buyNow(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</button>
+                        </div>
+                    )}
+                    {(country === "India" || total >= 4999) && (couponApplied !== '') && (
+                        <div className = "col-md-6">
+                            <button onClick={() => buyNowCoupon(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Dis</button>
+                        </div>
+                    )}
+                    {(country !== "India" && total < 4999) && (
+                        <div className = "col-md-6">
+                            <button onClick={() => buyNowInternational(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Int</button>
+                        </div>
+                    )} 
+                    
                 </div>
                 {discountError && <p className = "text-danger p-2">{discountError}</p>}
                 {(country === "Select Country" || country === "India") && (
