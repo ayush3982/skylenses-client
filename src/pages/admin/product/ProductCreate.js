@@ -48,6 +48,7 @@ const ProductCreate = () => {
     const [subOptions, setSubOptions] = useState([])
     const [showSub, setShowSub] = useState(false)
     const [loading, setLoading] = useState(false);
+    const [categoriesDropdown, setCategoriesDropdown] = useState([])
 
     const {user} = useSelector((state) => ({...state}))
 
@@ -55,12 +56,14 @@ const ProductCreate = () => {
 
     const loadCategories = () => getCategories().then(c => setValues({...values, categories: c.data}))
     const loadSubs = () => getSubs().then(s => setValues({...values, subs: s.data}))
+    const loadCategoriesDropdown = () => getCategories().then(c => setCategoriesDropdown(c.data))
     
     useEffect(() => {
         loadCategories()
         loadSubs()
+        loadCategoriesDropdown()
     }, [])
-    
+     
          
 
     const handleSubmit = (e) => {
@@ -113,11 +116,12 @@ const ProductCreate = () => {
                         </div>
                         <form onSubmit={handleSubmit}>
                             {JSON.stringify(categories)}
+                            {JSON.stringify(categoriesDropdown)}     
                             <div className="form-group">
                                 <label>Category (Months)</label>
                                 <select name="category" className="form-control" onChange={handleCategoryChange}>
                                     <option>Select Category</option>
-                                    {values.categories.length > 0 && values.categories.map((c) => (
+                                    {categoriesDropdown.length > 0 && categoriesDropdown.map((c) => (
                                         <option value={c._id} key={c._id}>
                                             {c.name}
                                         </option>

@@ -265,7 +265,11 @@ const Checkout = ({history}) => {
                     alert(response.error.metadata.order_id);
                     alert(response.error.metadata.payment_id);
             });
-            
+            if(fullData.cartTotal >= 1499) {
+                const addMore = 200;
+                console.log(fullData.cartTotal);
+                addCoins(user.token, user.email, addMore)  
+            }
         }
     }
 
@@ -313,7 +317,6 @@ const Checkout = ({history}) => {
                     alert(response.error.metadata.order_id);
                     alert(response.error.metadata.payment_id);
             });
-            
         }
     }
 
@@ -361,6 +364,11 @@ const Checkout = ({history}) => {
                     alert(response.error.metadata.order_id);
                     alert(response.error.metadata.payment_id);
             });
+            if(fullData.cartTotal >= 1499) {
+                const addMore = 200;
+                console.log(fullData.cartTotal);
+                addCoins(user.token, user.email, addMore)  
+            }
             
         }
     }
@@ -419,124 +427,136 @@ const Checkout = ({history}) => {
     }
 
     return (
-        <div className = "row"> 
-            <div className = "col-md-6">
-                <h4>Delivery Address</h4>  
-                <br />
-                {JSON.stringify(userData.coins)}
-                <form className = "ml-2 mr-5">
-                    <div className = "form-group">
-                        <label>Customer Name</label>
-                        <input value = {customerName} className = "form-control" type = "text" onChange = {(e) => setCustomerName(e.target.value)} required/>
-                    </div>
-                    <div className = "form-group">
-                        <label>Address</label>
-                        <textarea value = {address} className = "form-control" type = "text" onChange = {(e) => setAddress(e.target.value)} required/>
-                    </div>
-                    <div className = "form-group">
-                        <label>Country</label>
-                        <select name="sub" className="form-control" type = "text" onChange={handleCountryChange} value = {country} required>
-                            <option>Select Country</option>
-                                {countryData.length > 0 && countryData.map((c) => (
-                                    <option value={c.name}  key={c._id} data = {c.id}>
-                                        {c.name}
-                                    </option>
-                                ))}
-                        </select>
-                    </div>
-                    <div className = "form-group">
-                        <label>State</label>
-                        <input value = {state} className = "form-control" type = "text" onChange = {(e) => setState(e.target.value)} required/>
-                    </div>
-                    <div className = "form-group">
-                        <label>City</label>
-                        <input value = {city}  className = "form-control" type = "text" onChange = {(e) => setCity(e.target.value)} required/>
-                    </div>
-                    <div className = "form-group">
-                        <label>Pincode/ZIP Code</label>
-                        <input value = {pincode} className = "form-control" type = "number" inputmode="numeric" onChange = {(e) => setPincode(e.target.value)} required/>
-                    </div>
-                    <div className = "form-group">
-                        <label>Email</label>
-                        <input value = {email} className = "form-control" type = "email" onChange = {(e) => setEmail(e.target.value)} required/>
-                    </div>
-                    <div className = "form-group">
-                        <label>Phone Number</label>
-                        <input value = {phone} className = "form-control" type = "number" onChange = {(e) => setPhone(e.target.value)} required/>
-                    </div>
-                </form>
-                <button className="btn btn-primary mt-2" onClick={saveAddressToDb} disabled = {country === "Select Country"}>Confirm Address</button>
-                <hr />
-
-            </div>
-            <div className="col-md-6">
-                <h4>Order Summary</h4>
-                <hr />
-                <p>Products: {products.length}</p>
-                <hr />
-                {products.map((p,i) => (
-                    <div key = {i}>
-                        <p>{p.product.title} x {p.count} = {p.price*p.count}</p>
-                    </div>
-                ))} 
-                <hr />   
-                {country === "India" ? (
-                    <>{IndianShippingBox()}</>
-                ) : (
-                    <>{InternationalShippingBox()}</>
-                )}
-                <div className = "row">
-                    {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === false) && (
-                        <div className = "col-md-6">
-                            <button onClick={() => buyNow(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</button>
-                        </div>
-                    )}
-                    {(country === "India" || total >= 4999) && (couponApplied !== '') && (coinsSuccess === false) && (  
-                        <div className = "col-md-6">
-                            <button onClick={() => buyNowCoupon(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Dis</button>
-                        </div>
-                    )}
-                    {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === true) && (
-                        <div className = "col-md-6">
-                            <button onClick={() => buyNowCoins(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Coin</button>
-                        </div>
-                    )}
-                    {(country !== "India" && total < 4999) && (
-                        <div className = "col-md-6">
-                            <button onClick={() => buyNowInternational(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Int</button>
-                        </div>
-                    )} 
-                    
-                </div>
-                {discountError && <p className = "text-danger p-2">{discountError}</p>}
-                {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === false) &&(  
-                    <>
-                        <div>
-                            {showApplyCoupon()}
-                        </div>
-                        <div>
-                            <button className="btn btn-secondary mt-3" onClick={handleCoins}>Use Coins Instead?</button>
-                        </div>
-                    </>
-                )}
-                {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === true) &&(  
-                    <>
-                        <div>
-                            {showApplyCoins()}
-                        </div>
-                    </>
-                )}
+        <div>
+            {payment === true && (
                 <div>
-                    {JSON.stringify(coinsNumber)}
-                    {payment && (
-                        <div>
-                            <p>Payment Id: {paymentId}</p>
-                            <p>Order Id: {orderId}</p>
-                            <p>Signature: {signature}</p>
-                        </div>
+                    <p>Payment Success</p>
+                    {fullData.cartTotal >= 1499 && (
+                        <p className="text-success">You got 200 coins!</p>
                     )}
                 </div>
+            )}
+            {payment === false && (
+                <div className = "row"> 
+                <div className = "col-md-6">
+                    <h4>Delivery Address</h4>  
+                    <br />
+                    {JSON.stringify(userData.coins)}
+                    <form className = "ml-2 mr-5">
+                        <div className = "form-group">
+                            <label>Customer Name</label>
+                            <input value = {customerName} className = "form-control" type = "text" onChange = {(e) => setCustomerName(e.target.value)} required/>
+                        </div>
+                        <div className = "form-group">
+                            <label>Address</label>
+                            <textarea value = {address} className = "form-control" type = "text" onChange = {(e) => setAddress(e.target.value)} required/>
+                        </div>
+                        <div className = "form-group">
+                            <label>Country</label>
+                            <select name="sub" className="form-control" type = "text" onChange={handleCountryChange} value = {country} required>
+                                <option>Select Country</option>
+                                    {countryData.length > 0 && countryData.map((c) => (
+                                        <option value={c.name}  key={c._id} data = {c.id}>
+                                            {c.name}
+                                        </option>
+                                    ))}
+                            </select>
+                        </div>
+                        <div className = "form-group">
+                            <label>State</label>
+                            <input value = {state} className = "form-control" type = "text" onChange = {(e) => setState(e.target.value)} required/>
+                        </div>
+                        <div className = "form-group">
+                            <label>City</label>
+                            <input value = {city}  className = "form-control" type = "text" onChange = {(e) => setCity(e.target.value)} required/>
+                        </div>
+                        <div className = "form-group">
+                            <label>Pincode/ZIP Code</label>
+                            <input value = {pincode} className = "form-control" type = "number" inputmode="numeric" onChange = {(e) => setPincode(e.target.value)} required/>
+                        </div>
+                        <div className = "form-group">
+                            <label>Email</label>
+                            <input value = {email} className = "form-control" type = "email" onChange = {(e) => setEmail(e.target.value)} required/>
+                        </div>
+                        <div className = "form-group">
+                            <label>Phone Number</label>
+                            <input value = {phone} className = "form-control" type = "number" onChange = {(e) => setPhone(e.target.value)} required/>
+                        </div>
+                    </form>
+                    <button className="btn btn-primary mt-2" onClick={saveAddressToDb} disabled = {country === "Select Country"}>Confirm Address</button>
+                    <hr />
+    
+                </div>
+                <div className="col-md-6">
+                    <h4>Order Summary</h4>
+                    <hr />
+                    <p>Products: {products.length}</p>
+                    <hr />
+                    {products.map((p,i) => (
+                        <div key = {i}>
+                            <p>{p.product.title} x {p.count} = {p.price*p.count}</p>
+                        </div>
+                    ))} 
+                    <hr />   
+                    {country === "India" ? (
+                        <>{IndianShippingBox()}</>
+                    ) : (
+                        <>{InternationalShippingBox()}</>
+                    )}
+                    <div className = "row">
+                        {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === false) && (
+                            <div className = "col-md-6">
+                                <button onClick={() => buyNow(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</button>
+                            </div>
+                        )}
+                        {(country === "India" || total >= 4999) && (couponApplied !== '') && (coinsSuccess === false) && (  
+                            <div className = "col-md-6">
+                                <button onClick={() => buyNowCoupon(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Dis</button>
+                            </div>
+                        )}
+                        {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === true) && (
+                            <div className = "col-md-6">
+                                <button onClick={() => buyNowCoins(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Coin</button>
+                            </div>
+                        )}
+                        {(country !== "India" && total < 4999) && (
+                            <div className = "col-md-6">
+                                <button onClick={() => buyNowInternational(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Int</button>
+                            </div>
+                        )} 
+                        
+                    </div>
+                    {discountError && <p className = "text-danger p-2">{discountError}</p>}
+                    {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === false) &&(  
+                        <>
+                            <div>
+                                {showApplyCoupon()}
+                            </div>
+                            <div>
+                                <button className="btn btn-secondary mt-3" onClick={handleCoins}>Use Coins Instead?</button>
+                            </div>
+                        </>
+                    )}
+                    {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === true) &&(  
+                        <>
+                            <div>
+                                {showApplyCoins()}
+                            </div>
+                        </>
+                    )}
+                    <div>
+                        {JSON.stringify(coinsNumber)}
+                        {payment && (
+                            <div>
+                                <p>Payment Id: {paymentId}</p>
+                                <p>Order Id: {orderId}</p>
+                                <p>Signature: {signature}</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
+            )}
         </div>
     )
 }

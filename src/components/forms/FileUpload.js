@@ -19,10 +19,10 @@ const FileUpload = ({ values, setValues, setLoading }) => {
         Resizer.imageFileResizer(
           files[i],
           720,
-          720,
+          720,      
           "PNG",
           100,
-          0,
+          0, 
           (uri) => {
             // console.log(uri);
             axios
