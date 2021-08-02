@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import { toast } from 'react-toastify';
-import {getUserCart, saveUserAddress, getUser, applyCoupon} from "../functions/user"
+import {getUserCart, saveUserAddress, getUser, applyCoupon, applyCoins, addCoins, removeCoins} from "../functions/user"
 import {countryData} from "../helpers/countries"
 
 import axios from "axios";
@@ -15,6 +15,11 @@ const Checkout = ({history}) => {
     const [totalAfterDiscount, setTotalAfterDiscount] = useState(0)
     const [discountError, setDiscountError] = useState('')
     const [fullData, setFullData] = useState('')
+    const [coins, setCoins] = useState('');
+    const [usingCoins, setUsingCoins] = useState(false);
+    const [coinsNumber, setCoinsNumber] = useState(0)
+    const [coinsSuccess, setCoinsSuccess] = useState(false);
+    const [totalAfterCoins, setTotalAfterCoins] = useState('')
     const dispatch = useDispatch();
     const { user, coupon } = useSelector((state) => ({ ...state }));
 
@@ -57,6 +62,7 @@ const Checkout = ({history}) => {
             setPincode(res.data.billing_pincode)
             setCountry(res.data.billing_country)
             setEmail(res.data.billing_email)
+            setCoins(res.data.coins);
         })
     }, []);
 
@@ -97,6 +103,12 @@ const Checkout = ({history}) => {
                         <b><p>Total Payable: {totalAfterDiscount} </p></b>
                     </div>
                 )}
+                {coinsSuccess && (
+                    <div>
+                        <p className = "text-success">Coins Redeemed</p>
+                        <b><p>Total Payable: {totalAfterCoins} works</p></b>
+                    </div>
+                )}
             </div>
         )
     }
@@ -132,9 +144,23 @@ const Checkout = ({history}) => {
         })
     }
 
+    const applyDiscountCoin = async () => {
+        let discount = (coinsNumber * 0.25);
+        console.log(discount)
+        let newTotal = total - discount
+        await setTotalAfterCoins(newTotal)
+        console.log(totalAfterCoins)
+        setCoinsSuccess(true)
+        applyCoins(user.token, cartId, discount) 
+        .then(res => {
+            alert('does something')
+        })
+    }
+
     const removeCoupon = () => {
         setCouponApplied('');
         setTotalAfterDiscount(0)
+        setCoinsNumber(0);
     }
 
     const showApplyCoupon = () => (
@@ -154,6 +180,35 @@ const Checkout = ({history}) => {
           <button onClick={removeCoupon} disabled = {!couponApplied} className="btn btn-danger mt-2">Remove Coupon</button>
         </>
     );
+
+    const showApplyCoins = () => (
+        <>
+          <input   
+            onChange={(e) => {
+                setCoinsNumber(e.target.value);
+                setDiscountError("");  
+            }}
+            value={coinsNumber}
+            type="number"
+            min="50" max="200"
+            className="form-control"
+          />
+          <button onClick={applyDiscountCoin} className="btn btn-primary mt-2">
+            Apply
+          </button>
+          <p className="text-success">You have {coins} coins</p>
+          <button onClick={coinsFalse} className="btn btn-danger mt-2">Use Coupons instead?</button>
+        </>
+    );
+
+    const handleCoins = () => {
+        setUsingCoins(true);
+    }
+
+    const coinsFalse = () => {
+        setUsingCoins(false);
+        setCoinsSuccess(false);
+    }
 
     const buyNow = async (cartID) => {
         getUserCart(user.token).then((res) => {
@@ -310,12 +365,64 @@ const Checkout = ({history}) => {
         }
     }
 
+    const buyNowCoins = async (cartID) => {
+        const res = await axios.get(`${process.env.REACT_APP_API}/order/coin/${cartID}`)
+        console.log(res);
+        if(res.status === 200) {
+            const options = {
+                "key": process.env.RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
+                "amount": res.data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "Sky Cosmetic Lenses",
+                "description": "Test Transaction",
+                "image": "https://example.com/your_logo",
+                "order_id": res.data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "handler": function (response){
+                    // alert(response.razorpay_payment_id);
+                    // alert(response.razorpay_order_id);
+                    // alert(response.razorpay_signature)
+                    setOrderId(response.razorpay_order_id)
+                    setPaymentId(response.razorpay_payment_id)
+                    setSignature(response.razorpay_signature)
+                    setPayment(true)
+                },
+                "prefill": {
+                    "name": customerName,
+                    "email": email,
+                    "contact": phone
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new window.Razorpay(options);
+            rzp1.open()
+            rzp1.on('payment.failed', function (response){
+                    alert(response.error.code);
+                    alert(response.error.description);
+                    alert(response.error.source);
+                    alert(response.error.step);
+                    alert(response.error.reason);
+                    alert(response.error.metadata.order_id);
+                    alert(response.error.metadata.payment_id);
+            });
+            removeCoins(user.token, user.email, coinsNumber);
+            if(fullData.cartTotal >= 1499) {
+                const addMore = 200;
+                console.log(fullData.cartTotal);
+                addCoins(user.token, user.email, addMore)  
+            }
+        }
+    }
+
     return (
         <div className = "row"> 
             <div className = "col-md-6">
                 <h4>Delivery Address</h4>  
                 <br />
-                {JSON.stringify(couponApplied)}
                 {JSON.stringify(userData.coins)}
                 <form className = "ml-2 mr-5">
                     <div className = "form-group">
@@ -379,14 +486,19 @@ const Checkout = ({history}) => {
                     <>{InternationalShippingBox()}</>
                 )}
                 <div className = "row">
-                    {(country === "India" || total >= 4999) && (couponApplied === '') && (
+                    {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === false) && (
                         <div className = "col-md-6">
                             <button onClick={() => buyNow(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</button>
                         </div>
                     )}
-                    {(country === "India" || total >= 4999) && (couponApplied !== '') && (
+                    {(country === "India" || total >= 4999) && (couponApplied !== '') && (coinsSuccess === false) && (  
                         <div className = "col-md-6">
                             <button onClick={() => buyNowCoupon(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Dis</button>
+                        </div>
+                    )}
+                    {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === true) && (
+                        <div className = "col-md-6">
+                            <button onClick={() => buyNowCoins(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Coin</button>
                         </div>
                     )}
                     {(country !== "India" && total < 4999) && (
@@ -397,12 +509,25 @@ const Checkout = ({history}) => {
                     
                 </div>
                 {discountError && <p className = "text-danger p-2">{discountError}</p>}
-                {(country === "Select Country" || country === "India") && (total >= 999) && (  
-                    <div>
-                        {showApplyCoupon()}
-                    </div>
+                {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === false) &&(  
+                    <>
+                        <div>
+                            {showApplyCoupon()}
+                        </div>
+                        <div>
+                            <button className="btn btn-secondary mt-3" onClick={handleCoins}>Use Coins Instead?</button>
+                        </div>
+                    </>
+                )}
+                {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === true) &&(  
+                    <>
+                        <div>
+                            {showApplyCoins()}
+                        </div>
+                    </>
                 )}
                 <div>
+                    {JSON.stringify(coinsNumber)}
                     {payment && (
                         <div>
                             <p>Payment Id: {paymentId}</p>

@@ -79,3 +79,39 @@ export const buyCart = async (coupon, cartID) => {
     { couponApplied: coupon}
   )
 }
+
+export const applyCoins = async (authtoken, cartID, discount) => {
+  await axios.post(
+    `${process.env.REACT_APP_API}/user/coins/${cartID}`,
+    {discount},
+    {
+      headers : {
+        authtoken,
+      }
+    }
+  )
+}
+
+export const addCoins = async (authtoken, email, coins) => {
+  await axios.post(
+    `${process.env.REACT_APP_API}/user/addCoins/${email}`, 
+    {coins},
+    {
+      headers : {
+        authtoken,
+      }
+    }
+  )
+}
+
+export const removeCoins = async (authtoken, email, coins) => {
+  await axios.post(
+    `${process.env.REACT_APP_API}/user/removeCoins/${email}`, 
+    {coins},
+    {
+      headers : {
+        authtoken,
+      }
+    }
+  )
+}
