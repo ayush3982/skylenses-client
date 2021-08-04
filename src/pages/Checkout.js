@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import { toast } from 'react-toastify';
-import {getUserCart, saveUserAddress, getUser, applyCoupon, applyCoins, addCoins, removeCoins} from "../functions/user"
+import {getUserCart, saveUserAddress, getUser, applyCoupon, applyCoins, addCoins, removeCoins, addSolution, createOrder, emptyUserCart} from "../functions/user"
 import {countryData} from "../helpers/countries"
 
 import axios from "axios";
@@ -20,6 +20,7 @@ const Checkout = ({history}) => {
     const [coinsNumber, setCoinsNumber] = useState(0)
     const [coinsSuccess, setCoinsSuccess] = useState(false);
     const [totalAfterCoins, setTotalAfterCoins] = useState('')
+    const [liquid, setLiquid] = useState(false);
     const dispatch = useDispatch();
     const { user, coupon } = useSelector((state) => ({ ...state }));
 
@@ -201,13 +202,34 @@ const Checkout = ({history}) => {
         </>
     );
 
-    const handleCoins = () => {
+   
+
+    const handleCoins = () => {    
         setUsingCoins(true);
     }
 
     const coinsFalse = () => {
         setUsingCoins(false);
         setCoinsSuccess(false);
+    }
+
+    const setOrder = () => {
+        if(fullData.cartTotal >= 0 && payment === true) {
+            createOrder(paymentId, user.token)
+            .then(res => {
+                if(res.data.ok) {
+                    // empty cart from local storage
+                    if(typeof window.localStorage !== 'undefined') localStorage.removeItem("cart")
+                    // empty cart from redux
+                    dispatch({
+                        type: 'ADD_TO_CART',
+                        payload: [],
+                    })
+                    // empty cart from database
+                    emptyUserCart(user.token)
+                }
+            })
+        }
     }
 
     const buyNow = async (cartID) => {
@@ -268,8 +290,13 @@ const Checkout = ({history}) => {
             if(fullData.cartTotal >= 1499) {
                 const addMore = 200;
                 console.log(fullData.cartTotal);
-                addCoins(user.token, user.email, addMore)  
+                addCoins(user.token, user.email, addMore) 
             }
+            if(fullData.cartTotal >= 999) {
+                setLiquid(true)
+                addSolution(user.token, fullData._id, true)
+            }
+            setOrder()
         }
     }
 
@@ -544,6 +571,7 @@ const Checkout = ({history}) => {
                             </div>
                         </>
                     )}
+    
                     <div>
                         {JSON.stringify(coinsNumber)}
                         {payment && (
@@ -561,4 +589,4 @@ const Checkout = ({history}) => {
     )
 }
 
-export default Checkout   
+export default Checkout       

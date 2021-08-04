@@ -115,3 +115,26 @@ export const removeCoins = async (authtoken, email, coins) => {
     }
   )
 }
+
+export const addSolution = async (authtoken, cartID, liquid) => {
+  await axios.post(
+    `${process.env.REACT_APP_API}/user/solution/${cartID}`,
+    {liquid},
+    {
+      headers : {
+        authtoken
+      }
+    }
+  )
+}
+
+export const createOrder = async (razorpayId, authtoken) => 
+  await axios.post(
+    `${process.env.REACT_APP_API}/user/order`,
+    {razorpayId},
+    {
+      headers : {
+        authtoken
+      }
+    }
+  )

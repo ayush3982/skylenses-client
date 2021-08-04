@@ -18,7 +18,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
       for (let i = 0; i < files.length; i++) {
         Resizer.imageFileResizer(
           files[i],
-          720,
+          1000,
           720,      
           "PNG",
           100,
