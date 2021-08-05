@@ -213,25 +213,6 @@ const Checkout = ({history}) => {
         setCoinsSuccess(false);
     }
 
-    const setOrder = () => {
-        if(fullData.cartTotal >= 0 && payment === true) {
-            createOrder(paymentId, user.token)
-            .then(res => {
-                if(res.data.ok) {
-                    // empty cart from local storage
-                    if(typeof window.localStorage !== 'undefined') localStorage.removeItem("cart")
-                    // empty cart from redux
-                    dispatch({
-                        type: 'ADD_TO_CART',
-                        payload: [],
-                    })
-                    // empty cart from database
-                    emptyUserCart(user.token)
-                }
-            })
-        }
-    }
-
     const buyNow = async (cartID) => {
         getUserCart(user.token).then((res) => {
             console.log("user cart res", JSON.stringify(res.data, null, 4));
@@ -263,6 +244,21 @@ const Checkout = ({history}) => {
                     setPaymentId(response.razorpay_payment_id)
                     setSignature(response.razorpay_signature)
                     setPayment(true)
+                    const sendId = response.razorpay_payment_id
+                        createOrder(sendId, user.token)
+                        .then(res => {
+                            if(res.data.ok) {
+                                // empty cart from local storage
+                                if(typeof window.localStorage !== 'undefined') localStorage.removeItem("cart")
+                                // empty cart from redux
+                                dispatch({
+                                    type: 'ADD_TO_CART',
+                                    payload: [],
+                                })
+                                // empty cart from database
+                                emptyUserCart(user.token)
+                            }
+                        })
                 },
                 "prefill": {
                     "name": customerName,
@@ -296,7 +292,6 @@ const Checkout = ({history}) => {
                 setLiquid(true)
                 addSolution(user.token, fullData._id, true)
             }
-            setOrder()
         }
     }
 
@@ -320,6 +315,21 @@ const Checkout = ({history}) => {
                     setPaymentId(response.razorpay_payment_id)
                     setSignature(response.razorpay_signature)
                     setPayment(true)
+                    const sendId = response.razorpay_payment_id
+                        createOrder(sendId, user.token)
+                        .then(res => {
+                            if(res.data.ok) {
+                                // empty cart from local storage
+                                if(typeof window.localStorage !== 'undefined') localStorage.removeItem("cart")
+                                // empty cart from redux
+                                dispatch({
+                                    type: 'ADD_TO_CART',
+                                    payload: [],
+                                })
+                                // empty cart from database
+                                emptyUserCart(user.token)
+                            }
+                        })
                 },
                 "prefill": {
                     "name": customerName,
@@ -367,6 +377,21 @@ const Checkout = ({history}) => {
                     setPaymentId(response.razorpay_payment_id)
                     setSignature(response.razorpay_signature)
                     setPayment(true)
+                    const sendId = response.razorpay_payment_id
+                        createOrder(sendId, user.token)
+                        .then(res => {
+                            if(res.data.ok) {
+                                // empty cart from local storage
+                                if(typeof window.localStorage !== 'undefined') localStorage.removeItem("cart")
+                                // empty cart from redux
+                                dispatch({
+                                    type: 'ADD_TO_CART',
+                                    payload: [],
+                                })
+                                // empty cart from database
+                                emptyUserCart(user.token)
+                            }
+                        })
                 },
                 "prefill": {
                     "name": customerName,
@@ -420,6 +445,21 @@ const Checkout = ({history}) => {
                     setPaymentId(response.razorpay_payment_id)
                     setSignature(response.razorpay_signature)
                     setPayment(true)
+                    const sendId = response.razorpay_payment_id
+                        createOrder(sendId, user.token)
+                        .then(res => {
+                            if(res.data.ok) {
+                                // empty cart from local storage
+                                if(typeof window.localStorage !== 'undefined') localStorage.removeItem("cart")
+                                // empty cart from redux
+                                dispatch({
+                                    type: 'ADD_TO_CART',
+                                    payload: [],
+                                })
+                                // empty cart from database
+                                emptyUserCart(user.token)
+                            }
+                        })
                 },
                 "prefill": {
                     "name": customerName,

@@ -130,11 +130,11 @@ export const addSolution = async (authtoken, cartID, liquid) => {
 
 export const createOrder = async (razorpayId, authtoken) => 
   await axios.post(
-    `${process.env.REACT_APP_API}/user/order`,
+    `${process.env.REACT_APP_API}/user/order/new`,
     {razorpayId},
     {
       headers : {
         authtoken
-      }
+      }         
     }
   )
