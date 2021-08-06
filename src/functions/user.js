@@ -138,3 +138,21 @@ export const createOrder = async (razorpayId, authtoken) =>
       }         
     }
   )
+
+export const setInternational = async (cartID, authtoken) => 
+    await axios.post(
+      `${process.env.REACT_APP_API}/user/set/international/${cartID}`,
+      {cartID},
+      {
+        headers : {
+          authtoken
+        }
+      }
+    )
+
+export const getUserOrders = async (authtoken) =>
+      await axios.get(`${process.env.REACT_APP_API}/user/orders`, {
+        headers: {
+          authtoken
+        }
+      })

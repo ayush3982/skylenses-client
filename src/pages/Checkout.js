@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import { toast } from 'react-toastify';
-import {getUserCart, saveUserAddress, getUser, applyCoupon, applyCoins, addCoins, removeCoins, addSolution, createOrder, emptyUserCart} from "../functions/user"
+import {getUserCart, saveUserAddress, getUser, applyCoupon, applyCoins, addCoins, removeCoins, addSolution, createOrder, emptyUserCart, setInternational} from "../functions/user"
 import {countryData} from "../helpers/countries"
 
 import axios from "axios";
@@ -315,6 +315,7 @@ const Checkout = ({history}) => {
                     setPaymentId(response.razorpay_payment_id)
                     setSignature(response.razorpay_signature)
                     setPayment(true)
+                    setInternational(fullData._id, user.token)
                     const sendId = response.razorpay_payment_id
                         createOrder(sendId, user.token)
                         .then(res => {
