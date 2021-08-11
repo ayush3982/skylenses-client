@@ -3,6 +3,12 @@ import {useSelector, useDispatch} from 'react-redux'
 import { toast } from 'react-toastify';
 import {getUserCart, saveUserAddress, getUser, applyCoupon, applyCoins, addCoins, removeCoins, addSolution, createOrder, emptyUserCart, setInternational} from "../functions/user"
 import {countryData} from "../helpers/countries"
+import './../styles/checkout.css'
+import TextField from '@material-ui/core/TextField';       
+import MenuItem from '@material-ui/core/MenuItem'; 
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import Button from '@material-ui/core/Button';
 
 import axios from "axios";
  
@@ -21,6 +27,7 @@ const Checkout = ({history}) => {
     const [coinsSuccess, setCoinsSuccess] = useState(false);
     const [totalAfterCoins, setTotalAfterCoins] = useState('')
     const [liquid, setLiquid] = useState(false);
+    const [coinError, setCoinError] = useState(false);
     const dispatch = useDispatch();
     const { user, coupon } = useSelector((state) => ({ ...state }));
 
@@ -95,9 +102,9 @@ const Checkout = ({history}) => {
 
     const IndianShippingBox = () => {
         return (
-            <div>
-                Rs 50 shipping if applicable
-                <p>Total: {total}</p>
+            <div className="indian-box">
+                <div className="shipping-indian">Rs 50 shipping if applicable</div>
+                <p className="shipping-indian-price">Total: INR <b>{total}</b></p>
                 {totalAfterDiscount > 0 && (
                     <div>
                         <p className = "text-success">Coupon Applied</p>
@@ -146,16 +153,21 @@ const Checkout = ({history}) => {
     }
 
     const applyDiscountCoin = async () => {
-        let discount = (coinsNumber * 0.25);
-        console.log(discount)
-        let newTotal = total - discount
-        await setTotalAfterCoins(newTotal)
-        console.log(totalAfterCoins)
-        setCoinsSuccess(true)
-        applyCoins(user.token, cartId, discount) 
-        .then(res => {
-            alert('does something')
-        })
+        if(coinsNumber > 200 || coinsNumber < 50) {
+            setCoinError(true);
+        }
+        else {
+            let discount = (coinsNumber * 0.25);
+            console.log(discount)
+            let newTotal = total - discount
+            await setTotalAfterCoins(newTotal)
+            console.log(totalAfterCoins)
+            setCoinsSuccess(true)
+            applyCoins(user.token, cartId, discount) 
+            .then(res => {
+                alert('does something')
+            })
+        }
     }
 
     const removeCoupon = () => {
@@ -184,10 +196,14 @@ const Checkout = ({history}) => {
 
     const showApplyCoins = () => (
         <>
+            {coinError === true && (
+              <p className="text-danger">You can only apply minimum 50 and maximum 200 coins</p>
+          ) }
           <input   
             onChange={(e) => {
                 setCoinsNumber(e.target.value);
-                setDiscountError("");  
+                setDiscountError(""); 
+                setCoinError(false); 
             }}
             value={coinsNumber}
             type="number"
@@ -202,10 +218,70 @@ const Checkout = ({history}) => {
         </>
     );
 
-   
+    const addressBox = () => (
+        <div className = "col-md-5 address-box">
+                        <div className = "heading">Shipping Address</div>
+                        <form className = "address-form">
+                            <div className = "field-container">
+                                <TextField className = "address-field" onChange = {(e) => setCustomerName(e.target.value)} required value = {customerName} id="outlined-basic" label="Your Name" />
+                            </div>
+                            <div className = "field-container">
+                                <TextField value = {address} multiline className = "address-field" onChange = {(e) => setAddress(e.target.value)} label = "Address" required/>
+                            </div>
+                            <div className = "field-container">
+                                <InputLabel id="demo-simple-select-label">Country</InputLabel>
+                                <Select name = "sub" onChange = {handleCountryChange} value = {country} required>
+                                    <MenuItem>Select Country</MenuItem>
+                                    {countryData.length > 0 && countryData.map((c) => (
+                                        <MenuItem value={c.name}  key={c._id} data = {c.id}>
+                                            {c.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </div>
+                            <div className = "field-container">
+                                <TextField value = {state}  className = "address-field" onChange = {(e) => setAddress(e.target.value)} label = "State" required/>
+                            </div>
+                            <div className = "field-container">
+                                <TextField value = {city}  className = "address-field" onChange = {(e) => setAddress(e.target.value)} label = "City" required/>
+                            </div>
+                            <div className = "field-container">
+                                <TextField value = {email} type = "email"  className = "address-field" onChange = {(e) => setAddress(e.target.value)} label = "Email" required/>
+                            </div>
+                            <div className = "field-container">
+                                <TextField value = {phone} type = "number" className = "address-field" onChange = {(e) => setAddress(e.target.value)} label = "Phone" required/>
+                            </div>
+                        </form>
+                            <Button className = "address-button" variant="outlined" color="secondary" onClick={saveAddressToDb} disabled = {country === "Select Country"}>Confirm Address</Button >
+                            <br />
+                    </div>
+    )
+
+    const buttons = () => {
+        return (
+            <div>
+                {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === false) && (
+                    <Button variant="outlined" color="secondary" onClick={() => buyNow(cartId)} className="mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Pay Now</Button>
+                )}
+                {(country === "India" || total >= 4999) && (couponApplied !== '') && (coinsSuccess === false) && (  
+                    <Button onClick={() => buyNowCoupon(cartId)} className="btn btn-primary mt-2" variant="outlined" color="secondary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Dis</Button>
+                )}
+                {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === true) && (
+                    <Button onClick={() => buyNowCoins(cartId)} className="btn btn-primary mt-2" variant="outlined" color="secondary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Coin</Button>
+                )}
+                {(country !== "India" && total < 4999) && (
+                    <Button onClick={() => buyNowInternational(cartId)} className="btn btn-primary mt-2" variant="outlined" color="secondary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Int</Button>
+                )}
+                <br />
+                <Button variant="outlined" color="primary" onClick={() => buyNow(cartId)} className="mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Cash on Delivery</Button>
+            </div>
+        )
+    }
 
     const handleCoins = () => {    
         setUsingCoins(true);
+        setCouponApplied('');
+        setTotalAfterDiscount(0)
     }
 
     const coinsFalse = () => {
@@ -494,139 +570,191 @@ const Checkout = ({history}) => {
         }
     }
 
-    return (
-        <div>
-            {payment === true && (
-                <div>
-                    <p>Payment Success</p>
-                    {fullData.cartTotal >= 1499 && (
-                        <p className="text-success">You got 200 coins!</p>
-                    )}
-                </div>
-            )}
-            {payment === false && (
-                <div className = "row"> 
-                <div className = "col-md-6">
-                    <h4>Delivery Address</h4>  
-                    <br />
-                    {JSON.stringify(userData.coins)}
-                    <form className = "ml-2 mr-5">
-                        <div className = "form-group">
-                            <label>Customer Name</label>
-                            <input value = {customerName} className = "form-control" type = "text" onChange = {(e) => setCustomerName(e.target.value)} required/>
-                        </div>
-                        <div className = "form-group">
-                            <label>Address</label>
-                            <textarea value = {address} className = "form-control" type = "text" onChange = {(e) => setAddress(e.target.value)} required/>
-                        </div>
-                        <div className = "form-group">
-                            <label>Country</label>
-                            <select name="sub" className="form-control" type = "text" onChange={handleCountryChange} value = {country} required>
-                                <option>Select Country</option>
-                                    {countryData.length > 0 && countryData.map((c) => (
-                                        <option value={c.name}  key={c._id} data = {c.id}>
-                                            {c.name}
-                                        </option>
-                                    ))}
-                            </select>
-                        </div>
-                        <div className = "form-group">
-                            <label>State</label>
-                            <input value = {state} className = "form-control" type = "text" onChange = {(e) => setState(e.target.value)} required/>
-                        </div>
-                        <div className = "form-group">
-                            <label>City</label>
-                            <input value = {city}  className = "form-control" type = "text" onChange = {(e) => setCity(e.target.value)} required/>
-                        </div>
-                        <div className = "form-group">
-                            <label>Pincode/ZIP Code</label>
-                            <input value = {pincode} className = "form-control" type = "number" inputmode="numeric" onChange = {(e) => setPincode(e.target.value)} required/>
-                        </div>
-                        <div className = "form-group">
-                            <label>Email</label>
-                            <input value = {email} className = "form-control" type = "email" onChange = {(e) => setEmail(e.target.value)} required/>
-                        </div>
-                        <div className = "form-group">
-                            <label>Phone Number</label>
-                            <input value = {phone} className = "form-control" type = "number" onChange = {(e) => setPhone(e.target.value)} required/>
-                        </div>
-                    </form>
-                    <button className="btn btn-primary mt-2" onClick={saveAddressToDb} disabled = {country === "Select Country"}>Confirm Address</button>
-                    <hr />
+    // // return (
+    //     <div>
+    //         {payment === true && (
+    //             <div>
+    //                 <p>Payment Success</p>
+    //                 {fullData.cartTotal >= 1499 && (
+    //                     <p className="text-success">You got 200 coins!</p>
+    //                 )}
+    //             </div>
+    //         )}
+    //         {payment === false && (
+    //             <div className = "row"> 
+    //             <div className = "col-md-6">
+    //                 <h4>Delivery Address</h4>  
+    //                 <br />
+    //                 {JSON.stringify(userData.coins)}
+    //                 <form className = "ml-2 mr-5">
+    //                     <div className = "form-group">
+    //                         <label>Customer Name</label>
+    //                         <input value = {customerName} className = "form-control" type = "text" onChange = {(e) => setCustomerName(e.target.value)} required/>
+    //                     </div>
+    //                     <div className = "form-group">
+    //                         <label>Address</label>
+    //                         <textarea value = {address} className = "form-control" type = "text" onChange = {(e) => setAddress(e.target.value)} required/>
+    //                     </div>
+    //                     <div className = "form-group">
+    //                         <label>Country</label>
+    //                         <select name="sub" className="form-control" type = "text" onChange={handleCountryChange} value = {country} required>
+    //                             <option>Select Country</option>
+    //                                 {countryData.length > 0 && countryData.map((c) => (
+    //                                     <option value={c.name}  key={c._id} data = {c.id}>
+    //                                         {c.name}
+    //                                     </option>
+    //                                 ))}
+    //                         </select>
+    //                     </div>
+    //                     <div className = "form-group">
+    //                         <label>State</label>
+    //                         <input value = {state} className = "form-control" type = "text" onChange = {(e) => setState(e.target.value)} required/>
+    //                     </div>
+    //                     <div className = "form-group">
+    //                         <label>City</label>
+    //                         <input value = {city}  className = "form-control" type = "text" onChange = {(e) => setCity(e.target.value)} required/>
+    //                     </div>
+    //                     <div className = "form-group">
+    //                         <label>Pincode/ZIP Code</label>
+    //                         <input value = {pincode} className = "form-control" type = "number" inputmode="numeric" onChange = {(e) => setPincode(e.target.value)} required/>
+    //                     </div>
+    //                     <div className = "form-group">
+    //                         <label>Email</label>
+    //                         <input value = {email} className = "form-control" type = "email" onChange = {(e) => setEmail(e.target.value)} required/>
+    //                     </div>
+    //                     <div className = "form-group">
+    //                         <label>Phone Number</label>
+    //                         <input value = {phone} className = "form-control" type = "number" onChange = {(e) => setPhone(e.target.value)} required/>
+    //                     </div>
+    //                 </form>
+    //                 <button className="btn btn-primary mt-2" onClick={saveAddressToDb} disabled = {country === "Select Country"}>Confirm Address</button>
+    //                 <hr />
     
-                </div>
-                <div className="col-md-6">
-                    <h4>Order Summary</h4>
-                    <hr />
-                    <p>Products: {products.length}</p>
-                    <hr />
-                    {products.map((p,i) => (
-                        <div key = {i}>
-                            <p>{p.product.title} x {p.count} = {p.price*p.count}</p>
-                        </div>
-                    ))} 
-                    <hr />   
-                    {country === "India" ? (
-                        <>{IndianShippingBox()}</>
-                    ) : (
-                        <>{InternationalShippingBox()}</>
-                    )}
-                    <div className = "row">
-                        {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === false) && (
-                            <div className = "col-md-6">
-                                <button onClick={() => buyNow(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</button>
-                            </div>
-                        )}
-                        {(country === "India" || total >= 4999) && (couponApplied !== '') && (coinsSuccess === false) && (  
-                            <div className = "col-md-6">
-                                <button onClick={() => buyNowCoupon(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Dis</button>
-                            </div>
-                        )}
-                        {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === true) && (
-                            <div className = "col-md-6">
-                                <button onClick={() => buyNowCoins(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Coin</button>
-                            </div>
-                        )}
-                        {(country !== "India" && total < 4999) && (
-                            <div className = "col-md-6">
-                                <button onClick={() => buyNowInternational(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Int</button>
-                            </div>
-                        )} 
+    //             </div>
+    //             <div className="col-md-6">
+    //                 <h4>Order Summary</h4>
+    //                 <hr />
+    //                 <p>Products: {products.length}</p>
+    //                 <hr />
+    //                 {products.map((p,i) => (
+    //                     <div key = {i}>
+    //                         <p>{p.product.title} x {p.count} = {p.price*p.count}</p>
+    //                     </div>
+    //                 ))} 
+    //                 <hr />   
+    //                 {country === "India" ? (
+    //                     <>{IndianShippingBox()}</>
+    //                 ) : (
+    //                     <>{InternationalShippingBox()}</>
+    //                 )}
+    //                 <div className = "row">
+    //                     {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === false) && (
+    //                         <div className = "col-md-6">
+    //                             <button onClick={() => buyNow(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</button>
+    //                         </div>
+    //                     )}
+    //                     {(country === "India" || total >= 4999) && (couponApplied !== '') && (coinsSuccess === false) && (  
+    //                         <div className = "col-md-6">
+    //                             <button onClick={() => buyNowCoupon(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Dis</button>
+    //                         </div>
+    //                     )}
+    //                     {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === true) && (
+    //                         <div className = "col-md-6">
+    //                             <button onClick={() => buyNowCoins(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Coin</button>
+    //                         </div>
+    //                     )}
+    //                     {(country !== "India" && total < 4999) && (
+    //                         <div className = "col-md-6">
+    //                             <button onClick={() => buyNowInternational(cartId)} className="btn btn-primary mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Int</button>
+    //                         </div>
+    //                     )} 
                         
-                    </div>
-                    {discountError && <p className = "text-danger p-2">{discountError}</p>}
-                    {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === false) &&(  
-                        <>
-                            <div>
-                                {showApplyCoupon()}
-                            </div>
-                            <div>
-                                <button className="btn btn-secondary mt-3" onClick={handleCoins}>Use Coins Instead?</button>
-                            </div>
-                        </>
-                    )}
-                    {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === true) &&(  
-                        <>
-                            <div>
-                                {showApplyCoins()}
-                            </div>
-                        </>
-                    )}
+    //                 </div>
+    //                 {discountError && <p className = "text-danger p-2">{discountError}</p>}
+    //                 {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === false) &&(  
+    //                     <>
+    //                         <div>
+    //                             {showApplyCoupon()}
+    //                         </div>
+    //                         <div>
+    //                             <button className="btn btn-secondary mt-3" onClick={handleCoins}>Use Coins Instead?</button>
+    //                         </div>
+    //                     </>
+    //                 )}
+    //                 {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === true) &&(  
+    //                     <>
+    //                         <div>
+    //                             {showApplyCoins()}
+    //                         </div>
+    //                     </>
+    //                 )}
     
-                    <div>
-                        {JSON.stringify(coinsNumber)}
-                        {payment && (
-                            <div>
-                                <p>Payment Id: {paymentId}</p>
-                                <p>Order Id: {orderId}</p>
-                                <p>Signature: {signature}</p>
+    //                 <div>
+    //                     {JSON.stringify(coinsNumber)}
+    //                     {payment && (
+    //                         <div>
+    //                             <p>Payment Id: {paymentId}</p>
+    //                             <p>Order Id: {orderId}</p>
+    //                             <p>Signature: {signature}</p>
+    //                         </div>
+    //                     )}
+    //                 </div>
+    //             </div>
+    //         </div>
+    //         )}
+    //     </div>
+    // // )
+
+    return (
+        <>
+            <div className="full-container">
+                <div className = "row full-box">
+                    {addressBox()}
+                    <div className = "col-md-5 payment-box">
+                        <div className = "payment-box-order">
+                            <div className = "order-title">Order Summary</div>
+                                <div className = "order-details">
+                                    <hr />
+                                    {products.map((p,i) => (
+                                        <div key = {i}>
+                                            <p>{p.product.title} x {p.count} = INR <b>{p.price*p.count}</b></p>
+                                        </div>
+                                    ))} 
+                                    <hr />
+                                    {country === "India" ? (
+                                        <>{IndianShippingBox()}</>
+                                    ) : (
+                                        <>{InternationalShippingBox()}</>
+                                    )}
+                                        {buttons()}
+                                </div>
+                        </div> 
+                        <div className="discount-box">
+                            <p className = "text-success">If you don't apply any Coupon or Coins, you'll get solution free</p>
+                            {discountError && <p className = "text-danger p-2">{discountError}</p>}
+                            {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === false) &&(  
+                                <>
+                                    <div>
+                                        {showApplyCoupon()}
+                                    </div>
+                                    <div>
+                                        <button className="btn btn-secondary mt-3" onClick={handleCoins}>Use Coins Instead?</button>
+                                    </div>
+                                </>
+                            )}
+                            {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === true) &&(  
+                                <>
+                                    <div>
+                                        {showApplyCoins()}
+                                    </div>
+                                </>
+                            )}
                             </div>
-                        )}
-                    </div>
-                </div>
+                        </div>
+                 </div>
             </div>
-            )}
-        </div>
+
+        </>
     )
 }
 

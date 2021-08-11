@@ -18,7 +18,7 @@ export const createCoupon = async (coupon, authtoken) =>
     { coupon },
     {
         headers: {
-            authtoken 
+            authtoken  
         },
     })
 

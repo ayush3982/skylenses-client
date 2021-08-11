@@ -12,6 +12,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Payment from './pages/Payment';
 import Product from './pages/Product';
+import CategoryProducts from './pages/CategoryProducts';
 import Header from './components/nav/Header';
 import RegisterComplete from './pages/auth/RegisterComplete'
 import ForgotPassword from './pages/auth/ForgotPassword';
@@ -81,6 +82,7 @@ const App = () => {
         <UserRoute exact path = "/payment" component = {Payment}/>
         <Route exact path = "/checkout" component = {Checkout}/>
         <Route exact path = "/product/:slug" component = {Product}/>
+        <Route exact path = "/category/:slug" component = {CategoryProducts}/>
         <Route exact path = "/login" component = {Login}/>
         <Route exact path = "/register" component = {Register}/>
         <Route exact path = "/register/complete" component = {RegisterComplete}/>

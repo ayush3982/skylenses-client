@@ -9,13 +9,17 @@ const CategoryUpdate = ({history, match}) => {
     const {user} = useSelector((state) => ({...state}))
 
     const [name, setName] = useState('');
-    const [hexCode, sethexCode] = useState('');
-    const [loading, setLoading] = useState(false)
+    const [hexCodeLight, setHexCodeLight] = useState('');
+    const [hexCodeDark, setHexCodeDark] = useState('');
+    const [tagline, setTagline] = useState('');
+    const [loading, setLoading] = useState(false)  
 
     const loadCategory = () => {
         getCategory(match.params.slug).then((c) => {
-            setName(c.data.name)
-            sethexCode(c.data.hexCode)
+            setName(c.data.category.name)
+            setHexCodeLight(c.data.category.hexCodeLight)
+            setHexCodeDark(c.data.category.hexCodeDark)
+            setTagline(c.data.category.tagline)
         })
     }
 
@@ -27,11 +31,13 @@ const CategoryUpdate = ({history, match}) => {
         e.preventDefault();
         // console.log(name)
         setLoading(true)
-        updateCategory(match.params.slug, {name, hexCode}, user.token)
+        updateCategory(match.params.slug, {name, hexCodeLight, hexCodeDark, tagline}, user.token)
         .then(res => {
             setLoading(false)
             setName('')
-            sethexCode('')
+            setHexCodeLight('')
+            setHexCodeDark('')
+            setTagline('')
             toast.success(`${res.data.name} is successfully updated`)
             history.push('/admin/category')
         })
@@ -55,11 +61,27 @@ const CategoryUpdate = ({history, match}) => {
                 required>
             </input>
             <br />
-            <label>Color Code (Hex Code)</label>
+            <label>Color Code Light(Hex Code)</label>
             <input type="text" 
                 className="form-control" 
-                onChange = {e => sethexCode(e.target.value)} 
-                value={hexCode}
+                onChange = {e => setHexCodeLight(e.target.value)} 
+                value={hexCodeLight}
+                autoFocus
+                required>
+            </input>
+            <label>Color Code Dark(Hex Code)</label>
+            <input type="text" 
+                className="form-control" 
+                onChange = {e => setHexCodeDark(e.target.value)} 
+                value={hexCodeDark}
+                autoFocus
+                required>
+            </input>
+            <label>Tagline</label>
+            <input type="text" 
+                className="form-control" 
+                onChange = {e => setTagline(e.target.value)} 
+                value={tagline}
                 autoFocus
                 required>
             </input>

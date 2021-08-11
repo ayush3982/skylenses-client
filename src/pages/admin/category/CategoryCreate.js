@@ -15,7 +15,7 @@ const CategoryCreate = () => {
     const [hexCodeLight, setHexCodeLight] = useState('');
     const [hexCodeDark, setHexCodeDark] = useState('');
     const [tagline, setTagline] = useState('');
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false) 
     const [categories, setCategories] = useState([]);
     const [keyword, setKeyword] = useState('')
 

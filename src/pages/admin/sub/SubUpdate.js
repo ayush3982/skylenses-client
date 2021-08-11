@@ -23,11 +23,11 @@ const SubUpdate = ({match, history}) => {
 
     const loadCategories = () => getCategories().then(c => setCategories(c.data))
     const loadSub = () => getSub(match.params.slug).then(s => {
-        setName(s.data.name)
-        setHexCodeLight(s.data.hexCodeLight)
-        setHexCodeDark(s.data.hexCodeDark)
-        setTagline(s.data.tagline)
-        setParent(s.data.parent)
+        setName(s.data.sub.name)
+        setHexCodeLight(s.data.sub.hexCodeLight)
+        setHexCodeDark(s.data.sub.hexCodeDark)
+        setTagline(s.data.sub.tagline)
+        setParent(s.data.sub.parent)
     })
 
     useEffect(() => {

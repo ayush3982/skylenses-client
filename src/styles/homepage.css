@@ -1,0 +1,96 @@
+.home {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+@media only screen and (max-width: 674px) {
+    .carousel-container {
+        margin-top: -2px;
+     }
+}
+
+.categories {
+    width: 100%;
+    height: 600px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.categories-heading {
+    margin-top: 50px;
+    font-size: 50px;
+}
+
+.categories-card-container {
+    margin-top: 40px;
+    margin-bottom: 30px;  
+    width: 90%;
+    height: 620px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-box {
+    width: 20%;
+    height: 95%;
+    margin-left: 10px;
+    margin-right: 10px;
+    background: white;
+    border-radius: 20px;  
+    -webkit-box-shadow: 0px 0px 26px 0px rgba(145,145,145,0.83);
+    -moz-box-shadow: 0px 0px 26px 0px rgba(145,145,145,0.83);
+    box-shadow: 0px 0px 26px 0px rgba(145,145,145,0.83);
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    flex-direction: column;  
+    cursor: pointer;
+}
+
+.category-image {
+    margin-top: 10px;
+    width: 90%;
+    height: 80%;
+    background: #AAFFA9;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ABB2B9 , #D5D8DC);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top,#C7AB4A, #F5DF93); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+}
+
+.category-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.category-button {
+    width: 60%;
+    margin-top: 15px;
+    height: 40px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 10px;    
+    font-size: 22px;
+    background: #ffffff;  /* fallback for old browsers
+    /* background: -webkit-linear-gradient(to right, #11FFBD, #aaffa934);  /* Chrome 10-25, Safari 5.1-6 */
+    /* background: linear-gradient(to right, #11FFBD, #AAFFA9); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* <select name="sub" className="form-control" type = "text" onChange={handleCountryChange} value = {country} required>
+    <option>Select Country</option>
+        {countryData.length > 0 && countryData.map((c) => (
+            <option value={c.name}  key={c._id} data = {c.id}>
+                {c.name}
+            </option>
+        ))}
+</select> */
