@@ -213,3 +213,13 @@
     background: linear-gradient(to right, #2f80ed, #56ccf2);
     align-self: center;  
 }
+
+.notice {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    height: 40px;
+    font-family: 'Lato', sans-serif;
+}

@@ -122,200 +122,201 @@ const SingleProduct = ({product, onStarClick, star}) => {
     }
 
     return (
-        <>  
-            <div className="col-md-7">
-                <Carousel showArrows = {true} autoPlay infiniteLoop>
-                    {images && images.map((i) => <img src={i.url} key={i.public_id}/>)}
-                </Carousel>
-            </div>
-            <div className="col-md-5">
-                <h1 className="p-3 text-center" style={{backgroundColor: hexCodeLight}}>{title}</h1>
-                {product && product.ratings && product.ratings.length > 0 ? showAverage(product) : (
-                    <div className="text-center pt-1 pb-3">New Product: Be the first to rate it!</div>
-                )}
-                <h6 className="p-3 text-center">{tagline}</h6>
-                <Card
-                    actions = {[
-                        <>
-                            <a onClick = {handleAddToCart}>
-                                <ShoppingCartOutlined className="text-danger" disabled /> <br /> Add to Cart
-                            </a>
-                        </>,
-                        <Link to = {`/`}>
-                            <HeartOutlined className="text-info" /> <br /> Add to Wishlist
-                        </Link>,
-                        <RatingModal>
-                            <StarRating
-                                name = {_id}
-                                numberOfStars = {5}
-                                rating = {star}   
-                                changeRating = {onStarClick}
-                                isSelectable = {true}
-                                starRatedColor = "aqua"
-                            />
-                            <br />
-                            <br /> 
-                        </RatingModal>
-                    ]}
-                >
-                    <div>
-                        <ul className="list-group">
-                        <li className="list-group-item">
-                            Price{" "}
-                            <span className="label label-default label-pill pull-xs-right">
-                            $ {price} {customized && (
-                                <p className = "text-success"> + $500</p>
-                            )}
-                            </span>
-                        </li>
+        // <>  
+        //     <div className="col-md-7">
+        //         <Carousel showArrows = {true} autoPlay infiniteLoop>
+        //             {images && images.map((i) => <img src={i.url} key={i.public_id}/>)}
+        //         </Carousel>
+        //     </div>
+        //     <div className="col-md-5">
+        //         <h1 className="p-3 text-center" style={{backgroundColor: hexCodeLight}}>{title}</h1>
+        //         {product && product.ratings && product.ratings.length > 0 ? showAverage(product) : (
+        //             <div className="text-center pt-1 pb-3">New Product: Be the first to rate it!</div>
+        //         )}
+        //         <h6 className="p-3 text-center">{tagline}</h6>
+        //         <Card
+        //             actions = {[
+        //                 <>
+        //                     <a onClick = {handleAddToCart}>
+        //                         <ShoppingCartOutlined className="text-danger" disabled /> <br /> Add to Cart
+        //                     </a>
+        //                 </>,
+        //                 <Link to = {`/`}>
+        //                     <HeartOutlined className="text-info" /> <br /> Add to Wishlist
+        //                 </Link>,
+        //                 <RatingModal>
+        //                     <StarRating
+        //                         name = {_id}
+        //                         numberOfStars = {5}
+        //                         rating = {star}   
+        //                         changeRating = {onStarClick}
+        //                         isSelectable = {true}
+        //                         starRatedColor = "aqua"
+        //                     />
+        //                     <br />
+        //                     <br /> 
+        //                 </RatingModal>
+        //             ]}
+        //         >
+        //             <div>
+        //                 <ul className="list-group">
+        //                 <li className="list-group-item">
+        //                     Price{" "}
+        //                     <span className="label label-default label-pill pull-xs-right">
+        //                     $ {price} {customized && (
+        //                         <p className = "text-success"> + $500</p>
+        //                     )}
+        //                     </span>
+        //                 </li>
 
-                        {category && (
-                            <li className="list-group-item">
-                            Category{" "}
-                            <Link
-                                to={`/category/${category.slug}`}
-                                className="label label-default label-pill pull-xs-right"
-                            >
-                                {category.name}
-                            </Link>
-                            </li>
-                        )}
+        //                 {category && (
+        //                     <li className="list-group-item">
+        //                     Category{" "}
+        //                     <Link
+        //                         to={`/category/${category.slug}`}
+        //                         className="label label-default label-pill pull-xs-right"
+        //                     >
+        //                         {category.name}
+        //                     </Link>
+        //                     </li>
+        //                 )}
 
-                        {sub && (
-                            <li className="list-group-item">
-                            Sub category{" "}
-                            <Link
-                                to={`/sub/${sub.slug}`}
-                                className="label label-default label-pill pull-xs-right"
-                            >
-                                {sub.name}
-                            </Link>
-                            </li>
-                        )}
+        //                 {sub && (
+        //                     <li className="list-group-item">
+        //                     Sub category{" "}
+        //                     <Link
+        //                         to={`/sub/${sub.slug}`}
+        //                         className="label label-default label-pill pull-xs-right"
+        //                     >
+        //                         {sub.name}
+        //                     </Link>
+        //                     </li>
+        //                 )}
 
                         
 
-                        <br />
+        //                 <br />
 
-                        {category && category.name === '6 Months' ? (
-                            <>
-                                <div className="form-group">
-                                    <select
-                                        value = {power}
-                                        name = "choosePower"
-                                        className = "form-control"
-                                        onChange = {(e) => setPower(e.target.value)}
-                                        hidden = {hidden}
-                                    >
-                                        {choosePower6s.map(c => {
-                                            if(outOfStock.includes(c)) {
-                                               return (<option disabled key = {c} value = {c}>
-                                                    {c} - Out of Stock
-                                                </option>)
-                                            } else {
-                                                return (
-                                                    <option key = {c} value = {c}>
-                                                        {c}
-                                                    </option>
-                                                )
-                                            }
-                                        })}
-                                    </select>
-                                </div>
-                            <div>
-                                {!customized && (
-                                    <p className="text-muted">Different powers? Customize by clicking below!</p>
-                                )}
+        //                 {category && category.name === '6 Months' ? (
+        //                     <>
+        //                         <div className="form-group">
+        //                             <select
+        //                                 value = {power}
+        //                                 name = "choosePower"
+        //                                 className = "form-control"
+        //                                 onChange = {(e) => setPower(e.target.value)}
+        //                                 hidden = {hidden}
+        //                             >
+        //                                 {choosePower6s.map(c => {
+        //                                     if(outOfStock.includes(c)) {
+        //                                        return (<option disabled key = {c} value = {c}>
+        //                                             {c} - Out of Stock
+        //                                         </option>)
+        //                                     } else {
+        //                                         return (
+        //                                             <option key = {c} value = {c}>
+        //                                                 {c}
+        //                                             </option>
+        //                                         )
+        //                                     }
+        //                                 })}
+        //                             </select>
+        //                         </div>
+        //                     <div>
+        //                         {!customized && (
+        //                             <p className="text-muted">Different powers? Customize by clicking below!</p>
+        //                         )}
 
-                                {customized && (
-                                    <>
-                                        <p className="text-success">Left Power: {powerLeft}</p>
-                                        <p className="text-success">Right Power: {powerRight}</p>
-                                    </>
-                                )}
-                                <Button type="primary" onClick={showModal}>
-                                    Customize
-                                </Button>
-                                {showError ? (<p>Please choose a power</p>) : ""}
-                                <Modal title="Customize Your Lenses" okText={`Customize`} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                                    <div className="form-group">
-                                        <label>Power Left</label>
-                                        <select
-                                            value = {powerLeft}
-                                            name = "choosePower6"
-                                            className = "form-control"
-                                            onChange = {(e) => setPowerLeft(e.target.value)}
-                                        >
-                                            {choosePower6s.map(c => {
-                                                if(outOfStock.includes(c)) {
-                                                return (<option disabled key = {c} value = {c}>
-                                                        {c} - Out of Stock
-                                                    </option>)
-                                                } else {
-                                                    return (
-                                                        <option key = {c} value = {c}>
-                                                            {c}
-                                                        </option>
-                                                    )
-                                                }
-                                            })}
-                                        </select>
-                                    </div> 
-                                    <hr />
-                                    <div className="form-group">
-                                        <label>Power Right</label>
-                                        <select
-                                            value = {powerRight}
-                                            name = "choosePower6"
-                                            className = "form-control"
-                                            onChange = {(e) => setPowerRight(e.target.value)}
-                                        >
-                                            {choosePower6s.map(c => {
-                                                if(outOfStock.includes(c)) {
-                                                return (<option disabled key = {c} value = {c}>
-                                                        {c} - Out of Stock
-                                                    </option>)
-                                                } else {
-                                                    return (
-                                                        <option key = {c} value = {c}>
-                                                            {c}
-                                                        </option>
-                                                    )
-                                                }
-                                            })}
-                                        </select>
-                                    </div>
-                                </Modal>
-                                {customized && (
-                                    <div>
-                                        <button className="btn btn-danger" onClick = {removeCustomization}>Remove Customizations</button>
-                                    </div>
-                                )}
-                            </div>
-                            </>
-                        ) : (
-                            <div className="form-group">
-                                    <select
-                                        value = {power}
-                                        name = "choosePowers"
-                                        className = "form-control"
-                                        onChange = {(e) => setPower(e.target.value)}
-                                    >
-                                        {choosePowers.map(c => 
-                                            <option key = {c} value = {c}>
-                                                {c}
-                                            </option>
-                                        )}
-                                    </select>
-                            </div>
-                        )}    
+        //                         {customized && (
+        //                             <>
+        //                                 <p className="text-success">Left Power: {powerLeft}</p>
+        //                                 <p className="text-success">Right Power: {powerRight}</p>
+        //                             </>
+        //                         )}
+        //                         <Button type="primary" onClick={showModal}>
+        //                             Customize
+        //                         </Button>
+        //                         {showError ? (<p>Please choose a power</p>) : ""}
+        //                         <Modal title="Customize Your Lenses" okText={`Customize`} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+        //                             <div className="form-group">
+        //                                 <label>Power Left</label>
+        //                                 <select
+        //                                     value = {powerLeft}
+        //                                     name = "choosePower6"
+        //                                     className = "form-control"
+        //                                     onChange = {(e) => setPowerLeft(e.target.value)}
+        //                                 >
+        //                                     {choosePower6s.map(c => {
+        //                                         if(outOfStock.includes(c)) {
+        //                                         return (<option disabled key = {c} value = {c}>
+        //                                                 {c} - Out of Stock
+        //                                             </option>)
+        //                                         } else {
+        //                                             return (
+        //                                                 <option key = {c} value = {c}>
+        //                                                     {c}
+        //                                                 </option>
+        //                                             )
+        //                                         }
+        //                                     })}
+        //                                 </select>
+        //                             </div> 
+        //                             <hr />
+        //                             <div className="form-group">
+        //                                 <label>Power Right</label>
+        //                                 <select
+        //                                     value = {powerRight}
+        //                                     name = "choosePower6"
+        //                                     className = "form-control"
+        //                                     onChange = {(e) => setPowerRight(e.target.value)}
+        //                                 >
+        //                                     {choosePower6s.map(c => {
+        //                                         if(outOfStock.includes(c)) {
+        //                                         return (<option disabled key = {c} value = {c}>
+        //                                                 {c} - Out of Stock
+        //                                             </option>)
+        //                                         } else {
+        //                                             return (
+        //                                                 <option key = {c} value = {c}>
+        //                                                     {c}
+        //                                                 </option>
+        //                                             )
+        //                                         }
+        //                                     })}
+        //                                 </select>
+        //                             </div>
+        //                         </Modal>
+        //                         {customized && (
+        //                             <div>
+        //                                 <button className="btn btn-danger" onClick = {removeCustomization}>Remove Customizations</button>
+        //                             </div>
+        //                         )}
+        //                     </div>
+        //                     </>
+        //                 ) : (
+        //                     <div className="form-group">
+        //                             <select
+        //                                 value = {power}
+        //                                 name = "choosePowers"
+        //                                 className = "form-control"
+        //                                 onChange = {(e) => setPower(e.target.value)}
+        //                             >
+        //                                 {choosePowers.map(c => 
+        //                                     <option key = {c} value = {c}>
+        //                                         {c}
+        //                                     </option>
+        //                                 )}
+        //                             </select>
+        //                     </div>
+        //                 )}    
 
         
-                        </ul>
-                    </div>
-                </Card>
-            </div>
-        </>
+        //                 </ul>
+        //             </div>
+        //         </Card>
+        //     </div>
+        // </>
+            <div></div>
     )
 }
 

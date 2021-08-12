@@ -70,16 +70,17 @@ const Product = ({match, history}) => {
           // load related
           getRelated(res.data._id).then((res) => setRelated(res.data));
         });
-      };
+    };
+
+    
 
     return (
         <div className ="container-fluid">
-            {JSON.stringify(product)}
             <div className = "row pt-4">
                 <SingleProduct product={product} onStarClick={onStarClick} star = {star} />
             </div>
 
-            <div className="row">
+            {/* <div className="row">
                 <div className="col text-center pt-5 pb-5">
                     <hr />
                     <h4>Related Products</h4>
@@ -128,7 +129,7 @@ const Product = ({match, history}) => {
                 )}
                 </div>
 
-            </div>
+            </div> */}
         </div>
     )
 }

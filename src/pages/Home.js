@@ -82,43 +82,87 @@ const Home = () => {
     return (
       <div className="home">
         {carousel()}
-        <div className="categories">
-          <div className="categories-heading">
-            Categories
+        <div className="category-container">
+          <div className="category-heading">
+            C A T E G O R I E S
           </div>
-          <div className="categories-card-container">
-            <div className = "category-box">
-              <div className = "category-image">
-                <img className="category-photo" src = "https://i.im.ge/2021/08/08/0i4v6.png" />
+          <div className="category-cards-container row">
+            <div className="col-md- 3 card-box">
+              <div className="image-heading">
+                6  M O N T H S
               </div>
-              <button className = "category-button">
-                6 Months
-              </button>
+              <img className = "category-image" src = "https://i.im.ge/2021/08/08/0i4v6.png" />
             </div>
-            <div className = "category-box">
-              <div className = "category-image">
-                <img className="category-photo" src = "https://i.im.ge/2021/08/08/0i4v6.png" />
+            <div className="col-md- 3 card-box">
+            <div className="image-heading">
+                6  M O N T H S
               </div>
-              <button className = "category-button">
-                6 Months
-              </button>
+              <img className = "category-image" src = "https://i.im.ge/2021/08/08/0i4v6.png" />
             </div>
-            <div className = "category-box">
-              <div className = "category-image">
-                <img className="category-photo" src = "https://i.im.ge/2021/08/08/0i4v6.png" />
+            <div className="col-md- 3 card-box">
+              <div className="image-heading">
+                6  M O N T H S
               </div>
-              <button className = "category-button">
-                6 Months
-              </button>
+              <img className = "category-image" src = "https://i.im.ge/2021/08/08/0i4v6.png" />
             </div>
-            <div className = "category-box">
-              <div className = "category-image">
-                <img className="category-photo" src = "https://i.im.ge/2021/08/08/0i4v6.png" />
+            <div className="col-md- 3 card-box">
+              <div className="image-heading">
+                6  M O N T H S
               </div>
-              <button className = "category-button">
-                6 Months
-              </button>
+              <img className = "category-image" src = "https://i.im.ge/2021/08/08/0i4v6.png" />
             </div>
+          </div>
+        </div>
+        <div className="solution-container">
+          <div className="solution-box row">
+            <div className="col-md-5 small-box">
+
+            </div>
+            <div className="col-md-5 small-box">
+              
+            </div>
+          </div>
+        </div>
+        <div className="app-container">
+          <div className="app-box">
+
+          </div>
+        </div>
+        <div className="app-container">
+          <div className="use-box">
+            
+          </div>
+        </div>
+        <div className="footer-container">
+          <div className="footer-box row">
+            <div className="footer-section col-md- 3">
+              <div className="get-app-container">
+                <div className="app-image">
+                  <img className="image-real" src = "https://i.im.ge/2021/08/12/jjUpM.png"/>
+                </div>
+                  <div className="app-heading margin-top">
+                    Marketed By
+                  </div>
+                  <p className = "branding-text">VYOMAN CLAIRE PVT LTD.</p>
+                  <p className = "branding-text">GSTIN: 07AAHCV4657N1ZM</p>
+              </div>
+            </div>
+            <div className="footer-section col-md- 3">
+              <div className="get-app-container">
+                <div className="app-heading">Get Our App</div>
+                <div className="app-image">
+                  <img className="image-real" src = "https://i.im.ge/2021/08/12/j57rF.png"/>
+                  <img className="image-real" src = "https://i.im.ge/2021/08/12/j5sV6.png"/>
+                </div>
+              </div>
+            </div>
+            <div className="footer-section col-md- 3">
+
+            </div>
+            <div className="footer-section col-md- 3">
+
+            </div>
+            <p className = "copyright">© skycosmeticlenses.com All Right Reserved.</p>
           </div>
         </div>
       </div>

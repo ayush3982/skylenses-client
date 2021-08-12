@@ -12,6 +12,7 @@ const CategoryProducts = ({match}) => {
     useEffect(() => {
         setLoading(true)
         getCategory(slug).then((res) => {
+            console.log(res.data.products)
             setCategory(res.data.category);
             setProducts(res.data.products)
             setLoading(false)
@@ -20,50 +21,52 @@ const CategoryProducts = ({match}) => {
 
     let backgroundStyles = {
         width: '100%',
-        height: '110vh',
         background: `linear-gradient(to top, ${category.hexCodeDark}, ${category.hexCodeLight})`,
         display: 'flex',
         justifyContent: 'center',
     }
 
+    let gradientStyles = {
+        width: '90%',
+        background: `linear-gradient(to top, ${category.hexCodeDark}, ${category.hexCodeLight})`,
+    }
 
     return (
         <>
-            {loading ? (<div>Loading</div>) : (
-                <div style={backgroundStyles}>
-                    <div className="products-container">
-                        <div className="heading">
-                            {category.name}
-                        </div>
-                        <div className="row-one">  
-                            {products.map(product => (
-                                <div key={product._id} className="product-card">
-                                    <div className="product-image-container" style={
-                                        {
-                                            width: '90%',
-                                            height: '75%',
-                                            background: `linear-gradient(to top, ${product.hexCodeDark}, ${product.hexCodeLight})`,
-                                            marginTop: '20px',
-                                            borderRadius: '10%',
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            overflow: 'hidden',
-
-                                        }}>
-                                            <img className="product-image" src={product.images[0].url} alt={product.title} />
+            <div className="big-bag" style={backgroundStyles}>
+                <div className="products-container">
+                    <div className="heading">
+                        {category.name}
+                    </div>
+                    <div className="row row-one">
+                        {products.map((product) => {
+                            return (
+                                <div className = "product-card col-md- 3">
+                                    <div style = {{
+                                        width: '90%',
+                                        background: `linear-gradient(to top, ${product.hexCodeDark}, ${product.hexCodeLight})`,
+                                        height: '80%',
+                                        marginTop: '20px',
+                                        borderRadius: '20px',
+                                        display: 'flex',
+                                        alignItems: 'flex-end',
+                                        justifyContent: 'center',
+                                        cursor: 'pointer'
+                                    }}>
+                                        <img className = "image-full" src = {product.images[0].url} />
                                     </div>
-                                    <div className="name-box">
+                                    <div className = "name-box">
                                         {product.title}
                                     </div>
-                                    <div className="price-box">
-                                        I N R <b>{product.price}</b>
+                                    <div className = "price-box">
+                                        INR  <b>{product.price}/-</b>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
+                            )
+                        })}
                     </div>
                 </div>
-            )}
+            </div>
         </>
     )
 }

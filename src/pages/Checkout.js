@@ -28,6 +28,7 @@ const Checkout = ({history}) => {
     const [totalAfterCoins, setTotalAfterCoins] = useState('')
     const [liquid, setLiquid] = useState(false);
     const [coinError, setCoinError] = useState(false);
+    const [availableCoupons, setAvailableCoupons] = useState([])
     const dispatch = useDispatch();
     const { user, coupon } = useSelector((state) => ({ ...state }));
 
@@ -60,7 +61,8 @@ const Checkout = ({history}) => {
           console.log(cartId)       
         });
         getUser(user.token, user.email).then((res) => {
-            console.log(res)
+            console.log(res.data.couponsAvailable)
+            setAvailableCoupons(res.data.couponsAvailable)
             setUserData(res.data)
             setAddress(res.data.billing_address)
             setPhone(res.data.billing_phone)
@@ -106,15 +108,15 @@ const Checkout = ({history}) => {
                 <div className="shipping-indian">Rs 50 shipping if applicable</div>
                 <p className="shipping-indian-price">Total: INR <b>{total}</b></p>
                 {totalAfterDiscount > 0 && (
-                    <div>
-                        <p className = "text-success">Coupon Applied</p>
-                        <b><p>Total Payable: {totalAfterDiscount} </p></b>
+                    <div className="indian-box">
+                        <p className = "shipping-indian-price">Coupon Applied</p>
+                        <b><p className = "shipping-indian-price">Total Payable: INR {totalAfterDiscount} </p></b>
                     </div>
                 )}
                 {coinsSuccess && (
-                    <div>
-                        <p className = "text-success">Coins Redeemed</p>
-                        <b><p>Total Payable: {totalAfterCoins} works</p></b>
+                    <div className="indian-box">
+                        <p className = "shipping-indian-price">Coins Redeemed</p>
+                        <b><p className = "shipping-indian-price">Total Payable: {totalAfterCoins} works</p></b>
                     </div>
                 )}
             </div>
@@ -123,9 +125,9 @@ const Checkout = ({history}) => {
 
     const InternationalShippingBox = () => {
         return (
-            <div>
-                <p>Seems like you are shipping to {country}, international shipping will be applied under orders less than 4999</p>
-                {total < 4999 ? (<div>total : {internationalTotal}</div>) : (<div> total : {total}</div>)}
+            <div className="indian-box">
+                <p className="shipping-indian-price">Seems like you are shipping to {country}, international shipping will be applied under orders less than 4999</p>
+                {total < 4999 ? (<div>Total : <b>INR {internationalTotal}</b></div>) : (<div> total : <b>INR {total}</b></div>)}
             </div>
         )
     }
@@ -191,6 +193,7 @@ const Checkout = ({history}) => {
             Apply
           </button>
           <button onClick={removeCoupon} disabled = {!couponApplied} className="btn btn-danger mt-2">Remove Coupon</button>
+
         </>
     );
 
@@ -273,7 +276,9 @@ const Checkout = ({history}) => {
                     <Button onClick={() => buyNowInternational(cartId)} className="btn btn-primary mt-2" variant="outlined" color="secondary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Int</Button>
                 )}
                 <br />
-                <Button variant="outlined" color="primary" onClick={() => buyNow(cartId)} className="mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Cash on Delivery</Button>
+                {(country === "India") && (couponApplied === '' && coinsSuccess === false)  && (
+                    <Button variant="outlined" color="primary" onClick={() => buyNow(cartId)} className="mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Cash on Delivery</Button>
+                )}
             </div>
         )
     }
@@ -729,27 +734,38 @@ const Checkout = ({history}) => {
                                         {buttons()}
                                 </div>
                         </div> 
-                        <div className="discount-box">
-                            <p className = "text-success">If you don't apply any Coupon or Coins, you'll get solution free</p>
-                            {discountError && <p className = "text-danger p-2">{discountError}</p>}
-                            {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === false) &&(  
-                                <>
-                                    <div>
-                                        {showApplyCoupon()}
-                                    </div>
-                                    <div>
-                                        <button className="btn btn-secondary mt-3" onClick={handleCoins}>Use Coins Instead?</button>
-                                    </div>
-                                </>
-                            )}
-                            {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === true) &&(  
-                                <>
-                                    <div>
-                                        {showApplyCoins()}
-                                    </div>
-                                </>
-                            )}
+                        {total > 999 && country === "India" && (
+                            <div className="discount-box">
+                                <p className = "text-success margin-30">If you don't apply any Coupon or Coins, you'll get solution free</p>
+                                {discountError && <p className = "text-danger p-2">{discountError}</p>}
+                                {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === false) &&(  
+                                    <>
+                                        <div>
+                                            {showApplyCoupon()}
+                                        </div>
+                                        <div>
+                                            <button className="btn btn-secondary mt-3" onClick={handleCoins}>Use Coins Instead?</button> <hr />
+                                        </div>
+                                    </>
+                                )}
+                                {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === true) &&(  
+                                    <>
+                                        <div>
+                                            {showApplyCoins()}
+                                        </div>
+                                    </>
+                                )}
+                                <div className="coupon-section">
+                                    <div className = "coupon-heading">Available Coupons</div>
+                                    
+                                    {availableCoupons.map(c => {
+                                        if(c.coupon !== null && c.coupon.isActive === true && c.coupon.isVisible === true) {
+                                            return <p className = "coupon-name">{c.coupon.name}</p>
+                                        }
+                                    })}
+                                </div>
                             </div>
+                        )}
                         </div>
                  </div>
             </div>

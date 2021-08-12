@@ -11,86 +11,186 @@
      }
 }
 
-.categories {
+.category-container {
     width: 100%;
-    height: 600px; 
+    min-height: 500px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 35px;
 }
 
-.categories-heading {
-    margin-top: 50px;
-    font-size: 50px;
+.category-heading {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.categories-card-container {
-    margin-top: 40px;
-    margin-bottom: 30px;  
+.category-cards-container {
     width: 90%;
-    height: 620px;
+    min-height: 500px;
+    margin-bottom: 30px;
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-.category-box {
-    width: 20%;
-    height: 95%;
-    margin-left: 10px;
-    margin-right: 10px;
-    background: white;
-    border-radius: 20px;  
+.card-box {
+    width: 300px;
+    height: 500px;
     -webkit-box-shadow: 0px 0px 26px 0px rgba(145,145,145,0.83);
     -moz-box-shadow: 0px 0px 26px 0px rgba(145,145,145,0.83);
     box-shadow: 0px 0px 26px 0px rgba(145,145,145,0.83);
+    background: -webkit-linear-gradient(to right, #ee9ca7, #ffdde1); 
+    background: linear-gradient(to top, #f4b0fa, #38053c);
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    transition: all 1s cubic-bezier(0.33333, 0);
     display: flex;
-    justify-content: center;
-    align-items: center;   
-    flex-direction: column;  
-    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.card-box:hover {
+    transform: scale(1.1);
+}
+
+.image-heading {
+    font-size: 20px;
+    margin-bottom: 20px;
 }
 
 .category-image {
-    margin-top: 10px;
-    width: 90%;
-    height: 80%;
-    background: #AAFFA9;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #ABB2B9 , #D5D8DC);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to top,#C7AB4A, #F5DF93); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    width: 100%;
     border-radius: 20px;
+}
+
+.solution-container {
+    width: 100%;
+    min-height: 600px;
     display: flex;
     justify-content: center;
-    align-items: center;  
+    align-items: center;
 }
 
-.category-photo {
-    width: 100%;
-    height: 100%;
+.solution-box {
+    width: 80%;
+    min-height: 500px;
+    background: #38053c;
     border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.category-button {
-    width: 60%;
-    margin-top: 15px;
-    height: 40px;
-    margin-bottom: 10px;
-    border: none;
-    border-radius: 10px;    
-    font-size: 22px;
-    background: #ffffff;  /* fallback for old browsers
-    /* background: -webkit-linear-gradient(to right, #11FFBD, #aaffa934);  /* Chrome 10-25, Safari 5.1-6 */
-    /* background: linear-gradient(to right, #11FFBD, #AAFFA9); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
-    cursor: pointer;
-    font-weight: 500;
+.small-box {
+    height: 450px;
+    width: 300px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-/* <select name="sub" className="form-control" type = "text" onChange={handleCountryChange} value = {country} required>
-    <option>Select Country</option>
-        {countryData.length > 0 && countryData.map((c) => (
-            <option value={c.name}  key={c._id} data = {c.id}>
-                {c.name}
-            </option>
-        ))}
-</select> */
+.app-container {
+    width: 100%;
+    min-height: 300px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-box {
+    width: 80%;
+    height: 200px;
+    background: #ffdde1;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.use-box {
+    margin-top: -50px;
+    width: 80%;
+    height: 200px;
+    background: #ffdde1;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-container {
+    min-height: 400px;
+    width: 100%;
+    background: -webkit-linear-gradient(to right, #2f80ed, #56ccf2); 
+    background: linear-gradient(to right, #2f80ed, #56ccf2);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.footer-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 200px;
+}
+
+.footer-section {
+    min-height: 400px;
+    width: 300px;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.get-app-container {
+    margin-bottom: 30px;
+    font-size: 30px;
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.app-image {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-real {
+    width: 80%;
+}
+
+.branding-text {
+    align-items: center;
+    justify-self: center;
+    font-size: 15px;
+}
+
+.margin-top {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.copyright {
+    color: #fff;
+}
