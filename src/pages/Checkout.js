@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import { toast } from 'react-toastify';
-import {getUserCart, saveUserAddress, getUser, applyCoupon, applyCoins, addCoins, removeCoins, addSolution, createOrder, emptyUserCart, setInternational} from "../functions/user"
+import {getUserCart, saveUserAddress, getUser, applyCoupon, applyCoins, addCoins, removeCoins, addSolution, createOrder, createOrderCOD, emptyUserCart, setInternational} from "../functions/user"
 import {countryData} from "../helpers/countries"
 import './../styles/checkout.css'
 import TextField from '@material-ui/core/TextField';       
@@ -277,7 +277,7 @@ const Checkout = ({history}) => {
                 )}
                 <br />
                 {(country === "India") && (couponApplied === '' && coinsSuccess === false)  && (
-                    <Button variant="outlined" color="primary" onClick={() => buyNow(cartId)} className="mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Cash on Delivery</Button>
+                    <Button variant="outlined" color="primary" onClick={() => buyNowCOD()} className="mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Cash on Delivery</Button>
                 )}
             </div>
         )
@@ -292,6 +292,24 @@ const Checkout = ({history}) => {
     const coinsFalse = () => {
         setUsingCoins(false);
         setCoinsSuccess(false);
+    }
+
+    const buyNowCOD = () => {
+        const sendId = "NULL NULL"
+        createOrderCOD(sendId, user.token)
+        .then(res => {
+            if(res.data.ok) {
+                // empty cart from local storage
+                if(typeof window.localStorage !== 'undefined') localStorage.removeItem("cart")
+                // empty cart from redux
+                dispatch({
+                    type: 'ADD_TO_CART',
+                        payload: [],
+                })
+                // empty cart from database
+                    emptyUserCart(user.token)
+                }
+        })
     }
 
     const buyNow = async (cartID) => {

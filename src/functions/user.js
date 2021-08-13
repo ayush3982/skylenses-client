@@ -138,6 +138,16 @@ export const createOrder = async (razorpayId, authtoken) =>
       }         
     }
   )
+  export const createOrderCOD = async (razorpayId, authtoken) => 
+  await axios.post(
+    `${process.env.REACT_APP_API}/user/order/cod/new`,
+    {razorpayId},
+    {
+      headers : {
+        authtoken
+      }         
+    }
+  )
 
 export const setInternational = async (cartID, authtoken) => 
     await axios.post(
