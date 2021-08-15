@@ -162,7 +162,7 @@ const Home = () => {
             <div className="footer-section col-md- 3">
 
             </div>
-            <p className = "copyright">© skycosmeticlenses.com All Right Reserved.</p>
+            <p className = "copyright">© skycosmeticlenses.com All Right Reserved. {window.location.href}</p>
           </div>
         </div>
       </div>

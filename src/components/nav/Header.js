@@ -139,19 +139,19 @@ const Header = () => {
             <div className="button-container-responsive">
               {!user && (
                 <div className="user-button button-box">
-                  <Link className="user-button button-box" to="/login"><box-icon name='user' color='#000000' ></box-icon></Link>
+                  <Link className="user-button button-box" to="/login"><box-icon name='user' color='#ffffff' ></box-icon></Link>
                 </div>
               )}
               {user && user.role === 'subscriber' && (
-                <Link className="user-button button-box" to="/user/history"><box-icon name='user' color='#000000' ></box-icon></Link>
+                <Link className="user-button button-box" to="/user/history"><box-icon name='user' color='#ffffff' ></box-icon></Link>
               )}
 
               {user && user.role === 'admin' && (
-                <Link className="user-button button-box" to="/admin/dashboard"><box-icon name='user' color='#000000' ></box-icon></Link>
+                <Link className="user-button button-box" to="/admin/dashboard"><box-icon name='user' color='#ffffff' ></box-icon></Link>
               )}
               <div className="cart-button button-box">
               <Badge count={cart.length} offset={[9,0]}>
-                <Link to="/cart"><box-icon name='cart-alt' color='#000000' ></box-icon></Link>
+                <Link to="/cart"><box-icon name='cart-alt' color='#ffffff' ></box-icon></Link>
               </Badge> 
               </div>
             </div>

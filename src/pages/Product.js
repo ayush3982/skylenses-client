@@ -5,11 +5,11 @@ import SingleProduct from "../components/cards/SingleProduct"
 import {useSelector} from 'react-redux'
 import ProductCard from "../components/cards/ProductCard";
 import { Button } from "antd";
-
-
+import '../styles/product.css';
 
 const Product = ({match, history}) => {
     const [product, setProduct] = useState({})
+    const [category, setCategory] = useState({})
     const [star, setStar] = useState(0)
     const [comment, setComment] = useState('')
     const [allowComment, setAllowComment] = useState(false)
@@ -67,17 +67,23 @@ const Product = ({match, history}) => {
     const loadSingleProduct = () => {
         getProduct(slug).then((res) => {
           setProduct(res.data);
+          setCategory(res.data.category);
           // load related
           getRelated(res.data._id).then((res) => setRelated(res.data));
         });
     };
 
-    
+    let backgroundStyles = {
+        background: `linear-gradient(to top, ${category.hexCodeDark}, ${category.hexCodeLight})`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
 
     return (
-        <div className ="container-fluid">
-            <div className = "row pt-4">
-                <SingleProduct product={product} onStarClick={onStarClick} star = {star} />
+        <div className ="container-fluid" style={backgroundStyles}>
+            <div className = "row pt-4"> 
+                <SingleProduct product={product} onStarClick={onStarClick} star = {star} />   
             </div>
 
             {/* <div className="row">
@@ -87,7 +93,6 @@ const Product = ({match, history}) => {
                     <hr />
                 </div>
             </div>
-
             <div className="row pb-5">
                 {related.length ? (
                     related.map((r) => (
@@ -128,7 +133,6 @@ const Product = ({match, history}) => {
                     <div className="btn btn-primary" onClick={handleRedirect}>Please log in to comment</div>
                 )}
                 </div>
-
             </div> */}
         </div>
     )

@@ -1,7 +1,6 @@
 .nav-container {
     width: 100%;      
-    background: -webkit-linear-gradient(to right, #2f80ed, #56ccf2); 
-    background: linear-gradient(to right, #2f80ed, #56ccf2);
+    background: #000;
     height: 10vh;
     display: flex;
     justify-content: space-between;
@@ -23,11 +22,13 @@
 .brand-text {
     font-family: 'Lato', sans-serif;
     color: #fff;
-    font-size: 30px;      
+    font-size: 30px;  
+    transition: all 0.2s ease-in    
 }
 
 .brand-text:hover {
-    color: #fff;        
+    color: #fff;  
+    transform: scale(1.1);      
 }    
 
 .button-container {
@@ -102,8 +103,7 @@
 
 .nav-container-responsive {
     width: 100%;      
-    background: -webkit-linear-gradient(to right, #2f80ed, #56ccf2); 
-    background: linear-gradient(to right, #2f80ed, #56ccf2);
+    
     height: 10vh;
     display: flex;
     justify-content: space-between;
@@ -164,8 +164,7 @@
 
 .nav-container-responsive {
     width: 100%;      
-    background: -webkit-linear-gradient(to right, #2f80ed, #56ccf2); 
-    background: linear-gradient(to right, #2f80ed, #56ccf2);
+    background: #000;
     height: 10vh;
     display: flex;
     justify-content: space-between;
@@ -209,8 +208,7 @@
 .menu-container-box {
     width: 100%;
     height: 300px;
-    background: -webkit-linear-gradient(to right, #2f80ed, #56ccf2); 
-    background: linear-gradient(to right, #2f80ed, #56ccf2);
+    background-color: #000;
     align-self: center;  
 }
 
@@ -218,7 +216,8 @@
     display: flex; 
     align-items: center;
     justify-content: center;
-    background-color: black;
+    background: -webkit-linear-gradient(to right, #2f80ed, #56ccf2); 
+    background: linear-gradient(to right, #2f80ed, #56ccf2);
     color: white;
     height: 40px;
     font-family: 'Lato', sans-serif;

@@ -20,7 +20,7 @@ const RegisterComplete = ({history}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // validation
+        // validation 
         if(!email || !password) {
             toast.error('Email and password required')
             return;

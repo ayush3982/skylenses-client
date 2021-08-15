@@ -123,8 +123,8 @@ const SingleProduct = ({product, onStarClick, star}) => {
 
     return (
         <>  
-            <div className="col-md-7">
-                <Carousel showArrows = {true} autoPlay infiniteLoop>
+            <div className="col-md-6">
+                <Carousel showThumbs = {false} autoPlay infiniteLoop>
                     {images && images.map((i) => <img src={i.url} key={i.public_id}/>)}
                 </Carousel>
             </div>
