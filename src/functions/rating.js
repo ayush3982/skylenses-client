@@ -23,12 +23,11 @@ export const showAverage = (p) => {
         <span>
           <StarRating
             starDimension="20px"
-            starSpacing="2px"
-            starRatedColor="red"
+            starSpacing="3px"
+            starRatedColor = {`${p.hexCodeLight}`}
             rating={result}
             editing={false}
           />{" "}
-          ({p.ratings.length})
         </span>
       </div>
     );

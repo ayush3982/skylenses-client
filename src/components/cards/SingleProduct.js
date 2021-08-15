@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Card, Tabs, Tooltip, Modal, Button } from "antd";
+import { Card, Tabs, Tooltip, Modal,  } from "antd";
+import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
@@ -121,77 +122,52 @@ const SingleProduct = ({product, onStarClick, star}) => {
     
     }
 
-    return (
-        <>  
-            <div className="col-md-6">
-                <Carousel showThumbs = {false} autoPlay infiniteLoop>
-                    {images && images.map((i) => <img src={i.url} key={i.public_id}/>)}
-                </Carousel>
-            </div>
-            <div className="col-md-5">
-                <h1 className="p-3 text-center" style={{backgroundColor: hexCodeLight}}>{title}</h1>
-                {product && product.ratings && product.ratings.length > 0 ? showAverage(product) : (
-                    <div className="text-center pt-1 pb-3">New Product: Be the first to rate it!</div>
-                )}
-                <h6 className="p-3 text-center">{tagline}</h6>
-                <Card
-                    actions = {[
-                        <>
-                            <a onClick = {handleAddToCart}>
-                                <ShoppingCartOutlined className="text-danger" disabled /> <br /> Add to Cart
-                            </a>
-                        </>,
-                        <Link to = {`/`}>
-                            <HeartOutlined className="text-info" /> <br /> Add to Wishlist
-                        </Link>,
-                        <RatingModal>
-                            <StarRating
-                                name = {_id}
-                                numberOfStars = {5}
-                                rating = {star}   
-                                changeRating = {onStarClick}
-                                isSelectable = {true}
-                                starRatedColor = "aqua"
-                            />
-                            <br />
-                            <br /> 
-                        </RatingModal>
-                    ]}
-                >
-                    <div>
-                        <ul className="list-group">
+    const productChoices = () => {
+        return (
+            <div className="container-fluid">
+                    <ul className="list-group">
                         <li className="list-group-item">
                             Price{" "}
                             <span className="label label-default label-pill pull-xs-right">
-                            $ {price} {customized && (
-                                <p className = "text-success"> + $500</p>
+                            {customized ? (
+                                <p> INR {price + 500}</p>
+                            ) : (
+                                <p> INR {price}</p>
                             )}
                             </span>
                         </li>
 
                         {category && (
                             <li className="list-group-item">
-                            Category{" "}
+                            Use it for{" "}
                             <Link
                                 to={`/category/${category.slug}`}
                                 className="label label-default label-pill pull-xs-right"
+                                style = {{color: `${product.hexCodeLight}`}}
                             >
                                 {category.name}
                             </Link>
                             </li>
-                        )}
+                        )}  
+                        {customized && (
+                            <>
+                                {/* <p>Left Power: {powerLeft}</p>
+                                <p>Right Power: {powerRight}</p> */}
+                                <li className="list-group-item">
+                                    Left Power{" "}
+                                    <span className="label label-default label-pill pull-xs-right">
+                                        <p>{powerLeft}</p>
+                                    </span>
+                                </li>
+                                <li className="list-group-item">
+                                    Right Power{" "}
+                                    <span className="label label-default label-pill pull-xs-right">
+                                        <p>{powerLeft}</p>
+                                    </span>
+                                </li>
+                            </>
+                        )} 
 
-                        {sub && (
-                            <li className="list-group-item">
-                            Sub category{" "}
-                            <Link
-                                to={`/sub/${sub.slug}`}
-                                className="label label-default label-pill pull-xs-right"
-                            >
-                                {sub.name}
-                            </Link>
-                            </li>
-                        )}
 
                         
 
@@ -206,6 +182,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                                         className = "form-control"
                                         onChange = {(e) => setPower(e.target.value)}
                                         hidden = {hidden}
+                                        style = {{color : `black`, background : `white`}}
                                     >
                                         {choosePower6s.map(c => {
                                             if(outOfStock.includes(c)) {
@@ -222,20 +199,20 @@ const SingleProduct = ({product, onStarClick, star}) => {
                                         })}
                                     </select>
                                 </div>
-                            <div>
+                                <hr />
+                            <div style = {{color : `${product.hexCodeLight}`}}>
                                 {!customized && (
-                                    <p className="text-muted">Different powers? Customize by clicking below!</p>
+                                    <p>Different powers? Customize by clicking below for an extra INR 500!</p>
                                 )}
 
-                                {customized && (
-                                    <>
-                                        <p className="text-success">Left Power: {powerLeft}</p>
-                                        <p className="text-success">Right Power: {powerRight}</p>
-                                    </>
+                                <div>
+                                    <Button variant="outlined" onClick={showModal} style = {{color : `${product.hexCodeDark}`, background : `${product.hexCodeLight}`}}>
+                                        Customize
+                                    </Button> <br />
+                                    {customized && (
+                                    <Button variant="outlined" onClick = {removeCustomization} style = {{color : `${product.hexCodeDark}`, background : `${product.hexCodeLight}`, marginTop : '10px'}}>Remove Customizations</Button>
                                 )}
-                                <Button type="primary" onClick={showModal}>
-                                    Customize
-                                </Button>
+                                </div>
                                 {showError ? (<p>Please choose a power</p>) : ""}
                                 <Modal title="Customize Your Lenses" okText={`Customize`} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
                                     <div className="form-group">
@@ -286,11 +263,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                                         </select>
                                     </div>
                                 </Modal>
-                                {customized && (
-                                    <div>
-                                        <button className="btn btn-danger" onClick = {removeCustomization}>Remove Customizations</button>
-                                    </div>
-                                )}
+                    
                             </div>
                             </>
                         ) : (
@@ -311,9 +284,74 @@ const SingleProduct = ({product, onStarClick, star}) => {
                         )}    
 
         
-                        </ul>
+                        </ul> 
+                        <div style = {{
+                            display: 'flex',
+                            marginTop: '20px',
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                        }}>
+                        <a style = {{
+                           marginLeft: '20px',
+                           marginRight: '20px',
+                           backgroundColor: `${product.hexCodeLight}`,
+                           color: `${product.hexCodeDark}`,
+                           height: '40px',
+                           width: '100px',
+                           display: 'flex',
+                           alignItems: 'center', 
+                           justifyContent: 'center',
+                           borderRadius: '5px'
+                        }} onClick = {handleAddToCart}>
+                                <ShoppingCartOutlined className="success" disabled /> Add to Cart
+                        </a>
+                        <RatingModal style = {{
+                            display: 'flex',
+                            marginTop: '10px',
+                            alignItems: 'center', 
+                            justifyContent: 'center',
+                        }}>
+                            <StarRating
+                                name = {_id}
+                                numberOfStars = {5}
+                                rating = {star}   
+                                changeRating = {onStarClick}
+                                isSelectable = {true}
+                                starRatedColor = {`${product.hexCodeLight}`}
+                            />
+                            <br />
+                            <br /> 
+                        </RatingModal>
+                        </div>
                     </div>
+        )
+    }
+
+    const cardBody = () => {
+        return (
+            <>
+                <h1 className="p-3 text-center" style={{backgroundColor: `${product.hexCodeDark}`, borderRadius: '20px', color: `${product.hexCodeLight}`, marginTop: '10px'}}>{title}</h1>
+                {product && product.ratings && product.ratings.length > 0 ? showAverage(product) : (
+                    <div className="text-center pt-1 pb-3" style = {{color: `${product.hexCodeLight}`}}>New Product: Be the first to rate it!</div>
+                )}
+                <h6 className="p-3 text-center" style = {{color: `${product.hexCodeLight}`}}>{tagline}</h6>
+                <Card style ={{borderRadius: '20px', backgroundColor: `${product.hexCodeDark}`, color: `${product.hexCodeLight}`}}
+                >
+                    {productChoices()}
                 </Card>
+            </>
+        )
+    }
+
+    return (
+        <>  
+            <div className="col-md-6">
+                <Carousel showThumbs = {false} autoPlay infiniteLoop>
+                    {images && images.map((i) => <img src={i.url} key={i.public_id}/>)}
+                </Carousel>
+            </div>
+            <div className="col-md-5" style={{backgroundColor: `${product.hexCodeDark}`, borderRadius: '20px'}} >
+                {cardBody()}
             </div>
         </>
             

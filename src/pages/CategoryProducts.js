@@ -41,6 +41,7 @@ const CategoryProducts = ({match}) => {
                     <div className="row row-one">
                         {products.map((product) => {
                             return (
+                                <a href = {`/product/${product.slug}`} >
                                 <div className = "product-card col-md- 3">
                                     <div style = {{
                                         width: '90%',
@@ -62,6 +63,7 @@ const CategoryProducts = ({match}) => {
                                         INR  <b>{product.price}/-</b>
                                     </div>
                                 </div>
+                                </a>
                             )
                         })}
                     </div>
