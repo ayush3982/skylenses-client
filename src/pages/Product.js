@@ -74,7 +74,7 @@ const Product = ({match, history}) => {
     };
 
     let backgroundStyles = {
-        background: `linear-gradient(to top, ${category.hexCodeDark}, ${category.hexCodeLight})`,
+        background: `linear-gradient(to top, ${product.hexCodeDark}, ${product.hexCodeLight})`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
