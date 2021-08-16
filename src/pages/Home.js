@@ -107,21 +107,21 @@ const Home = () => {
             </div>
             <div className="col-md- 3 card-box">
             <div className="image-heading">
-                6  M O N T H S
+                3  M O N T H S
               </div>
-              <img className = "category-image" src = "https://i.im.ge/2021/08/08/0i4v6.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629072531/3_months_pcfnft.png" />
             </div>
             <div className="col-md- 3 card-box">
               <div className="image-heading">
-                6  M O N T H S
+                1  M O N T H
               </div>
-              <img className = "category-image" src = "https://i.im.ge/2021/08/08/0i4v6.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629072345/1_month_mf2f89.png" />
             </div>
             <div className="col-md- 3 card-box">
               <div className="image-heading">
                 1  D A Y
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629069718/1_ylnlps.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629072333/1_day_kxmbr4.png" />
             </div>
           </div>
         </div>

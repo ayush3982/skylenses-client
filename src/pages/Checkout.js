@@ -729,8 +729,17 @@ const Checkout = ({history}) => {
     // // )
 
     return (
-        <>
-            <div className="full-container">
+        <div>
+            {payment === true && (
+                 <div>
+                    <p>Payment Success</p>
+                        {fullData.cartTotal >= 1499 && (
+                            <p className="text-success">You got 200 coins!</p>
+                    )}
+                 </div>
+            )}
+            {payment === false && (
+                <div className="full-container">
                 <div className = "row full-box">
                     {addressBox()}
                     <div className = "col-md-5 payment-box">
@@ -787,8 +796,8 @@ const Checkout = ({history}) => {
                         </div>
                  </div>
             </div>
-
-        </>
+            )}
+        </div>
     )
 }
 
