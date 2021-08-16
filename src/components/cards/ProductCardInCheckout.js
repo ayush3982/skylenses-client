@@ -5,6 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {toast} from 'react-toastify'
 import _ from "lodash"
 import {CloseOutlined} from "@ant-design/icons";
+import '../../styles/cart.css'
 
 const ProductCardInCheckout = ({p}) => {
 
@@ -77,37 +78,70 @@ const ProductCardInCheckout = ({p}) => {
       };
 
     return (
-        <tbody>
-            <tr>
-                <td>
-                    <div style = {{width: '200px', height: '200px', alignItems: 'center', justifyContent: 'center'}}>
-                        {p.images.length ? (<ModalImage small = {p.images[0].url} large = {p.images[0].url} />) : (<ModalImage small = {defaultImage} large = {defaultImage} />)}
-                    </div>
-                </td>
-                <td>{p.title}</td>
+        // <tbody>
+        //     <tr>
+        //         <td>
+        //             <div style = {{width: '200px', height: '200px', alignItems: 'center', justifyContent: 'center'}}>
+        //                 {p.images.length ? (<ModalImage small = {p.images[0].url} large = {p.images[0].url} />) : (<ModalImage small = {defaultImage} large = {defaultImage} />)}
+        //             </div>
+        //         </td>
+        //         <td>{p.title}</td>
+        //         {p.isCustomized ? (
+        //            <>
+        //             <td>
+        //                 Left Power: {p.choosePowerLeft} <br />
+        //                 Right Power: {p.choosePowerRight}
+        //             </td> 
+        //            </>
+        //         ) : (
+        //             <td>{p.choosePower}</td>
+        //         )}
+        //         <td>{p.category.name}</td>
+        //         <td className = "text-center">
+        //             <input type="number" className = "form-control" value = {p.count} onChange={handleQuantityChange}/>
+        //         </td>
+        //         <td>INR {p.price}</td>
+        //         <td className="text-center">
+        //         <CloseOutlined
+        //             onClick={handleRemove}
+        //             className="text-danger pointer"
+        //         />
+        // </td>
+        //     </tr>
+        // </tbody>
+        <>
+          <div className="cart-card">
+              <div className="col-md small-card" style = {{
+                background: `linear-gradient(to top, ${p.hexCodeDark}, ${p.hexCodeLight})`,
+              }}>
+                <img className="image-cart" src = {p.images[0].url} />
+              </div>
+              <div className="col-md small-card diff">
+                  <CloseOutlined
+                     onClick={handleRemove}
+                     className="text-danger pointer text-right"
+                 />
+                <div>{p.title}</div>
+                <hr />
                 {p.isCustomized ? (
-                   <>
-                    <td>
-                        Left Power: {p.choosePowerLeft} <br />
-                        Right Power: {p.choosePowerRight}
-                    </td> 
-                   </>
-                ) : (
-                    <td>{p.choosePower}</td>
-                )}
-                <td>{p.category.name}</td>
-                <td className = "text-center">
-                    <input type="number" className = "form-control" value = {p.count} onChange={handleQuantityChange}/>
-                </td>
-                <td>{p.price}</td>
-                <td className="text-center">
-                <CloseOutlined
-                    onClick={handleRemove}
-                    className="text-danger pointer"
-                />
-        </td>
-            </tr>
-        </tbody>
+                    <>
+                     <td>
+                         Left Power: {p.choosePowerLeft} <br />
+                         Right Power: {p.choosePowerRight}
+                     </td> 
+                    </>
+                 ) : (
+                     <td>Power: {p.choosePower}</td>
+                 )}
+                 <p>{p.category.name}</p>
+                 <p>
+                     Quanity<input type="number" className = "form-control" value = {p.count} onChange={handleQuantityChange}/>
+                 </p>
+                 <td>Price: INR {p.price}</td>
+                 
+              </div>
+          </div>
+        </>   
     )
 }
 

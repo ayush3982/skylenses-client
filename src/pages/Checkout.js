@@ -780,7 +780,7 @@ const Checkout = ({history}) => {
                                         <div>
                                             {showApplyCoins()}
                                         </div>
-                                    </>
+                                    </> 
                                 )}
                                 <div className="coupon-section">
                                     <div className = "coupon-heading">Available Coupons</div>

@@ -21,7 +21,7 @@ const initialState = {
     category: '',
     subs: [],
     sub: '',
-    shipping: '',
+    shipping: '', 
     quantity: '',
     images: [],
     hexCodeLight: '',

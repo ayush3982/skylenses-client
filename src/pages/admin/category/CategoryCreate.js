@@ -12,6 +12,7 @@ const CategoryCreate = () => {
     const {user} = useSelector((state) => ({...state}))
 
     const [name, setName] = useState('');
+    const [image, setImage] = useState('');
     const [hexCodeLight, setHexCodeLight] = useState('');
     const [hexCodeDark, setHexCodeDark] = useState('');
     const [tagline, setTagline] = useState('');
@@ -29,10 +30,11 @@ const CategoryCreate = () => {
         e.preventDefault();
         // console.log(name)
         setLoading(true)
-        createCategory({name, hexCodeLight, hexCodeDark, tagline,}, user.token)
+        createCategory({name, image, hexCodeLight, hexCodeDark, tagline,}, user.token)
         .then(res => {
             setLoading(false)
             setName('')
+            setImage('')
             setHexCodeLight('')
             setHexCodeDark('')
             setTagline('')
@@ -80,6 +82,14 @@ const CategoryCreate = () => {
                 className="form-control" 
                 onChange = {e => setName(e.target.value)} 
                 value={name}
+                autoFocus
+                required>
+            </input>
+            <label>Image</label>
+            <input type="text" 
+                className="form-control" 
+                onChange = {e => setImage(e.target.value)} 
+                value={image}
                 autoFocus
                 required>
             </input>

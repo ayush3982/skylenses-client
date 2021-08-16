@@ -166,3 +166,10 @@ export const getUserOrders = async (authtoken) =>
           authtoken
         }
       })
+
+export const cancelOrder = async (removeID, authtoken) => 
+      await axios.post(`${process.env.REACT_APP_API}/user/orders/cancel/${removeID}`, {
+        headers: {
+          authtoken
+        }
+      })

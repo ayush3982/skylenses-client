@@ -9,6 +9,7 @@ const CategoryUpdate = ({history, match}) => {
     const {user} = useSelector((state) => ({...state}))
 
     const [name, setName] = useState('');
+    const [image, setImage] = useState('')
     const [hexCodeLight, setHexCodeLight] = useState('');
     const [hexCodeDark, setHexCodeDark] = useState('');
     const [tagline, setTagline] = useState('');
@@ -17,6 +18,7 @@ const CategoryUpdate = ({history, match}) => {
     const loadCategory = () => {
         getCategory(match.params.slug).then((c) => {
             setName(c.data.category.name)
+            setImage(c.data.category.image)
             setHexCodeLight(c.data.category.hexCodeLight)
             setHexCodeDark(c.data.category.hexCodeDark)
             setTagline(c.data.category.tagline)
@@ -31,10 +33,11 @@ const CategoryUpdate = ({history, match}) => {
         e.preventDefault();
         // console.log(name)
         setLoading(true)
-        updateCategory(match.params.slug, {name, hexCodeLight, hexCodeDark, tagline}, user.token)
+        updateCategory(match.params.slug, {name, image, hexCodeLight, hexCodeDark, tagline}, user.token)
         .then(res => {
             setLoading(false)
             setName('')
+            setImage('')
             setHexCodeLight('')
             setHexCodeDark('')
             setTagline('')
@@ -59,6 +62,14 @@ const CategoryUpdate = ({history, match}) => {
                 value={name}
                 autoFocus
                 required>
+            </input>
+            <label>Image</label>
+            <input type="text" 
+                className="form-control" 
+                onChange = {e => setImage(e.target.value)} 
+                value={image}
+                autoFocus
+                required>    
             </input>
             <br />
             <label>Color Code Light(Hex Code)</label>

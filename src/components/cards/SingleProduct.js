@@ -162,7 +162,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                                 <li className="list-group-item">
                                     Right Power{" "}
                                     <span className="label label-default label-pill pull-xs-right">
-                                        <p>{powerLeft}</p>
+                                        <p>{powerRight}</p>
                                     </span>
                                 </li>
                             </>

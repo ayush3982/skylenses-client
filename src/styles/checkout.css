@@ -29,9 +29,11 @@
 .payment-box {
     display: flex;
     height: 100%;
+    width: 90%;  
     flex-direction: column;
     justify-content: center; 
-    align-items: center
+    align-items: center;
+    margin-top : 20px;
 }
 
 .field-container {
@@ -60,11 +62,12 @@
 .payment-box-order {
     min-height: 300px;
     border-radius: 20px;
-    width: 70%;  
+    width: 100%;  
     margin-bottom: 30px; 
     display: flex;
     flex-direction: column;
     background-color: #fff;
+    margin-left: 10px;
 }
 
 .order-title {
@@ -104,13 +107,14 @@
 .discount-box {
     min-height: 300px;
     border-radius: 20px;
-    width: 70%;  
+    width: 100%;  
     margin-bottom: 30px; 
     display: flex;
     flex-direction: column;
     background-color: #fff;
     align-items: center;
     justify-content: center;
+    margin-left: 10px;
 }
 
 .text-success {
