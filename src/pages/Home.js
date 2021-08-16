@@ -40,21 +40,33 @@ const Home = () => {
   const carousel = () => (   
     <div className="carousel-container">
           <Carousel fade={false} pause={false} indicators={false} controls={false}>
+          <Carousel.Item interval={5000} >     
+              <img
+                src= "https://res.cloudinary.com/skylenses/image/upload/v1629068672/069A8846_1_kz8q6k.png"
+                alt="First slide"
+              />
+            </Carousel.Item>
+          <Carousel.Item interval={5000} >     
+              <img
+                src= "https://res.cloudinary.com/skylenses/image/upload/v1629068393/069A9679_1_bt4vu6.jpg"
+                alt="First slide"
+              />
+            </Carousel.Item>
             <Carousel.Item interval={5000} >     
               <img
-                src= "https://i.im.ge/2021/08/08/0DS68.jpg"
+                src= "https://res.cloudinary.com/skylenses/image/upload/v1629067985/img6_iawrm4.jpg"
                 alt="First slide"
               />
             </Carousel.Item>
             <Carousel.Item interval={5000}>
               <img
-                src= "https://i.im.ge/2021/08/08/0DtIT.jpg"
+                src= "https://res.cloudinary.com/skylenses/image/upload/v1629067985/img7_onv44m.jpg"   
                 alt="Third slide"
               />
             </Carousel.Item>
             <Carousel.Item interval={5000}>
               <img
-                src= "https://i.im.ge/2021/08/08/0D3fa.jpg"   
+                src= "https://res.cloudinary.com/skylenses/image/upload/v1629067984/img5_wg36ss.jpg"   
                 alt="Third slide"
               />
             </Carousel.Item>
@@ -107,9 +119,9 @@ const Home = () => {
             </div>
             <div className="col-md- 3 card-box">
               <div className="image-heading">
-                6  M O N T H S
+                1  D A Y
               </div>
-              <img className = "category-image" src = "https://i.im.ge/2021/08/08/0i4v6.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629069718/1_ylnlps.png" />
             </div>
           </div>
         </div>

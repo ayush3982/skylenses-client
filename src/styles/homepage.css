@@ -131,8 +131,9 @@
 .footer-container {
     min-height: 400px;
     width: 100%;
-    background: -webkit-linear-gradient(to right, #2f80ed, #56ccf2); 
-    background: linear-gradient(to right, #2f80ed, #56ccf2);
+    /* background: -webkit-linear-gradient(to right, #2f80ed, #56ccf2); 
+    background: linear-gradient(to right, #2f80ed, #56ccf2); */
+    background: black;
     display: flex;
     align-items: center;
     flex-direction: column;

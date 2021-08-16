@@ -296,8 +296,8 @@ const SingleProduct = ({product, onStarClick, star}) => {
                            marginRight: '20px',
                            backgroundColor: `${product.hexCodeLight}`,
                            color: `${product.hexCodeDark}`,
-                           height: '40px',
-                           width: '100px',
+                           height: '50px',
+                           width: '100%',
                            display: 'flex',
                            alignItems: 'center', 
                            justifyContent: 'center',
@@ -305,7 +305,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                         }} onClick = {handleAddToCart}>
                                 <ShoppingCartOutlined className="success" disabled /> Add to Cart
                         </a>
-                        <RatingModal style = {{
+                        {/* <RatingModal style = {{
                             display: 'flex',
                             marginTop: '10px',
                             alignItems: 'center', 
@@ -321,7 +321,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                             />
                             <br />
                             <br /> 
-                        </RatingModal>
+                        </RatingModal> */}
                         </div>
                     </div>
         )
