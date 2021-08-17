@@ -43,8 +43,6 @@
     -webkit-box-shadow: 0px 0px 26px 0px rgba(145,145,145,0.83);
     -moz-box-shadow: 0px 0px 26px 0px rgba(145,145,145,0.83);
     box-shadow: 0px 0px 26px 0px rgba(145,145,145,0.83);
-    background: -webkit-linear-gradient(to right, #ee9ca7, #ffdde1); 
-    background: linear-gradient(to top, #f4b0fa, #38053c);
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 20px;
@@ -54,20 +52,40 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
+.months-6 {
+    background: -webkit-linear-gradient(to top, #BFC1C3, #fff); 
+    background: linear-gradient(to top, #BFC1C3, #fff);
+}
+
+.months-3 {
+    background: -webkit-linear-gradient(to top, #3591CB, #C7E9FF); 
+    background: linear-gradient(to top, #3591CB, #C7E9FF);
+}
+
+.month-1 {
+    background: -webkit-linear-gradient(to top, #3E9632, #CDF0C8); 
+    background: linear-gradient(to top, #3E9632, #CDF0C8);
+}
+
+.day-1 {
+    background: -webkit-linear-gradient(to top, #000000, #DFE2DF); 
+    background: linear-gradient(to top, #000000, #DFE2DF);
+}
 .card-box:hover {
     transform: scale(1.1);
 }
 
 .image-heading {
+    margin-top: 100px;
     font-size: 20px;
-    margin-bottom: 20px;
+
 }
 
 .category-image {
-    width: 100%;
+    width: 120%;
     border-radius: 20px;
 }
 

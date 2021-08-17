@@ -99,30 +99,38 @@ const Home = () => {
             C A T E G O R I E S
           </div>
           <div className="category-cards-container row">
-            <div className="col-md- 3 card-box">
+            <a style = {{color: 'black'}} href = "/category/6-months">
+            <div className="col-md- 3 card-box months-6">
               <div className="image-heading">
                 6  M O N T H S
               </div>
-              <img className = "category-image" src = "https://i.im.ge/2021/08/08/0i4v6.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_1_ohabgf.png" />
             </div>
-            <div className="col-md- 3 card-box">
-            <div className="image-heading">
+            </a>
+            <a style = {{color: 'black'}} href = "/category/3-months">
+            <div className="col-md- 3 card-box months-3">
+              <div className="image-heading">
                 3  M O N T H S
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629072531/3_months_pcfnft.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_3_srjebp.png" />
             </div>
-            <div className="col-md- 3 card-box">
+            </a>
+            <a style = {{color: 'black'}} href = "/category/1-months">
+            <div className="col-md- 3 card-box month-1">
               <div className="image-heading">
                 1  M O N T H
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629072345/1_month_mf2f89.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_4_qrqpyc.png" />
             </div>
-            <div className="col-md- 3 card-box">
+            </a>
+            <a style = {{color: 'black'}} href = "/category/1-day">
+            <div className="col-md- 3 card-box day-1">
               <div className="image-heading">
                 1  D A Y
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629072333/1_day_kxmbr4.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_2_jbppby.png" />
             </div>
+            </a>
           </div>
         </div>
         <div className="solution-container">
