@@ -104,7 +104,7 @@ const Home = () => {
               <div className="image-heading">
                 6  M O N T H S
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_1_ohabgf.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_4_qrqpyc.png" />
             </div>
             </a>
             <a style = {{color: 'black'}} href = "/category/3-months">
@@ -112,7 +112,7 @@ const Home = () => {
               <div className="image-heading">
                 3  M O N T H S
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_3_srjebp.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_1_ohabgf.png" />
             </div>
             </a>
             <a style = {{color: 'black'}} href = "/category/1-month">
@@ -120,7 +120,7 @@ const Home = () => {
               <div className="image-heading">
                 1  M O N T H
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_4_qrqpyc.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_3_srjebp.png" />
             </div>
             </a>
             <a style = {{color: 'black'}} href = "/category/1-day">
