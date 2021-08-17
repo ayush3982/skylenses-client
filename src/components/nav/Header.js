@@ -112,7 +112,7 @@ const Header = () => {
           </div>
         </div> 
         <div className="notice">
-          Get free shipping over INR 999 - Pan India
+          Hold On! We are revamping our website to provide you the best experience 😉
         </div>
         {width >= 674 && (
           <>

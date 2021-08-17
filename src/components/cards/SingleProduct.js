@@ -126,7 +126,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
         return (
             <div className="container-fluid">
                     <ul className="list-group">
-                        <li className="list-group-item">
+                        {/* <li className="list-group-item">
                             Price{" "}
                             <span className="label label-default label-pill pull-xs-right">
                             {customized ? (
@@ -135,7 +135,14 @@ const SingleProduct = ({product, onStarClick, star}) => {
                                 <p> INR {price}</p>
                             )}
                             </span>
-                        </li>
+                        </li> */}
+                        <div>
+                        {customized ? (
+                            <h5 className="p-3 text-center" style = {{color: `${product.hexCodeLight}`, fontSize: '30px'}}> INR {price + 500}</h5>
+                            ) : (
+                                <h5 className="p-3 text-center" style = {{color: `${product.hexCodeLight}`, fontSize: '30px'}}> INR {price}</h5>
+                            )}
+                        </div>
 
                         {category && (
                             <li className="list-group-item">
