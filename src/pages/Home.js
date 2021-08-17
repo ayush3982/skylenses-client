@@ -115,7 +115,7 @@ const Home = () => {
               <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_3_srjebp.png" />
             </div>
             </a>
-            <a style = {{color: 'black'}} href = "/category/1-months">
+            <a style = {{color: 'black'}} href = "/category/1-month">
             <div className="col-md- 3 card-box month-1">
               <div className="image-heading">
                 1  M O N T H
