@@ -243,16 +243,19 @@ const Checkout = ({history}) => {
                                 </Select>
                             </div>
                             <div className = "field-container">
-                                <TextField value = {state}  className = "address-field" onChange = {(e) => setAddress(e.target.value)} label = "State" required/>
+                                <TextField value = {state}  className = "address-field" onChange = {(e) => setState(e.target.value)} label = "State" required/>
                             </div>
                             <div className = "field-container">
-                                <TextField value = {city}  className = "address-field" onChange = {(e) => setAddress(e.target.value)} label = "City" required/>
+                                <TextField value = {city}  className = "address-field" onChange = {(e) => setCity(e.target.value)} label = "City" required/>
                             </div>
                             <div className = "field-container">
-                                <TextField value = {email} type = "email"  className = "address-field" onChange = {(e) => setAddress(e.target.value)} label = "Email" required/>
+                                <TextField value = {pincode}  className = "address-field" onChange = {(e) => setPincode(e.target.value)} label = "Pincode" required/>
                             </div>
                             <div className = "field-container">
-                                <TextField value = {phone} type = "number" className = "address-field" onChange = {(e) => setAddress(e.target.value)} label = "Phone" required/>
+                                <TextField value = {email} type = "email"  className = "address-field" onChange = {(e) => setEmail(e.target.value)} label = "Email" required/>
+                            </div>
+                            <div className = "field-container">
+                                <TextField value = {phone} type = "number" className = "address-field" onChange = {(e) => setPhone(e.target.value)} label = "Phone" required/>
                             </div>
                         </form>
                             <Button className = "address-button" variant="outlined" color="secondary" onClick={saveAddressToDb} disabled = {country === "Select Country"}>Confirm Address</Button >
@@ -301,6 +304,7 @@ const Checkout = ({history}) => {
             if(res.data.ok) {
                 // empty cart from local storage
                 if(typeof window.localStorage !== 'undefined') localStorage.removeItem("cart")
+                setPayment(true)
                 // empty cart from redux
                 dispatch({
                     type: 'ADD_TO_CART',
