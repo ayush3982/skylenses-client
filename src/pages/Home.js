@@ -160,7 +160,7 @@ const Home = ({history}) => {
               <h3>S K Y &nbsp;&nbsp;  S O L U T I O N</h3>
               <h5 className="solution-body">60 ml Solution for contact lenses, specially formalized for both colored and non colored lenses</h5>
               <h3 className="solution-money">J U S T &nbsp; I N &nbsp; ₹ 99/-</h3>
-              <button onClick={solution}  className="solution-button">EXPLORE NOW</button>
+              <button onClick={solution}  className="solution-button">EXPLORE</button>
             </div>
           </div>
         </div>
