@@ -58,7 +58,7 @@ const Header = () => {
 
     return (
         <>
-          <div>
+          {/* <div>
           <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
             
             <Item key="home" icon={<AppstoreOutlined />}>
@@ -110,7 +110,7 @@ const Header = () => {
           <div className="new-nav">
         
           </div>
-        </div> 
+        </div>  */}
         <div className="notice">
           Sky Cosmetic Lenses app for iOS and Android lauching soon! Stay tuned 😉
         </div>

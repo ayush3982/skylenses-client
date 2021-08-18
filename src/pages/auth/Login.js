@@ -169,6 +169,9 @@ const Login = ({ history }) => {
           <Link to="/forgot/password" className="float-right text-danger">
             Forgot Password
           </Link>
+          <Link to="/register" className="float-left">
+            New User? Sign Up here.
+          </Link>
         </div>
       </div>
     </div>

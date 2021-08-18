@@ -1,8 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import firebase from 'firebase'
+import {useDispatch, useSelector} from 'react-redux';
+import {useHistory} from 'react-router-dom'
 
-const AdminNav = () => (
-  <nav>
+const AdminNav = () => {
+
+  let dispatch = useDispatch();
+  let {user, cart} = useSelector((state) => ({...state}));
+  let history = useHistory();
+
+  const logout = () => {
+    firebase.auth().signOut()
+    dispatch({
+      type: "LOGOUT",
+      payload: null
+    })
+    history.push('/login')
+  }
+
+  return (
+    <nav>
     <ul className="nav flex-column">
       <li className="nav-item">
         <Link to="/admin/dashboard" className="nav-link">
@@ -45,8 +63,14 @@ const AdminNav = () => (
           Update Password
         </Link>
       </li>
+      <li className="nav-item">
+        <Link onClick={logout} className="nav-link">
+          Logout
+        </Link>
+      </li>
     </ul>
   </nav>
-);
+  )
+};
 
 export default AdminNav;

@@ -5,7 +5,7 @@ import { Carousel } from 'react-bootstrap';
 import "../styles/homepage.css"
 import axios from "axios";
 
-const Home = () => {
+const Home = ({history}) => {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading ] = useState(false);
@@ -23,6 +23,10 @@ const Home = () => {
         console.log(err);
       });
   };
+
+  const solution = () => {
+    history.push('/product/sky-solution')
+  }
 
   const loadCarousel = async () => {
     const res = await axios.get('https://skycosmeticlenses.com/api/carousel/get/data')
@@ -152,7 +156,11 @@ const Home = () => {
               <img className="solution-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629290470/1629290468511.png"/>
             </div>
             <div className="col-md-5 small-box">
-              
+              <h4>I N D T R O D U C I N G</h4>
+              <h3>S K Y &nbsp;&nbsp;  S O L U T I O N</h3>
+              <h5 className="solution-body">60 ml Solution for contact lenses, specially formalized for both colored and non colored lenses</h5>
+              <h3 className="solution-money">J U S T &nbsp; I N &nbsp; ₹ 99/-</h3>
+              <button onClick={solution}  className="solution-button">EXPLORE NOW</button>
             </div>
           </div>
         </div>
