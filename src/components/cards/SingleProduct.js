@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Tabs, Tooltip, Modal,  } from "antd";
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
@@ -29,6 +29,12 @@ const SingleProduct = ({product, onStarClick, star}) => {
     const [showError, setShowError] = useState(false);
 
     const {title, tagline, images, slug, hexCodeDark, hexCodeLight, price, category, sub, _id, isCustomized, outOfStock} = product;
+
+    useEffect(() => {
+        if(category.name === 'Sky Solution') {
+            setPower(0);
+        }
+    })
 
     const {user, cart} = useSelector((state) => ({...state}))
     const dispatch = useDispatch()
