@@ -123,6 +123,31 @@ const SingleProduct = ({product, onStarClick, star}) => {
                 })
              }
         }
+
+        if(category.name === "Sky Solution") {
+            let cart = []
+            if(typeof window != 'undefined') {
+                if(localStorage.getItem('cart')) {
+                    cart = JSON.parse(localStorage.getItem('cart')) 
+                }
+                cart.push({
+                    ...product,
+                    count: 1,
+                    choosePower: power,
+                    choosePowerLeft: powerLeft,
+                    choosePowerRight: powerRight,
+                    isCustomized: customized,
+                    price: passingPrice
+                })
+                let unique = _.uniqWith(cart, _.isEqual)
+                // console.log(unique)
+                localStorage.setItem('cart', JSON.stringify(unique))
+                dispatch({
+                    type: "ADD_TO_CART",
+                    payload: unique
+                })
+             }
+        }
     
     }
 
