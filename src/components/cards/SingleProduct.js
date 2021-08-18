@@ -33,8 +33,9 @@ const SingleProduct = ({product, onStarClick, star}) => {
     useEffect(() => {
         if(category.name === 'Sky Solution') {
             setPower(0);
+            console.log(category.name);
         }
-    })
+    }, [])
 
     const {user, cart} = useSelector((state) => ({...state}))
     const dispatch = useDispatch()
