@@ -53,6 +53,7 @@ const History = () => {
         const date2 = new Date(generateOrderDate())
         const diffTime = Math.abs(date2 - date1);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        console.log(diffTime);
         if(diffDays > 0) return false;
         else return true;
     }

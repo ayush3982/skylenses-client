@@ -3,14 +3,13 @@ import { getProducts} from "../functions/product";
 import ProductCard from '../components/cards/ProductCard';
 import { Carousel } from 'react-bootstrap';
 import "../styles/homepage.css"
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import axios from "axios";
 
 const Home = () => {
 
   const [products, setProducts] = useState([]);
-  const [loading, setLoading ] = useState(false)
+  const [loading, setLoading ] = useState(false);
+  const [carouselData, setCarouselData] = useState([]);
 
   const loadAllProducts = () => {
     setLoading(true);
@@ -25,6 +24,11 @@ const Home = () => {
       });
   };
 
+  const loadCarousel = async () => {
+    const res = await axios.get('https://skycosmeticlenses.com/api/carousel/get/data')
+    setCarouselData(res.data)
+  }
+
   const contentStyle = {
     height: '600px',
     color: '#fff',
@@ -35,12 +39,21 @@ const Home = () => {
 
   useEffect(() => {
     loadAllProducts();
+    loadCarousel()
   }, [])
 
   const carousel = () => (   
     <div className="carousel-container">
           <Carousel fade={false} pause={false} indicators={false} controls={false}>
-          <Carousel.Item interval={5000} >     
+            {carouselData.map((c) => (
+              <Carousel.Item interval={5000} >     
+                <img
+                  src= {c.image}
+                  alt="First slide"
+                />
+              </Carousel.Item>
+            ))}
+          {/* <Carousel.Item interval={5000} >     
               <img
                 src= "https://res.cloudinary.com/skylenses/image/upload/v1629068672/069A8846_1_kz8q6k.png"
                 alt="First slide"
@@ -69,7 +82,7 @@ const Home = () => {
                 src= "https://res.cloudinary.com/skylenses/image/upload/v1629067984/img5_wg36ss.jpg"   
                 alt="Third slide"
               />
-            </Carousel.Item>
+            </Carousel.Item> */}
           </Carousel>
     </div>
   )
