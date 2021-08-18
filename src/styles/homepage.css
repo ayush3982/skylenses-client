@@ -213,3 +213,9 @@
 .copyright {
     color: #fff;
 }
+
+.brand-image {
+    filter: invert(1);
+    width: 140px;
+    height: auto;
+}

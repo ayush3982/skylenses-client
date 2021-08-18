@@ -119,22 +119,10 @@ const Header = () => {
             <div className="nav-container">
             <div className="brand-container">
               <div className="brand-text">
-                <Link className="brand-text" to="/">Skylenses</Link>
+                <Link className="brand-text" to="/">
+                  <a><img className="brand-image" src = 'https://res.cloudinary.com/skylenses/image/upload/v1629289694/sky_logo_qacvga.png'></img></a>
+                </Link>
               </div>
-            </div>
-            <div className="menu-container">
-              <Link to="/shop" className="menu-item">
-                  Shop
-              </Link>
-              <Link className="menu-item">
-                  How to Use
-              </Link>
-              <Link className="menu-item">
-                  Contact Us
-              </Link>
-              <Link className="menu-item">
-                  About Us
-              </Link>
             </div>
             <div className="button-container-responsive">
               {!user && (
@@ -161,25 +149,12 @@ const Header = () => {
         {width <= 674 && (
           <>
             <div className = "nav-container-responsive">
-              <div className = "toggle-container">
-              {collapseState === false && (
-                <button onClick={(e) => collapseFunc(e)} className = "hamburger hamburger--squeeze" type="button">
-                  <span class="hamburger-box">
-                    <span class="hamburger-inner"></span>
-                  </span>
-                </button>
-              )}
-              {collapseState === true && (
-                <button onClick={(e) => collapseFuncR(e)} className = "hamburger hamburger--squeeze is-active" type="button">
-                  <span class="hamburger-box">
-                    <span class="hamburger-inner"></span>
-                  </span>
-                </button>
-              )}
-              </div>
+      
               <div className = "brand-container-responsive">
                 <div className="brand-text-responsive">
-                  <Link className="brand-text-responsive" to="/">Skylenses</Link>
+                  <Link className="brand-text-responsive" to="/">
+                    <a><img className="brand-image" src = 'https://res.cloudinary.com/skylenses/image/upload/v1629289694/sky_logo_qacvga.png'></img></a>
+                  </Link>
                 </div>
               </div>
               <div className="button-container-responsive">

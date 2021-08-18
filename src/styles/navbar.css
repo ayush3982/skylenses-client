@@ -188,7 +188,8 @@
 .brand-text-responsive {
     font-family: 'Lato', sans-serif;
     color: #ffffff;
-    font-size: 35px;      
+    font-size: 35px;   
+    margin-left: 80px;   
 }
 
 .brand-text-responsive:hover {
