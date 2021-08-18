@@ -144,7 +144,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                             )}
                         </div>
 
-                        {category && category !== "Sky Solution" (
+                        {category && category !== "Sky Solution" && (
                             <li className="list-group-item">
                             Use it for{" "}
                             <Link
