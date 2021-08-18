@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
+import {Link} from 'react-router-dom'
 import { toast } from 'react-toastify';
 import {getUserCart, saveUserAddress, getUser, applyCoupon, applyCoins, addCoins, removeCoins, addSolution, createOrder, createOrderCOD, emptyUserCart, setInternational} from "../functions/user"
 import {countryData} from "../helpers/countries"
@@ -9,6 +10,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
+import 'boxicons'
+
 
 import axios from "axios";
  
@@ -258,7 +261,7 @@ const Checkout = ({history}) => {
                                 <TextField value = {phone} type = "number" className = "address-field" onChange = {(e) => setPhone(e.target.value)} label = "Phone" required/>
                             </div>
                         </form>
-                            <Button className = "address-button" variant="outlined" color="secondary" onClick={saveAddressToDb} disabled = {country === "Select Country"}>Confirm Address</Button >
+                            <Button className = "address-button" variant="outlined" color="primary" onClick={saveAddressToDb} disabled = {country === "Select Country"}>Confirm Address</Button >
                             <br />
                     </div>
     )
@@ -267,16 +270,16 @@ const Checkout = ({history}) => {
         return (
             <div>
                 {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === false) && (
-                    <Button variant="outlined" color="secondary" onClick={() => buyNow(cartId)} className="mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Pay Now</Button>
+                    <Button variant="outlined" color="rimary" onClick={() => buyNow(cartId)} className="mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Pay Now</Button>
                 )}
                 {(country === "India" || total >= 4999) && (couponApplied !== '') && (coinsSuccess === false) && (  
-                    <Button onClick={() => buyNowCoupon(cartId)} className="btn btn-primary mt-2" variant="outlined" color="secondary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Dis</Button>
+                    <Button onClick={() => buyNowCoupon(cartId)} className="btn btn-primary mt-2" variant="outlined" color="primary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Dis</Button>
                 )}
                 {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === true) && (
-                    <Button onClick={() => buyNowCoins(cartId)} className="btn btn-primary mt-2" variant="outlined" color="secondary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Coin</Button>
+                    <Button onClick={() => buyNowCoins(cartId)} className="btn btn-primary mt-2" variant="outlined" color="primary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Coin</Button>
                 )}
                 {(country !== "India" && total < 4999) && (
-                    <Button onClick={() => buyNowInternational(cartId)} className="btn btn-primary mt-2" variant="outlined" color="secondary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Int</Button>
+                    <Button onClick={() => buyNowInternational(cartId)} className="btn btn-primary mt-2" variant="outlined" color="primary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Int</Button>
                 )}
                 <br />
                 {(country === "India") && (couponApplied === '' && coinsSuccess === false)  && (
@@ -734,12 +737,17 @@ const Checkout = ({history}) => {
 
     return (
         <div>
+            <div>
             {payment === true && (
-                 <div>
-                    <p>Payment Success</p>
-                        {fullData.cartTotal >= 1499 && (
-                            <p className="text-success">You got 200 coins!</p>
-                    )}
+                 <div className="payment-background">
+                     <div className="container-payment">
+                         <h2 className="payment-heading"><span className="payment-span">Order Accepted!</span> Thanks for shopping with us!</h2>
+                         {fullData.cartTotal >= 1499 && (
+                            <h3 className = "mt-5">You got <span className="payment-coin">200 coins!</span> for shopping over ₹ 1499</h3>
+                        )}
+                        <Link className="payment-continue mt-5" to = "/">Continue Shopping</Link>
+                     </div>
+                     
                  </div>
             )}
             {payment === false && (
@@ -801,6 +809,50 @@ const Checkout = ({history}) => {
                  </div>
             </div>
             )}
+        </div>
+        <div className="footer-container">
+          <div className="footer-box row">
+            <div className="footer-section col-md- 3">
+              <div className="get-app-container">
+                <div className="app-image">
+                  <img className="image-real" src = "https://i.im.ge/2021/08/12/jjUpM.png"/>
+                </div>
+                  <div className="app-heading margin-top">
+                    Marketed By
+                  </div>
+                  <p className = "branding-text">VYOMAN CLAIRE PVT LTD.</p>
+                  <p className = "branding-text">GSTIN: 07AAHCV4657N1ZM</p>
+              </div>
+            </div>
+            <div className="footer-section col-md- 3">
+              <div className="get-app-container">
+                <div className="app-heading">Get Our App</div>
+                <div className="app-image">
+                  <img className="image-real" src = "https://i.im.ge/2021/08/12/j57rF.png"/>
+                  <img className="image-real" src = "https://i.im.ge/2021/08/12/j5sV6.png"/>
+                </div>
+              </div>
+            </div>
+            <div className="footer-section col-md- 3">
+              <div className="get-app-container">
+              <div className="app-heading">Shop Our Range</div>
+                <a href = "/category/6-months" style = {{color: 'white'}}><p className = "branding-text mt-2">6 &nbsp; Months</p></a>
+                <a href = "/category/3-months" style = {{color: 'white'}}><p className = "branding-text mt-2">3 &nbsp; Months</p></a>
+                <a href = "/category/1-month" style = {{color: 'white'}}><p className = "branding-text mt-2">1 &nbsp; Month</p></a>
+                <a href = "/category/1-day" style = {{color: 'white'}}><p className = "branding-text mt-2">1 &nbsp; Day</p></a>
+              </div>
+            </div>
+            <div className="footer-section col-md- 3">
+            <div className="get-app-container">
+              <div className="app-heading">Our Policies</div>
+                <a href = "/privacypolicy" style = {{color: 'white'}}><p className = "branding-text mt-2">Privacy and Policy</p></a>
+                <a href = "/returnpolicy" style = {{color: 'white'}}><p className = "branding-text mt-2">Return Policy</p></a>
+                <a href = "/tandc" style = {{color: 'white'}}><p className = "branding-text mt-2">Terms & Conditions</p></a>
+              </div>
+            </div>
+            <p className = "copyright">© skycosmeticlenses.com All Rights Reserved.</p>
+          </div>
+        </div>
         </div>
     )
 }

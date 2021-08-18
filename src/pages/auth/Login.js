@@ -144,7 +144,8 @@ const Login = ({ history }) => {
   );
 
   return (
-    <div className="container p-5">
+    <div>
+      <div className="container p-5" style = {{marginBottom: "200px"}}>
       <div className="row">
         <div className="col-md-6 offset-md-3">
           {loading ? (
@@ -174,6 +175,50 @@ const Login = ({ history }) => {
           </Link>
         </div>
       </div>
+    </div>
+    <div className="footer-container">
+          <div className="footer-box row">
+            <div className="footer-section col-md- 3">
+              <div className="get-app-container">
+                <div className="app-image">
+                  <img className="image-real" src = "https://i.im.ge/2021/08/12/jjUpM.png"/>
+                </div>
+                  <div className="app-heading margin-top">
+                    Marketed By
+                  </div>
+                  <p className = "branding-text">VYOMAN CLAIRE PVT LTD.</p>
+                  <p className = "branding-text">GSTIN: 07AAHCV4657N1ZM</p>
+              </div>
+            </div>
+            <div className="footer-section col-md- 3">
+              <div className="get-app-container">
+                <div className="app-heading">Get Our App</div>
+                <div className="app-image">
+                  <img className="image-real" src = "https://i.im.ge/2021/08/12/j57rF.png"/>
+                  <img className="image-real" src = "https://i.im.ge/2021/08/12/j5sV6.png"/>
+                </div>
+              </div>
+            </div>
+            <div className="footer-section col-md- 3">
+              <div className="get-app-container">
+              <div className="app-heading">Shop Our Range</div>
+                <a href = "/category/6-months" style = {{color: 'white'}}><p className = "branding-text mt-2">6 &nbsp; Months</p></a>
+                <a href = "/category/3-months" style = {{color: 'white'}}><p className = "branding-text mt-2">3 &nbsp; Months</p></a>
+                <a href = "/category/1-month" style = {{color: 'white'}}><p className = "branding-text mt-2">1 &nbsp; Month</p></a>
+                <a href = "/category/1-day" style = {{color: 'white'}}><p className = "branding-text mt-2">1 &nbsp; Day</p></a>
+              </div>
+            </div>
+            <div className="footer-section col-md- 3">
+            <div className="get-app-container">
+              <div className="app-heading">Our Policies</div>
+                <a href = "/privacypolicy" style = {{color: 'white'}}><p className = "branding-text mt-2">Privacy and Policy</p></a>
+                <a href = "/returnpolicy" style = {{color: 'white'}}><p className = "branding-text mt-2">Return Policy</p></a>
+                <a href = "/tandc" style = {{color: 'white'}}><p className = "branding-text mt-2">Terms & Conditions</p></a>
+              </div>
+            </div>
+            <p className = "copyright">© skycosmeticlenses.com All Rights Reserved.</p>
+          </div>
+        </div>
     </div>
   );
 };

@@ -28,6 +28,10 @@ const Home = ({history}) => {
     history.push('/product/sky-solution')
   }
 
+  const howToUse = () => {
+    history.push('/howtouse')
+  }
+
   const loadCarousel = async () => {
     const res = await axios.get('https://skycosmeticlenses.com/api/carousel/get/data')
     setCarouselData(res.data)
@@ -167,14 +171,14 @@ const Home = ({history}) => {
         <div className="app-container">
           <div className="app-box">
               <h4 className="mt-5">New at using contact lenses? Here's a little heads up</h4>
-              <button className="use-button">How to use</button>
+              <button onClick={howToUse} className="use-button">How to use</button>
           </div>
         </div>
-        <div className="app-container">
+        {/* <div className="app-container">
           <div className="use-box">
             
           </div>
-        </div>
+        </div> */}
         <div className="footer-container">
           <div className="footer-box row">
             <div className="footer-section col-md- 3">
@@ -199,12 +203,23 @@ const Home = ({history}) => {
               </div>
             </div>
             <div className="footer-section col-md- 3">
-
+              <div className="get-app-container">
+              <div className="app-heading">Shop Our Range</div>
+                <a href = "/category/6-months" style = {{color: 'white'}}><p className = "branding-text mt-2">6 &nbsp; Months</p></a>
+                <a href = "/category/3-months" style = {{color: 'white'}}><p className = "branding-text mt-2">3 &nbsp; Months</p></a>
+                <a href = "/category/1-month" style = {{color: 'white'}}><p className = "branding-text mt-2">1 &nbsp; Month</p></a>
+                <a href = "/category/1-day" style = {{color: 'white'}}><p className = "branding-text mt-2">1 &nbsp; Day</p></a>
+              </div>
             </div>
             <div className="footer-section col-md- 3">
-
+            <div className="get-app-container">
+              <div className="app-heading">Our Policies</div>
+                <a href = "/privacypolicy" style = {{color: 'white'}}><p className = "branding-text mt-2">Privacy and Policy</p></a>
+                <a href = "/returnpolicy" style = {{color: 'white'}}><p className = "branding-text mt-2">Return Policy</p></a>
+                <a href = "/tandc" style = {{color: 'white'}}><p className = "branding-text mt-2">Terms & Conditions</p></a>
+              </div>
             </div>
-            <p className = "copyright">© skycosmeticlenses.com All Right Reserved. {window.location.href}</p>
+            <p className = "copyright">© skycosmeticlenses.com All Rights Reserved.</p>
           </div>
         </div>
       </div>

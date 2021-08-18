@@ -7,6 +7,10 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/Home';
 import HomePage from './pages/HomePage';
+import ReturnPolicy from './pages/ReturnPolicy'
+import Terms from './pages/T&C'
+import PrivacyPolicy from './pages/PrivacyPolicy'
+import How from './pages/How'
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
@@ -86,6 +90,10 @@ const App = () => {
         <Route exact path = "/category/:slug" component = {CategoryProducts}/>
         <Route exact path = "/login" component = {Login}/>
         <Route exact path = "/register" component = {Register}/>
+        <Route exact path = "/returnpolicy" component = {ReturnPolicy}/>
+        <Route exact path = "/privacypolicy" component = {PrivacyPolicy}/>
+        <Route exact path = "/howtouse" component = {How}/>
+        <Route exact path = "/tandc" component = {Terms}/>
         <Route exact path = "/register/complete" component = {RegisterComplete}/>
         <Route exact path = "/forgot/password" component = {ForgotPassword}/>
         <UserRoute exact path = "/user/history" component = {History}/>

@@ -167,7 +167,7 @@
 
 .use-button:hover {
     transform: scale(1.1) ;
-    background-color: #566573;
+    background-color: #3591CB;
 }
 
 .app-container {
@@ -183,7 +183,8 @@
 .app-box {
     width: 90%;
     height: 200px;
-    background: #ffdde1;
+    background: -webkit-linear-gradient(to right, #005AA7, #3f2b96); 
+    background: linear-gradient(to right, #005AA7, #3f2b96);
     border-radius: 20px;
     display: flex;
     align-items: center;

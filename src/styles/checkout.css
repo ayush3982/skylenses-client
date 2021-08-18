@@ -145,3 +145,39 @@
 .coupon-name {
 
 }
+
+.payment-background {
+    background: -webkit-linear-gradient(to right, #00F260 , #0575E6);  
+    background: linear-gradient(to right,#00F260, #0575E6);
+    min-height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container-payment {
+    background: #fff;
+    width: 80%;
+    min-height: 500px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.payment-coin {
+    color: #0575E6;
+}
+
+.payment-span {
+    color: #00F260;
+}
+
+.payment-continue {
+    font-size: 20px;
+    color: #000;
+    text-decoration: underline;
+}
