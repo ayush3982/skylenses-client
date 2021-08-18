@@ -344,9 +344,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                 <h6 className="p-3 text-center" style = {{color: `${product.hexCodeLight}`}}>{tagline}</h6>
                 <Card style ={{borderRadius: '20px', backgroundColor: `${product.hexCodeDark}`, color: `${product.hexCodeLight}`}}
                 >
-                    {category && category.name !== "Sky Solution" && (
-                        <div>{productChoices()}</div>
-                    )}
+                    {productChoices()}
                 </Card>
             </>
         )
