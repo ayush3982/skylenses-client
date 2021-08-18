@@ -58,7 +58,7 @@ const Cart = ({history}) => {
                     alignItems: "center"
                 }}>
                     <h4 className="mt-5">{cart.length} Products in  Cart</h4>
-                    {!cart.length ? (<p>No products in cart. <Link to = '/shop'>Continue Shopping</Link></p>) : (
+                    {!cart.length ? (<p>No products in cart. <Link to = '/'>Continue Shopping</Link></p>) : (
                         showCartItems()
                     )}
                 </div>
