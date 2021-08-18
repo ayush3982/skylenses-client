@@ -146,7 +146,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
 
                         {category && category !== "Sky Solution" && (
                             <li className="list-group-item">
-                            Use it for{" "}
+                            Category{" "}
                             <Link
                                 to={`/category/${category.slug}`}
                                 className="label label-default label-pill pull-xs-right"
@@ -181,7 +181,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
 
                         <br />
 
-                        {category && category.name === '6 Months' && category.name !== "Sky Solutio" ? (
+                        {category && category.name === '6 Months' && category.name !== "Sky Solution" ? (
                             <>
                                 <div className="form-group">
                                     <select
@@ -276,7 +276,8 @@ const SingleProduct = ({product, onStarClick, star}) => {
                             </>
                         ) : (
                             <div className="form-group">
-                                    <select
+                                    {category && category.name !== "Sky Solution" && (
+                                        <select
                                         value = {power}
                                         name = "choosePowers"
                                         className = "form-control"
@@ -288,6 +289,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                                             </option>
                                         )}
                                     </select>
+                                    )}
                             </div>
                         )}    
 
