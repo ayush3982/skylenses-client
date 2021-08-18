@@ -180,7 +180,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
 
                         <br />
 
-                        {category && category.name === '6 Months' ? (
+                        {category && category.name === '6 Months' && category.name !== "Sky Solutio" ? (
                             <>
                                 <div className="form-group">
                                     <select
@@ -344,7 +344,9 @@ const SingleProduct = ({product, onStarClick, star}) => {
                 <h6 className="p-3 text-center" style = {{color: `${product.hexCodeLight}`}}>{tagline}</h6>
                 <Card style ={{borderRadius: '20px', backgroundColor: `${product.hexCodeDark}`, color: `${product.hexCodeLight}`}}
                 >
-                    {productChoices()}
+                    {category && category.name !== "Sky Solution" && (
+                        <div>{productChoices()}</div>
+                    )}
                 </Card>
             </>
         )
