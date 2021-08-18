@@ -1,6 +1,6 @@
 .full-container {
-    background: -webkit-linear-gradient(to right, #ABB2B9 , #D5D8DC);  
-    background: linear-gradient(to top,#C7AB4A, #F5DF93);
+    background: -webkit-linear-gradient(to right, #77A1D3 , #79CBCA, #E684AE);  
+    background: linear-gradient(to right,#77A1D3, #79CBCA, #E684AE);
     height: auto;   
     min-height: 100vh;
     display: flex;

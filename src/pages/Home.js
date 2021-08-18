@@ -149,7 +149,7 @@ const Home = () => {
         <div className="solution-container">
           <div className="solution-box row">
             <div className="col-md-5 small-box">
-
+              <img className="solution-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629290470/1629290468511.png"/>
             </div>
             <div className="col-md-5 small-box">
               

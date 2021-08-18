@@ -112,7 +112,7 @@ const Header = () => {
           </div>
         </div> 
         <div className="notice">
-          Hold On! We are revamping our website to provide you the best experience 😉
+          Sky Cosmetic Lenses app for iOS and Android lauching soon! Stay tuned 😉
         </div>
         {width >= 674 && (
           <>
