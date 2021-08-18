@@ -166,7 +166,8 @@ const Home = ({history}) => {
         </div>
         <div className="app-container">
           <div className="app-box">
-
+              <h4 className="mt-5">New at using contact lenses? Here's a little heads up</h4>
+              <button className="use-button">How to use</button>
           </div>
         </div>
         <div className="app-container">

@@ -152,6 +152,24 @@
     background-color: #566573;
 }
 
+.use-button {
+    margin-top: 10px;
+    background-color: #000000;
+    color: #fff;
+    width: 30%;
+    height: 50px;
+    font-family: 'Lato', sans-serif;
+    border-radius: 20px;
+    border: none;
+    font-size: 20px;
+    transition: all 0.2s ease-in
+}
+
+.use-button:hover {
+    transform: scale(1.1) ;
+    background-color: #566573;
+}
+
 .app-container {
     width: 100%;
     min-height: 300px;
@@ -159,16 +177,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .app-box {
-    width: 80%;
+    width: 90%;
     height: 200px;
     background: #ffdde1;
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    text-align: center;
 }
 
 .use-box {
