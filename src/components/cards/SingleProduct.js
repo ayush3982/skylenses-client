@@ -31,7 +31,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
     const {title, tagline, images, slug, hexCodeDark, hexCodeLight, price, category, sub, _id, isCustomized, outOfStock} = product;
 
     useEffect(() => {
-        console.log(category)
+        console.log(product.category)
     }, [])
 
     const {user, cart} = useSelector((state) => ({...state}))
