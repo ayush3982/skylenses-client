@@ -117,44 +117,64 @@ const Home = ({history}) => {
         {carousel()}
         <div className="category-container">
           <div className="category-heading">
-            C A T E G O R I E S
+            S K Y &nbsp; C O L L E C T  I O N
           </div>
           <div className="category-cards-container row">
             <a style = {{color: 'black'}} href = "/category/6-months">
             <div className="col-md- 3 card-box months-6">
               <div className="image-heading">
-                6  M O N T H S
+                P R E M I U M
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_4_qrqpyc.png" />
+              <div className="sub-heading">
+                6 &nbsp; M O N T H S &nbsp; L E N S E S
+              </div>
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629471098/069A7931_3_hl9mdz.png" />
             </div>
             </a>
             <a style = {{color: 'black'}} href = "/category/3-months">
             <div className="col-md- 3 card-box months-3">
-              <div className="image-heading">
-                3  M O N T H S
+            <div className="image-heading">
+                  G L O B E
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_1_ohabgf.png" />
+              <div className="sub-heading">
+                3 &nbsp; M O N T H S &nbsp; L E N S E S
+              </div>
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629468484/3_months_isywod.png" />
             </div>
             </a>
             <a style = {{color: 'black'}} href = "/category/1-month">
             <div className="col-md- 3 card-box month-1">
-              <div className="image-heading">
-                1  M O N T H
+            <div className="image-heading">
+                C L A S S I C
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_3_srjebp.png" />
+              <div className="sub-heading">
+                1 &nbsp; M O N T H  &nbsp; L E N S E S
+              </div>
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629472580/069A9000_copy_jes0to.png" />
             </div>
             </a>
             <a style = {{color: 'black'}} href = "/category/1-day">
             <div className="col-md- 3 card-box day-1">
-              <div className="image-heading">
-                1  D A Y
+            <div className="image-heading">
+                B A S I C 
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629220209/Image_2_jbppby.png" />
+              <div className="sub-heading">
+                1 &nbsp; D A Y &nbsp; L E N S E S
+              </div>
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629473151/069A9460_copy_kjcuxi.png" />
+            </div>
+            </a>
+            <a style = {{color: 'black'}} href = "/product/sky-solution">
+            <div className="col-md- 3 card-box solution-color ">
+              <div className="image-heading">
+                S K Y &nbsp; S O L U T I O N
+              </div>
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629290470/1629290468511.png" />
             </div>
             </a>
           </div>
         </div>
-        <div className="solution-container">
+        {/* <div className="solution-container">
           <div className="solution-box row">
             <div className="col-md-5 small-box">
               <img className="solution-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629290470/1629290468511.png"/>
@@ -167,7 +187,7 @@ const Home = ({history}) => {
               <button onClick={solution}  className="solution-button">EXPLORE</button>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="app-container">
           <div className="app-box">
               <h4 className="mt-5">New at using contact lenses? Here's a little heads up</h4>
