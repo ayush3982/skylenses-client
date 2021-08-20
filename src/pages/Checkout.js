@@ -64,7 +64,7 @@ const Checkout = ({history}) => {
           console.log(cartId)       
         });
         getUser(user.token, user.email).then((res) => {
-            console.log(res.data.couponsAvailable)
+            console.log(res.data)
             setAvailableCoupons(res.data.couponsAvailable)
             setUserData(res.data)
             setAddress(res.data.billing_address)
