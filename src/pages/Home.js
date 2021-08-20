@@ -191,7 +191,7 @@ const Home = ({history}) => {
         <div className="app-container">
           <div className="app-box">
               <h4 className="mt-5">New at using contact lenses? Here's a little heads up</h4>
-              <button onClick={howToUse} className="use-button">How to use</button>
+              <button onClick={howToUse} className="use-button">Know more</button>
           </div>
         </div>
         {/* <div className="app-container">
