@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import firebase from 'firebase'
 import { auth } from "../../firebase";
 import {useDispatch} from 'react-redux';
 import {createOrUpdateUser} from '../../functions/auth'
@@ -14,7 +15,7 @@ const RegisterComplete = ({history}) => {
     let dispatch = useDispatch()
 
     useEffect(() => {
-        setEmail(window.localStorage.getItem('emailForRegistration'))
+        // setEmail(window.localStorage.getItem('emailForRegistration'))
     }, [history])
 
     const handleSubmit = async (e) => {
@@ -67,15 +68,65 @@ const RegisterComplete = ({history}) => {
         }
     }
 
+    const register = async (e) => {
+        e.preventDefault();
+
+        // validation 
+        if(!email || !password) {
+            toast.error('Email and password required')
+            return;
+        }
+
+        if(password.length < 6) {
+            toast.error('Password must be at least 6 characters long')
+            return;
+        }
+
+        try {
+            const res = await firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then( async (response) => {
+                let user = auth.currentUser
+                await user.updatePassword(password)
+                const idTokenResult = await user.getIdTokenResult()
+                // redux store 
+                console.log("user", user, "idTokenResult", idTokenResult);
+                createOrUpdateUser(idTokenResult.token)
+                .then((res) => {
+               
+                    dispatch({
+                        type: "LOGGED_IN_USER",
+                        payload: {
+                            name: res.data.name,
+                            email: res.data.email,
+                            token: idTokenResult.token,
+                            role: res.data.role,
+                            coupons: res.data.couponsAvailable,
+                            _id: res.data._id,
+                        }
+                    })
+                })
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+            history.push('/')
+        } catch(error) {
+            console.log(error);
+            toast.error(error.message)
+        }
+    }
+
     const CompleteRegisterForm = () => 
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={register}>
             <input 
                 type="email" 
                 className="form-control" 
                 value={email} 
+                placeholder="Email"
                 onChange={e => setEmail(e.target.value)} 
-                disabled/>
+                autoFocus
+                />
 
                 <input type = "password" 
                     className="form-control" 
@@ -96,7 +147,7 @@ const RegisterComplete = ({history}) => {
         <div className="container p-5">
             <div className="row">
                 <div className="col-md-6 offset-md-3">
-                    <h4>Register Complete</h4>
+                    <h4>Register</h4>
                     {CompleteRegisterForm()}
                 </div>
             </div>

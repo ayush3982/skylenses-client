@@ -787,22 +787,14 @@ const Checkout = ({history}) => {
                                         </div>
                                     </>
                                 )}
-                                {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === true) &&(  
+                                {/* {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === true) &&(  
                                     <>
                                         <div>
                                             {showApplyCoins()}
                                         </div>
                                     </> 
-                                )}
-                                <div className="coupon-section">
-                                    <div className = "coupon-heading">Available Coupons</div>
-                                    
-                                    {availableCoupons.map(c => {
-                                        if(c.coupon !== null && c.coupon.isActive === true && c.coupon.isVisible === true) {
-                                            return <p className = "coupon-name">{c.coupon.name}</p>
-                                        }
-                                    })}
-                                </div>
+                                )} */}
+                                
                             </div>
                         )}
                         </div>
