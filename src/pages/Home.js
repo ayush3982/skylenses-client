@@ -128,7 +128,7 @@ const Home = ({history}) => {
               <div className="sub-heading">
                 6 &nbsp; M O N T H S &nbsp; L E N S E S
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629471098/069A7931_3_hl9mdz.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629754509/6_months_sei1be.png" />
             </div>
             </a>
             <a style = {{color: 'black'}} href = "/category/3-months">
@@ -161,7 +161,7 @@ const Home = ({history}) => {
               <div className="sub-heading">
                 1 &nbsp; D A Y &nbsp; L E N S E S
               </div>
-              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629473151/069A9460_copy_kjcuxi.png" />
+              <img className = "category-image" src = "https://res.cloudinary.com/skylenses/image/upload/v1629754510/1_day_1_rg4i5b.png" />
             </div>
             </a>
             <a style = {{color: 'black'}} href = "/product/sky-solution">

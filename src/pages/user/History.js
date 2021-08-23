@@ -37,10 +37,14 @@ const History = () => {
     })
 
     const cancelBilled = (shippingID) => {
+      const answer = window.confirm("Cancel Order?");
+      if (answer) {
         cancelOrder(shippingID, user.token)
         .then((response) => {
             console.log(response.data)
+            loadUserOrders()
         })
+      }
     }
 
     const generateOrderDate = () => {

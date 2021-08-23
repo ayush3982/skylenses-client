@@ -76,7 +76,7 @@ const Cart = ({history}) => {
                             <p>{c.title} x {c.count} = INR {c.price * c.count}</p>
                         </div>
                     ))}
-                    {getTotal() < deliveryChargesApplied() ? (<div>Delivery Charges : 50</div>) : (null)}
+                    {getTotal() < deliveryChargesApplied() ? (<div>Delivery Charges : INR 50</div>) : (null)}
                     <hr />
                         Total: <b>INR {deliveryChargesApplied()}</b>
                     <hr />

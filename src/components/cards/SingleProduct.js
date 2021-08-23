@@ -10,6 +10,7 @@ import RatingModal from "../modal/RatingModal";
 import {showAverage} from "../../functions/rating"
 import _ from "lodash"
 import {useSelector, useDispatch} from 'react-redux'
+import {toast} from 'react-toastify'
 
 
 const {Meta} = Card
@@ -96,6 +97,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                     type: "ADD_TO_CART",
                     payload: unique
                 })
+                toast.success(`${product.title} added to cart`)
              }
         }
 
