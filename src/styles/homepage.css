@@ -294,3 +294,23 @@
     width: 140px;
     height: auto;
 }
+
+.modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: black;
+    min-height: 300px;
+    width: 350px;
+    border-radius: 20px;
+    color: white;
+}
+
+.modal-heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 80%;
+}

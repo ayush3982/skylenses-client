@@ -4,12 +4,14 @@ import ProductCard from '../components/cards/ProductCard';
 import { Carousel } from 'react-bootstrap';
 import "../styles/homepage.css"
 import axios from "axios";
+import {Modal, Button} from 'antd';
 
 const Home = ({history}) => {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading ] = useState(false);
   const [carouselData, setCarouselData] = useState([]);
+  const [visible, setVisible] = useState(false);
 
   const loadAllProducts = () => {
     setLoading(true);
@@ -37,6 +39,29 @@ const Home = ({history}) => {
     setCarouselData(res.data)
   }
 
+  const appModal = () => {
+    return (
+      <>
+        <Modal
+          centered
+          visible={visible}
+          onOk={() => setVisible(false)}
+          onCancel={() => setVisible(false)}
+          width={400}
+          footer={null}
+        >
+          <br />
+          <div className="modal-container">
+            <div className="modal-heading">
+              Sky Cosmetic Lenses app back on Google Play & App Store
+            </div>
+          </div>
+        </Modal>
+    </>
+
+    )
+  }
+
   const contentStyle = {
     height: '600px',
     color: '#fff',
@@ -48,6 +73,7 @@ const Home = ({history}) => {
   useEffect(() => {
     loadAllProducts();
     loadCarousel()
+    setVisible(true);   
   }, [])
 
   const carousel = () => (   
@@ -115,6 +141,7 @@ const Home = ({history}) => {
     return (
       <div className="home">
         {carousel()}
+        {appModal()}
         <div className="category-container">
           <div className="category-heading">
             S K Y &nbsp; C O L L E C T  I O N
