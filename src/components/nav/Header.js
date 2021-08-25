@@ -1,3 +1,4 @@
+  
 import React, {useState} from 'react'
 import { Menu, Badge } from 'antd';
 import {AppstoreOutlined, SettingOutlined, UserOutlined, UserAddOutlined, LogoutOutlined, ShoppingOutlined, ShoppingCartOutlined } from '@ant-design/icons';
@@ -41,7 +42,20 @@ const Header = () => {
     const menu = () => {
       return (
         <div className="menu-container-box">
-
+          <div className="menu-item-responsive-container">
+            <a href = "/category/6-months" className="responsive-menu-item">
+              <div className="hover-boi"  >6 Months Lenses</div>
+            </a>
+            <a href = "/category/3-months" className="responsive-menu-item">
+              <div className="hover-boi" >3 Months Lenses</div>
+            </a>
+            <a href = "/category/1-month" className="responsive-menu-item">
+              <div className="hover-boi" >1 Month Lenses</div>
+            </a>
+            <a href = "/category/1-day" className="responsive-menu-item">
+              <div className="hover-boi" >1 Day Lenses</div>
+            </a>
+          </div>
         </div>
       )
     }
@@ -112,7 +126,7 @@ const Header = () => {
           </div>
         </div>  */}
         <div className="notice">
-          Sky Cosmetic Lenses app for iOS and Android lauching soon! Stay tuned 😉
+          Sky Cosmetic Lenses App now availabe for Android & iOS
         </div>
         {width >= 674 && (
           <>
@@ -120,26 +134,48 @@ const Header = () => {
             <div className="brand-container">
               <div className="brand-text">
                 <Link className="brand-text" to="/">
-                  <a><img className="brand-image" src = 'https://res.cloudinary.com/skylenses/image/upload/v1629289694/sky_logo_qacvga.png'></img></a>
+                  <img className="image-brand" src = "https://i.im.ge/2021/08/12/jjUpM.png" />
                 </Link>
               </div>
+            </div>
+            <div className="menu-container">
+              <a style = {{color: 'white'}} href = "/category/6-months">
+                <div className="menu-item">
+                    6 Months Lenses
+                </div>
+              </a>
+              <a style = {{color: 'white'}} href = "/category/3-months">
+                <div className="menu-item">
+                    3 Months Lenses
+                </div>
+              </a>
+              <a style = {{color: 'white'}} href = "/category/1-month">
+                <div className="menu-item">
+                    1 Month Lenses
+                </div>
+              </a>
+              <a style = {{color: 'white'}} href = "/category/1-day">
+                <div className="menu-item">
+                    1 Day Lenses
+                </div>
+              </a>
             </div>
             <div className="button-container-responsive">
               {!user && (
                 <div className="user-button button-box">
-                  <Link className="user-button button-box" to="/login"><box-icon name='user' color='#ffffff' ></box-icon></Link>
+                  <Link className="user-button button-box" to="/login"><box-icon name='user' color='#FFFFFF' ></box-icon></Link>
                 </div>
               )}
               {user && user.role === 'subscriber' && (
-                <Link className="user-button button-box" to="/user/history"><box-icon name='user' color='#ffffff' ></box-icon></Link>
+                <Link className="user-button button-box" to="/user/history"><box-icon name='user' color='#FFFFFF' ></box-icon></Link>
               )}
 
               {user && user.role === 'admin' && (
-                <Link className="user-button button-box" to="/admin/dashboard"><box-icon name='user' color='#ffffff' ></box-icon></Link>
+                <Link className="user-button button-box" to="/admin/dashboard"><box-icon name='user' color='#FFFFFF' ></box-icon></Link>
               )}
               <div className="cart-button button-box">
               <Badge count={cart.length} offset={[9,0]}>
-                <Link to="/cart"><box-icon name='cart-alt' color='#ffffff' ></box-icon></Link>
+                <Link to="/cart"><box-icon name='cart-alt' color='#FFFFFF' ></box-icon></Link>
               </Badge> 
               </div>
             </div>
@@ -149,11 +185,26 @@ const Header = () => {
         {width <= 674 && (
           <>
             <div className = "nav-container-responsive">
-      
+              <div className = "toggle-container">
+              {collapseState === false && (
+                <button onClick={(e) => collapseFunc(e)} className = "hamburger hamburger--squeeze" type="button">
+                  <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                  </span>
+                </button>
+              )}
+              {collapseState === true && (
+                <button onClick={(e) => collapseFuncR(e)} className = "hamburger hamburger--squeeze is-active" type="button">
+                  <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                  </span>
+                </button>
+              )}
+              </div>
               <div className = "brand-container-responsive">
                 <div className="brand-text-responsive">
                   <Link className="brand-text-responsive" to="/">
-                    <a><img className="brand-image" src = 'https://res.cloudinary.com/skylenses/image/upload/v1629289694/sky_logo_qacvga.png'></img></a>
+                    <img className="image-brand-responsive" src = "https://i.im.ge/2021/08/12/jjUpM.png" />
                   </Link>
                 </div>
               </div>
@@ -191,4 +242,3 @@ const Header = () => {
 }
 
 export default Header
-

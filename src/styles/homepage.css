@@ -264,6 +264,12 @@
     justify-content: center;
 }
 
+.app-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .image-real {
     width: 80%;
 }

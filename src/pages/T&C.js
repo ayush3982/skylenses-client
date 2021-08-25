@@ -35,8 +35,8 @@ const Terms = () => {
               <div className="get-app-container">
                 <div className="app-heading">Get Our App</div>
                 <div className="app-image">
-                  <img className="image-real" src = "https://i.im.ge/2021/08/12/j57rF.png"/>
-                  <img className="image-real" src = "https://i.im.ge/2021/08/12/j5sV6.png"/>
+                <a className = "app-image-container" href="https://apps.apple.com/in/app/sky-cosmetic-lenses/id1537659278"><img className="image-real" src = "https://i.im.ge/2021/08/12/j57rF.png"/></a>
+                    <a className = "app-image-container" href = "https://play.google.com/store/apps/details?id=com.skycosmeticlenses.lenses"><img className="image-real" src = "https://i.im.ge/2021/08/12/j5sV6.png"/></a>
                 </div>
               </div>
             </div>
