@@ -193,11 +193,13 @@
     transition: all 0.2s ease-in;    
     display: flex;
     justify-content: center;
-    align-items: center;  
+    align-items: center; 
+    margin-left: 15px !important; 
 }
 
 .image-brand-responsive {
     width: 45%;
+    
 }
 
 .brand-text-responsive:hover {
