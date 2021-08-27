@@ -126,7 +126,7 @@ const Header = () => {
           </div>
         </div>  */}
         <div className="notice">
-          Sky Cosmetic Lenses App now availabe for Android & iOS
+          Shipping free all over India for orders over ₹ 999/-
         </div>
         {width >= 674 && (
           <>

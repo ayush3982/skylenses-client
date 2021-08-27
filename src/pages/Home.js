@@ -53,7 +53,7 @@ const Home = ({history}) => {
           <br />
           <div className="modal-container">
             <div className="modal-heading">
-              <span className="modal-color">Sky Cosmetic Lenses</span>app back on Google Play & App Store. Downlaod now to try your luck at the Lucky Wheel to get discounts!
+              <span className="modal-color">Sky Cosmetic Lenses</span>app back on Google Play & App Store. Download now to try your luck at the Lucky Wheel to get discounts!
             </div>
             <a className = "app-image-container modal-image" href="https://apps.apple.com/in/app/sky-cosmetic-lenses/id1537659278"><img className="image-real" src = "https://i.im.ge/2021/08/12/j57rF.png"/></a>
                 <a className = "app-image-container modal-image" href = "https://play.google.com/store/apps/details?id=com.skycosmeticlenses.lenses"><img className="image-real" src = "https://i.im.ge/2021/08/12/j5sV6.png"/></a>
