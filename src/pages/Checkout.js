@@ -787,13 +787,13 @@ const Checkout = ({history}) => {
                                         </div>
                                     </>
                                 )}
-                                {/* {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === true) &&(  
+                                {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === true) &&(  
                                     <>
                                         <div>
                                             {showApplyCoins()}
                                         </div>
                                     </> 
-                                )} */}
+                                )}
                                 
                             </div>
                         )}
