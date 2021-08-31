@@ -133,7 +133,7 @@ const ProductUpdate = ({match, history}) => {
                 <div className="col-md-8">
                         {loading ? (<LoadingOutlined className="text-danger h1" />) : (<h4>Create Product</h4>)}
                         <hr />
-                        {JSON.stringify(values)}
+                        
                         <div className="p-3">
                             <FileUpload 
                                 values={values}
@@ -154,7 +154,7 @@ const ProductUpdate = ({match, history}) => {
                                 </select>
                             </div>
 
-                           {JSON.stringify(defaultSub)}
+                           
                             <div className="form-group">
                                 <label>Sub Category</label>
                                 <select name="sub" className="form-control" onChange={handleSubChange} value={defaultSub}>

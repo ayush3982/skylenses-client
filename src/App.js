@@ -6,6 +6,7 @@ import {Switch, Route} from 'react-router-dom'
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/Home';
+import CouponDash from './pages/CouponDash'
 import HomePage from './pages/HomePage';
 import ReturnPolicy from './pages/ReturnPolicy'
 import Terms from './pages/T&C'
@@ -96,6 +97,7 @@ const App = () => {
         <Route exact path = "/tandc" component = {Terms}/>
         <Route exact path = "/register/complete" component = {RegisterComplete}/>
         <Route exact path = "/forgot/password" component = {ForgotPassword}/>
+        <Route exact path = "/coupon/dashboard" component = {CouponDash}/>
         <UserRoute exact path = "/user/history" component = {History}/>
         <UserRoute exact path = "/user/password" component = {Password}/>
         <UserRoute exact path = "/user/wishlist" component = {Wishlist}/>

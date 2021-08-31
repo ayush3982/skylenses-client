@@ -11,8 +11,6 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import 'boxicons'
-
-
 import axios from "axios";
  
 const Checkout = ({history}) => {
@@ -273,13 +271,13 @@ const Checkout = ({history}) => {
                     <Button variant="outlined" color="rimary" onClick={() => buyNow(cartId)} className="mt-2" disabled = {!addressSaved || !products.length || country === "Select Country"}>Pay Now</Button>
                 )}
                 {(country === "India" || total >= 4999) && (couponApplied !== '') && (coinsSuccess === false) && (  
-                    <Button onClick={() => buyNowCoupon(cartId)} className="btn btn-primary mt-2" variant="outlined" color="primary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Dis</Button>
+                    <Button onClick={() => buyNowCoupon(cartId)} className="btn btn-primary mt-2" variant="outlined" color="primary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</Button>
                 )}
                 {(country === "India" || total >= 4999) && (couponApplied === '') && (coinsSuccess === true) && (
-                    <Button onClick={() => buyNowCoins(cartId)} className="btn btn-primary mt-2" variant="outlined" color="primary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Coin</Button>
+                    <Button onClick={() => buyNowCoins(cartId)} className="btn btn-primary mt-2" variant="outlined" color="primary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</Button>
                 )}
                 {(country !== "India" && total < 4999) && (
-                    <Button onClick={() => buyNowInternational(cartId)} className="btn btn-primary mt-2" variant="outlined" color="primary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order Int</Button>
+                    <Button onClick={() => buyNowInternational(cartId)} className="btn btn-primary mt-2" variant="outlined" color="primary" disabled = {!addressSaved || !products.length || country === "Select Country"}>Place Order</Button>
                 )}
                 <br />
                 {(country === "India") && (couponApplied === '' && coinsSuccess === false)  && (
@@ -784,6 +782,7 @@ const Checkout = ({history}) => {
                                         </div>
                                         <div>
                                             <button className="btn btn-secondary mt-3" onClick={handleCoins}>Use Coins Instead?</button> <hr />
+                                            
                                         </div>
                                     </>
                                 )}
@@ -794,7 +793,15 @@ const Checkout = ({history}) => {
                                         </div>
                                     </> 
                                 )}
-                                
+                                <div className="coupon-section">
+                                    <div className = "coupon-heading">Available Coupons</div>
+                                    
+                                    {availableCoupons.map(c => {
+                                        if(c.coupon !== null && c.coupon.isActive === true && c.coupon.isVisible === true) {
+                                            return <p className = "coupon-name">{c.coupon.name}</p>
+                                        }
+                                    })}
+                                </div>
                             </div>
                         )}
                         </div>

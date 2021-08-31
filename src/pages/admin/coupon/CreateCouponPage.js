@@ -65,7 +65,7 @@ const CreateCouponPage = () => {
                 </div>
                 <div className="col-md-8">
                     <h4>Create Coupon</h4>
-                    {JSON.stringify(coupons)}
+                    
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             <label className="text-muted">Name</label>

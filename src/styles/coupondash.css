@@ -1,0 +1,49 @@
+.dash-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.dash-heading {
+    font-family: 'Lato', sans-serif;
+    margin-top: 30px;
+    font-size: 30px;
+}
+
+.dash-text {
+    margin-top: 30px;
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+.dash-field {
+    width: 300px;
+}
+
+.dash-table-heading {
+    display: flex;
+    flex-direction: row;
+    background: black;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    height: 40px;
+}
+
+.dash-col {
+    margin-right: 20px;
+    margin-left: 20px;
+    color: white;
+}
+
+.dash-table-body {
+    display: flex;
+    flex-direction: row;
+    background: rgb(139, 137, 137);
+    align-items: center;
+    justify-content: center;
+   
+    height: 40px;
+}

@@ -105,7 +105,6 @@ const ProductCreate = () => {
                 </div>
                 <div className="col-md-8">
                     {loading ? (<LoadingOutlined className="text-danger h1" />) : (<h4>Create Product</h4>)}
-                    {JSON.stringify(values.images)}
                         <hr />
                         <div className="p-3">
                             <FileUpload 
@@ -114,9 +113,7 @@ const ProductCreate = () => {
                                 setLoading={setLoading}
                             />
                         </div>
-                        <form onSubmit={handleSubmit}>
-                            {JSON.stringify(categories)}
-                            {JSON.stringify(categoriesDropdown)}     
+                        <form onSubmit={handleSubmit}>   
                             <div className="form-group">
                                 <label>Category (Months)</label>
                                 <select name="category" className="form-control" onChange={handleCategoryChange}>
@@ -297,7 +294,7 @@ const ProductCreate = () => {
                                 </select>
 
                             </div> */}
-                            {JSON.stringify(outOfStock)}
+                            
                             <div>
                                 <label>Choose Out Of Stock</label>
                                 <Select
