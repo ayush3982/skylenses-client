@@ -50,6 +50,29 @@
       src="https://www.facebook.com/tr?id=586503582712398&ev=PageView&noscript=1"
       /></noscript>
       <!-- End Facebook Pixel Code -->
+      <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.1/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyAQtvIQ27di97wOYB6Mq5YPsTR6i5gGxIY",
+          authDomain: "skylenses-auth.firebaseapp.com",
+          projectId: "skylenses-auth",
+          storageBucket: "skylenses-auth.appspot.com",
+          messagingSenderId: "708926395574",
+          appId: "1:708926395574:web:a4ca5176f8b67dba910217",
+          measurementId: "G-1VC0VCQQF1"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
       
     <div id="root"></div>
   </body>
