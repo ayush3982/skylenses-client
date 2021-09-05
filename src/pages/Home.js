@@ -157,7 +157,7 @@ const Home = ({history}) => {
               <div className="sub-heading">
                 6 &nbsp; M O N T H S &nbsp; L E N S E S
               </div>
-              <img className = "category-image" src = "https://firebasestorage.googleapis.com/v0/b/skylenses-auth.appspot.com/o/category%2F6_months_sei1be.png?alt=media&token=5cbc50b8-e25b-4dce-bec2-94ce3546a591" />
+              <img className = "category-image" src = "https://firebasestorage.googleapis.com/v0/b/categories-5236e.appspot.com/o/categories%2F6_months_sei1be.png?alt=media&token=9ad4e33b-74c4-4200-b8bb-3c469e983d71" />
             </div>
             </a>
             <a style = {{color: 'black'}} href = "/category/3-months">
@@ -168,7 +168,7 @@ const Home = ({history}) => {
               <div className="sub-heading">
                 3 &nbsp; M O N T H S &nbsp; L E N S E S
               </div>
-              <img className = "category-image" src = "https://firebasestorage.googleapis.com/v0/b/skylenses-auth.appspot.com/o/category%2F3_months_isywod.png?alt=media&token=78a96e85-ace6-4b5f-a23c-3ad22d8380b7" />
+              <img className = "category-image" src = "https://firebasestorage.googleapis.com/v0/b/categories-5236e.appspot.com/o/categories%2F3_months_isywod.png?alt=media&token=50495a2a-cde1-4181-a0db-5b72f97eec14" />
             </div>
             </a>
             <a style = {{color: 'black'}} href = "/category/1-month">
@@ -179,7 +179,7 @@ const Home = ({history}) => {
               <div className="sub-heading">
                 1 &nbsp; M O N T H  &nbsp; L E N S E S
               </div>
-              <img className = "category-image" src = "https://firebasestorage.googleapis.com/v0/b/skylenses-auth.appspot.com/o/category%2F069A9000_copy_jes0to.png?alt=media&token=8970396d-ebb1-4a4a-b73e-59e94ad01ec0" />
+              <img className = "category-image" src = "https://firebasestorage.googleapis.com/v0/b/categories-5236e.appspot.com/o/categories%2F069A9000_copy_jes0to.png?alt=media&token=adce5587-94bb-4726-a134-2ed8d6d83e81" />
             </div>
             </a>
             <a style = {{color: 'black'}} href = "/category/1-day">
@@ -190,7 +190,7 @@ const Home = ({history}) => {
               <div className="sub-heading">
                 1 &nbsp; D A Y &nbsp; L E N S E S
               </div>
-              <img className = "category-image" src = "https://firebasestorage.googleapis.com/v0/b/skylenses-auth.appspot.com/o/category%2F1_day_1_rg4i5b.png?alt=media&token=70a35aa9-e86e-4ff2-9490-0e4467b08d61" />
+              <img className = "category-image" src = "https://firebasestorage.googleapis.com/v0/b/categories-5236e.appspot.com/o/categories%2F1_day_1_rg4i5b.png?alt=media&token=297fc61c-8b76-4cfe-a633-4b4362646fd5" />
             </div>
             </a>
             <a style = {{color: 'black'}} href = "/product/sky-solution">
@@ -198,7 +198,7 @@ const Home = ({history}) => {
               <div className="image-heading">
                 S K Y &nbsp; S O L U T I O N
               </div>
-              <img className = "category-image" src = "https://firebasestorage.googleapis.com/v0/b/skylenses-auth.appspot.com/o/category%2F1629290468511.png?alt=media&token=aa0b596a-281e-4dc2-baee-ffd229a4df3e" />
+              <img className = "category-image" src = "https://firebasestorage.googleapis.com/v0/b/categories-5236e.appspot.com/o/categories%2F1629290468511.png?alt=media&token=bf3f05d8-7584-4cbe-a61b-fd986c63e6be" />
             </div>
             </a>
           </div>
