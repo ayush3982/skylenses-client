@@ -11,6 +11,7 @@ import {showAverage} from "../../functions/rating"
 import _ from "lodash"
 import {useSelector, useDispatch} from 'react-redux'
 import {toast} from 'react-toastify'
+import 'boxicons'
 
 
 const {Meta} = Card
@@ -25,6 +26,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
     const [powerLeft, setPowerLeft] = useState('default');
     const [powerRight, setPowerRight] = useState('default');
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [visible, setVisible] = useState(false);
     const [customized, setCustomized] = useState(false);
     const [hidden, setHidden] = useState(false);
     const [showError, setShowError] = useState(false);
@@ -73,6 +75,30 @@ const SingleProduct = ({product, onStarClick, star}) => {
         setIsModalVisible(false);
     };
 
+    const infoModal = () => {
+        return (
+          <>
+            <Modal
+              centered
+              visible={visible}
+              onOk={() => setVisible(false)}
+              onCancel={() => setVisible(false)}
+              width={400}
+              footer={null}
+            >
+              <br />
+              <div className="modal-container">
+                <div className="modal-heading">
+                  <span className="modal-color">Sky Cosmetic Lenses</span>app back on Google Play & App Store. Download now to try your luck at the Lucky Wheel to get discounts!
+                </div>
+                <a className = "app-image-container modal-image" href="https://apps.apple.com/in/app/sky-cosmetic-lenses/id1537659278"><img className="image-real" src = "https://i.im.ge/2021/08/12/j57rF.png"/></a>
+                    <a className = "app-image-container modal-image" href = "https://play.google.com/store/apps/details?id=com.skycosmeticlenses.lenses"><img className="image-real" src = "https://i.im.ge/2021/08/12/j5sV6.png"/></a>
+              </div>
+            </Modal>
+        </>
+    
+        )
+      }
 
     const handleAddToCart = () => {
         if((power !== "default" && power !== "Choose Power")) {
@@ -307,7 +333,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                             </>
                         ) : (
                             <div className="form-group">
-                                    {category && category.name !== "Sky Solution" && (
+                                    {category && category.name !== "Lens Solution" && (
                                         <select
                                         value = {power}
                                         name = "choosePowers"
@@ -346,6 +372,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                         }} onClick = {handleAddToCart}>
                                 <ShoppingCartOutlined className="success" disabled /> Add to Cart
                         </a>
+                        
                         {/* <RatingModal style = {{
                             display: 'flex',
                             marginTop: '10px',
@@ -386,6 +413,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
 
     return (
         <>  
+            
             <div className="col-md-6">
                 <Carousel showThumbs = {false} autoPlay infiniteLoop>
                     {images && images.map((i) => <img src={i.url} key={i.public_id}/>)}
