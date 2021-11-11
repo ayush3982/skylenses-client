@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
+
 }
 
 .dash-heading {
@@ -22,6 +23,8 @@
     width: 300px;
 }
 
+
+
 .dash-table-heading {
     display: flex;
     flex-direction: row;
@@ -33,15 +36,21 @@
 }
 
 .dash-col {
-    margin-right: 20px;
-    margin-left: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+    color: green;
+}
+
+.dash-col-h {
+    margin-right: 10px;
+    margin-left: 10px;
     color: white;
 }
 
 .dash-table-body {
     display: flex;
     flex-direction: row;
-    background: rgb(139, 137, 137);
+    background: rgb(255, 253, 253);
     align-items: center;
     justify-content: center;
    

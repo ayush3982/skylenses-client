@@ -118,7 +118,7 @@ const SingleProduct = ({product, onStarClick, star}) => {
                 })
                 let unique = _.uniqWith(cart, _.isEqual)
                 // console.log(unique)
-                localStorage.setItem('cart', JSON.stringify(unique))
+                localStorage.setItem('cart', JSON.stringify(unique)) 
                 dispatch({
                     type: "ADD_TO_CART",
                     payload: unique

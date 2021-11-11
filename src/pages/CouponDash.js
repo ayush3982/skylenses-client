@@ -31,16 +31,22 @@ const CouponDash = () => {
     
                 <div className = "table-dash">
                     <div className = "dash-table-heading">
-                        <div className = "col-md dash-col">ID</div>
-                        <div className = "col-md dash-col">Date</div>
-                        <div className = "col-md dash-col">Razorpay</div>
+                        <div className = "col-md dash-col-h">Serial</div>
+                        <div className = "col-md dash-col-h">Coupon</div>
+                        <div className = "col-md dash-col-h">Date</div>
+                        <div className = "col-md dash-col-h">Order ID</div>
                     </div>
-                    {orderData.map((order) => (
-                        <div className = "dash-table-body">
-                            <div className = "col-md dash-col">{order.skyId}</div>
-                            <div className = "col-md dash-col">{order.orderDate}</div>
-                            <div className = "col-md dash-col">{order.rpayId}</div>
-                            <hr/>
+                    <br />
+                    {orderData.map((order, index) => (
+                        <div>
+                            <div className = "dash-table-body">
+                                <div className = "col-md dash-col">{index + 1}</div>
+                                <div className = "col-md dash-col">{order.couponUsed}</div>
+                                <div className = "col-md dash-col">{order.orderDate}</div>
+                                <div className = "col-md dash-col">{order.skyId}</div>
+                                <hr/>
+                            </div>
+                            <hr />
                         </div>
                     ))}
                 </div>
