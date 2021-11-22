@@ -72,7 +72,7 @@ const App = () => {
         .catch(err => console.log(err))
       }
     })
-    // clean up
+    // clean up 
     return () => unsubscribe();
   }, [dispatch])
 

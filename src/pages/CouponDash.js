@@ -33,7 +33,7 @@ const CouponDash = () => {
                     <div className = "dash-table-heading">
                         <div className = "col-md dash-col-h">Serial</div>
                         <div className = "col-md dash-col-h">Coupon</div>
-                        <div className = "col-md dash-col-h">Date</div>
+                        <div className = "col dash-col-date-h">Date</div>
                         <div className = "col-md dash-col-h">Order ID</div>
                     </div>
                     <br />
@@ -42,7 +42,7 @@ const CouponDash = () => {
                             <div className = "dash-table-body">
                                 <div className = "col-md dash-col">{index + 1}</div>
                                 <div className = "col-md dash-col">{order.couponUsed}</div>
-                                <div className = "col-md dash-col">{order.orderDate}</div>
+                                <div className = "col-lg dash-col-date">{order.orderDate}</div>
                                 <div className = "col-md dash-col">{order.skyId}</div>
                                 <hr/>
                             </div>

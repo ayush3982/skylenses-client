@@ -12,6 +12,7 @@ const Cart = ({history}) => {
 
     const charges = 50;
     const limit = 999;
+    const buyLimit = 500;
 
     const deliveryChargesApplied = () => {
         let extraCharges = getTotal();
@@ -68,32 +69,36 @@ const Cart = ({history}) => {
                     flexDirection: "column",
                     fontFamily: "Lato, sans-serif"
                 }}>
-                    <h4 className = "mt-5">Order Summary</h4>
-                    <hr />
-                    <p>Products</p>
-                    {cart.map((c, i) => (
-                        <div key={i}>
-                            <p>{c.title} x {c.count} = INR {c.price * c.count}</p>
+                    {getTotal() < buyLimit ? (<p style = {{marginTop: '200px', fontSize: '15px', alignItems: 'center'}}><b>Cart Value must be atleast 500 to order. Add more products to cart</b></p>) : (
+                        <div>
+                            <h4 className = "mt-5">Order Summary</h4>
+                        <hr />
+                        <p>Products</p>
+                        {cart.map((c, i) => (
+                            <div key={i}>
+                                <p>{c.title} x {c.count} = INR {c.price * c.count}</p>
+                            </div>
+                        ))}
+                        {getTotal() < deliveryChargesApplied() ? (<div>Delivery Charges : INR 50</div>) : (null)}
+                        <hr />
+                            Total: <b>INR {deliveryChargesApplied()}</b>
+                        <hr />
+                        {
+                            user ? (
+                                <button onClick={saveOrderToDb} className = "btn btn-sm btn-primary mt-2" disabled={!cart.length}>Proceed to Checkout</button>
+                            ) : (
+                                <button className = "btn btn-sm btn-primary mt-2">
+                                    <Link to = {{
+                                        pathname: "/login",
+                                        state: {from: "cart"}
+                                    }}>
+                                        Login to Checkout
+                                    </Link>
+                                </button>
+                            )
+                        }
                         </div>
-                    ))}
-                    {getTotal() < deliveryChargesApplied() ? (<div>Delivery Charges : INR 50</div>) : (null)}
-                    <hr />
-                        Total: <b>INR {deliveryChargesApplied()}</b>
-                    <hr />
-                    {
-                        user ? (
-                            <button onClick={saveOrderToDb} className = "btn btn-sm btn-primary mt-2" disabled={!cart.length}>Proceed to Checkout</button>
-                        ) : (
-                            <button className = "btn btn-sm btn-primary mt-2">
-                                <Link to = {{
-                                    pathname: "/login",
-                                    state: {from: "cart"}
-                                }}>
-                                    Login to Checkout
-                                </Link>
-                            </button>
-                        )
-                    }
+                    )}
                 </div>
             </div>
         </div>

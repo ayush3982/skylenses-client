@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-
 }
 
 .dash-heading {
@@ -33,6 +32,19 @@
     justify-content: center;
     margin-top: 30px;
     height: 40px;
+}
+
+.dash-col-date-h {
+    margin-right: 10px;
+    margin-left: 10px;
+    color: white;
+}
+
+.dash-col-date {
+    margin-right: 10px;
+    margin-left: 10px;
+    color: green;
+    
 }
 
 .dash-col {
