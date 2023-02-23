@@ -16,7 +16,7 @@ const Login = ({ history }) => {
 
   useEffect(() => {
     let intended = history.location.state;
-    if (intended) {
+    if (intended) { 
       return;
     } else {
       if (user && user.token) history.push("/");

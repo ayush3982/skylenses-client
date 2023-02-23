@@ -11,4 +11,4 @@ const rootReducer = combineReducers({
     coupon: couponReducer   
 })
 
-export default rootReducer;   
+export default rootReducer;    

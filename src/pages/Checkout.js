@@ -773,7 +773,6 @@ const Checkout = ({history}) => {
                         </div> 
                         {total > 999 && country === "India" && (
                             <div className="discount-box">
-                                <p className = "text-success margin-30">If you don't apply any Coupon or Coins, you'll get solution free</p>
                                 {discountError && <p className = "text-danger p-2">{discountError}</p>}
                                 {(country === "Select Country" || country === "India") && (total >= 999) && (usingCoins === false) &&(  
                                     <>
